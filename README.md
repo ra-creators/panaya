@@ -16,10 +16,3 @@
 
     `pip install -r requirements.txt`
 
-## Note: 
-
-### CSS, JS, and Images
-
-**Put the CSS, JS, and Images in the `static` folder:**
-    
-    `Example:- static/css/styles.css`
