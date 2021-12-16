@@ -10,13 +10,13 @@
 
     `source venv/bin/activate` (for Linux) 
     
-    `source venv\Scripts\activate` (for Windows)
+    `venv\Scripts\activate` (for Windows)
 
 3. Install the required packages by using the following command:
 
     `pip install -r requirements.txt`
 
-## Notes: 
+## Note: 
 
 ### CSS, JS, and Images
 
