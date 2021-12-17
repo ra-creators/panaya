@@ -1,0 +1,158 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}About us{% endblock %}
+
+{% block css %}
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
+<link rel="stylesheet" href="{% static 'pages_static/css/about.css' %}">
+{% endblock css %}
+
+{% block body %}
+<div id='story'>
+    <section class='section-1-3'>
+        <div id='story-header'>
+            <h2>OUR STORY</h2>
+        </div>
+        <div class='container' id='about-us'>
+            <div class='row justify-content-md-center'>
+                <div class='col-lg-6'>
+                    <div class='align-center'>
+                        <h2>About us</h2>
+                    </div>
+                    <div class='text'>
+                        <p>
+                            Panaya, formerly known as Oriental textile, is an elite name in the world of Banarasi Sarees.
+                            It is located in Varanasi and Banglore. The Heritage of Indian Culture has been well-preserved and displayed at Panaya.
+                            The piousness attached to the 'historic' Banarasi Saree has been kept intact at Panaya. The name has been shining not just in India, but all over the world.
+                            The royal range of Banarasi Sarees at Panaya have conquered many hearts, not only Indian but across the world. People from various parts of the world have been captivated by this
+                            piece of Indian art and culture. The six-yards of royal ethnic piece, has left impressed even Her Majesty the Queen of the England. She herself visited us
+                             to buy textiles! Even the famous pop singer Goldie Hawn chose our Banarasi Saree for Michael Douglas in the New York City! The handwork done on the purest form of Banarasi silk
+                             by our artists has kept all our customers across the globe on their toes.
+                        </p>
+                    </div>
+                </div>
+
+                <div class='col-lg-6 about-image-wrapper'>
+                    <img id='about-image' src="{% static 'pages_static/images/about/image1.png' %}" alt="">
+                </div>
+            </div>
+        </div>
+
+        <div class='container award-container'>
+            <div class='row'>
+                <div class='col-lg-6 about-image-wrapper'>
+                    <img class='award-image' src="{% static 'pages_static/images/about/award1.png'%}" alt="">
+                </div>
+                <div class='col-lg-6 col-text'>
+                    <p>In, the most amazing moment for us when Queen England visited and she appreciated our work. Which made us more proud and motivated to work.</p>
+                </div>
+            </div>
+            <div class='row'>
+                <div class='col-lg-6 col-text'>
+                    <p>The Media Portal for Goldie hogs hollywood limelight in banarasi saree.</p>
+                </div>
+                <div class='col-lg-6 about-image-wrapper'>
+                    <img class='award-image' src="{% static 'pages_static/images/about/paper.png'%}" alt="">
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class='section-2-4'>
+        <div class='container'>
+            <div>
+                <div class='align-center'>
+                    <h2>What is so special about Banarasi Sarees?</h2>
+                </div>
+                <div class='text'>
+                    <p>
+                        Banarasi Silk (also known as Benarasi Silk) is a fine variant of Silk originating from the city of Varanasi in Uttar Pradesh, India.
+                        Saree woven from this fine silk, known as a Banarasi Silk Sarees extremely popular all over India and across the world.
+                    </p>
+                </div>
+                <div>
+                    <img class='boat-image' src="{% static 'pages_static/images/about/boat-image.png'%}" alt="">
+                </div>
+                <div class='text'>
+                    <p>
+                        The art and culture of providing Banarasi sarees with silks is very ancient. The continuations of passing down the culture of
+                        artistry of the Banarasi sarees from one generation to another have never stopped. Persian motifs were being mixed up with the design of Indian silk
+                        for creating this distinctive flowery pattern of Banarasi silk sarees, which are so typical in present days.
+                    </p>
+                </div>
+                <div class='row'>
+                    <img class='col-6 women-image' src="{% static 'pages_static/images/about/image2.png'%}" alt="">
+                    <img class='col-6 women-image' src="{% static 'pages_static/images/about/image3.png'%}" alt="">
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class='section-1-3'>
+        <div class='container'>
+            <div>
+                <div class='align-center'>
+                    <h1>How do we make Banarasi Sarees for you?</h1>
+                </div>
+                <div class='text'>
+                    <p>
+                        The rich and royal range of Banarasi Sarees produced at Panaya. The edication and perfection poured into the making of
+                        this classic historic element is unparalleled. The charisma and the royalty that the sarees is unmatched by anything else.
+                    </p>
+                </div>
+                <div>
+                    <div class='align-center'>
+                        <h2>Waving Process</h2>
+                    </div>
+                    <div class='row'>
+                        <div class='col-md-4'>
+                            <div class="vector">
+                                <img src="{% static 'pages_static/images/about/Vector.png'%}" alt="">
+                                <p id='text-1'>Saree Design and Jacquard card Process</p>
+                            </div>
+                        </div>
+                        <div class='col-md-4'>
+                            <div class="vector">
+                                <img src="{% static 'pages_static/images/about/Vector2.png'%}" alt="">
+                                <p id='text-2'>Dyeing</p>
+                            </div>
+                        </div>
+                        <div class='col-md-4'>
+                            <div class="vector">
+                                <img src="{% static 'pages_static/images/about/Vector.png'%}" alt="">
+                                <p id='text-3'>Wrap and weft preparations</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class='section-2-4' id='section-4'>
+        <div class='container'>
+            <div class='col-12' id='man-image'>
+                <img class='boat-image'src="{% static 'pages_static/images/about/A.png'%}" alt="">
+            </div>
+            <div>
+                <div id='wrapper-image'>
+                    <div class="row">
+                        <img class='col-6 women-image' src="{% static 'pages_static/images/about/B.png'%}" alt="">
+                        <img class='col-6 women-image' src="{% static 'pages_static/images/about/C.png'%}" alt="">
+                    </div>
+                    <div class="row">
+                        <img src="{% static 'pages_static/images/about/D.png'%}" class='col-6 women-image' alt="">
+                        <img src="{% static 'pages_static/images/about/E.png'%}" class='col-6 women-image' alt="">
+                    </div>
+                    <div class="row">
+                        <img src="{% static 'pages_static/images/about/F.png'%}" class='col-6 women-image' alt="">
+                        <img src="{% static 'pages_static/images/about/G.png'%}" class='col-6 women-image' alt="">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</div>
+{% endblock body %}
