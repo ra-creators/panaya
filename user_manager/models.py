@@ -17,6 +17,7 @@ class UserProfileManager(BaseUserManager):
     def create_superuser(self, email, fname, lname, dob, password=None):
         """Create and save a new superuser with given details"""
         user = self.create_user(email, fname, lname, dob, password)
+        user.is_staff = True
         user.is_superuser = True
         user.save(using=self._db)
         return user
@@ -28,7 +29,7 @@ class User(AbstractBaseUser, PermissionsMixin):
     lname = models.CharField(max_length=255)
     dob = models.DateField()
     otp = models.IntegerField(blank=True, null=True)
-
+    is_staff = models.BooleanField(default=False)  
     objects = UserProfileManager()
 
     USERNAME_FIELD = 'email'
@@ -45,3 +46,4 @@ class User(AbstractBaseUser, PermissionsMixin):
     
     def __str__(self):
         return self.email
+
