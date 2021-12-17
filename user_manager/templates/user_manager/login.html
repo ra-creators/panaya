@@ -1,0 +1,37 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sign in</title>
+    <link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css" integrity="sha384-AYmEC3Yw5cVb3ZcuHtOA93w35dYTsvhLPVnYs9eStHfGJvOvKxVfELGroGkvsg+p" crossorigin="anonymous"/>
+   <link href="{% static 'user_manager/css/styles.css' %}" rel="stylesheet">
+    
+</head>
+<body>
+    <div class="container">
+        <img src="{% static 'user_manager/images/crown.png' %}">
+        <h1>PANAYA</h1>
+    </div>
+    <div class="sign-in-form">
+        <form method='post'>
+        {% csrf_token %}
+        <h1>Sign in</h1>
+        <p>New user ? <a href="#">Create an Account</a></p>
+        
+        <input type="email" placeholder="Enter your Email Address" name="email" id="email" required>
+        <input type="password" placeholder="Enter Password" name='password' id="password" required >
+        <button type="submit" class="continue">Continue</button>
+        <hr>
+        <p class="or"> or </p>
+        <button type="button" id="signup-google" class="signup-google" ><i class="fab fa-google"></i>
+             Continue with Google</button>
+        <button type="button" id="signup-facebook" class="signup-facebook"><i class="fab fa-facebook-f"></i> Continue with Facebook</button>
+        <button type="button" id="signup-apple" class="signup-apple"> <i class="fab fa-apple"></i> Continue with Apple</button>
+
+        </form>
+    </div>
+</body>
+</html>

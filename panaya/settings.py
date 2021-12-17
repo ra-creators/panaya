@@ -39,7 +39,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     
     # Custom apps
-    'users',
+    'user_manager',
     'pages_static',
 
     # Third party apps
@@ -105,7 +105,7 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
-AUTH_USER_MODEL = 'users.User'
+AUTH_USER_MODEL = 'user_manager.User'
 
 # Internationalization
 # https://docs.djangoproject.com/en/3.0/topics/i18n/
