@@ -41,6 +41,7 @@ INSTALLED_APPS = [
     # Custom apps
     'user_manager',
     'pages_static',
+    'product',
 
     # Third party apps
 ]
@@ -120,8 +121,16 @@ USE_L10N = True
 
 USE_TZ = True
 
+# Login, Logout redirect urls
+# LOGIN_REDIRECT_URL = 'home'
+LOGIN_URL = 'login'
+LOGOUT_URL = 'logout'
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/3.0/howto/static-files/
 
 STATIC_URL = '/static/'
+
+# Media files
+MEDIA_URL = '/media/'
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')

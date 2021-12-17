@@ -28,7 +28,7 @@ class User(AbstractBaseUser, PermissionsMixin):
     fname = models.CharField(max_length=255)
     lname = models.CharField(max_length=255)
     dob = models.DateField()
-    otp = models.IntegerField(blank=True, null=True)
+    phone_number = models.CharField(max_length=10, blank=True)
     is_staff = models.BooleanField(default=False)  
     objects = UserProfileManager()
 
@@ -47,3 +47,15 @@ class User(AbstractBaseUser, PermissionsMixin):
     def __str__(self):
         return self.email
 
+class OTP(models.Model):
+    """
+    Otp model for user. 
+    This model is used to store the otp generated for the user.
+    Otp should expire after 15 minutes of generation.
+    """
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    otp = models.CharField(max_length=6)
+    created = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return self.otp
