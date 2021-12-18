@@ -2,7 +2,7 @@ from django.urls import path
 from . import views
 
 urlpatterns = [
-    path('', views.blogandnews, name="blogs"),
+    path('', views.blogs, name="blogs"),
     path('<int:blogId>', views.blog, name="blog"),
     path('<int:blogId>/like', views.blog_like, name="blog_like"),
     # API to post a comment

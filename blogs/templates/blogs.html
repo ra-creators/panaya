@@ -1,0 +1,84 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Blog | {{blog.title|truncatewords:10}}{% endblock %}
+
+{% block css %}
+<link rel="stylesheet" href="{% static 'blogs/blogs.css' %}">
+{% endblock css %}
+
+{% block body %}
+<section class='story'>
+    <div class="align-center section-heading">
+        <img src="{% static 'pages_static/images/section-heading-decor.png'%}" alt="" />
+        <h2>Blogs</h2>
+        <img class="flip-horizontal" src="{% static 'pages_static/images/section-heading-decor.png'%}" alt="" />
+    </div>
+</section>
+
+<section id="decor">
+    <div class="container-md my-5">
+        <div class="row g-5">
+            <div class="col-md-4">
+                <div class="text-center d-none d-md-block">
+                    <img class="img-fluid" src="{% static 'blogs/Rectangle 336.png' %}" alt="">
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="text-center" style="margin-top:10rem;">
+                    <img class="img-fluid" src="{% static 'blogs/Rectangle 337.png' %}" alt="">
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="text-center d-none d-md-block" style="margin-top:20rem;">
+                    <img class="img-fluid" src="{% static 'blogs/Rectangle 338.png' %}" alt="">
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section id="tag-line" class="container-lg mt-5">
+    <h1 class="text-center">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Felis lacus tellus in mi in.</h1>
+</section>
+
+<section id="blogs" class="my-5">
+    <div class="container-lg">
+        <div class="row g-2 row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-4 justify-content-center">
+            {% comment %} <div class="col">
+                <div class="card mx-auto" style="max-width: 20rem;">
+                    <img src="{%static 'pages_static/images/index/Rectangle 79.png' %}" class="card-img-top"
+                        alt="..." />
+                    <div class="card-body">
+                        <h5 class="card-title">Singhanias - Celebrity Blog</h5>
+                        <p>August 20, 2021</p>
+                        <p class="card-text">
+                            Sailesh Singhanias is an iconic part of the tinsel world as
+                            celebrities breathe style in every l...Continue Reading
+                        </p>
+                    </div>
+                </div>
+            </div> {% endcomment %}
+            {% for blog in blogs %}
+            <div class="col">
+                <div class="card mx-auto" style="max-width: 20rem;">
+                    <div class="card-body">
+                        <h5 class="card-title">{{blog.title}}</h5>
+                        <div class="text-muted d-flex justify-content-between">
+                            <p class="text-muted">{{blog.date | timesince}} ago</p>
+                            <p> <i class="far fa-eye"></i> {{blog.views}}</p>
+                        </div>
+                        <div class="card-text" style="max-height:20rem; overflow:hidden">
+                            {{blog.content|safe}}
+                        </div>
+                        <a href="{% url 'blog' blog.id %}">... Continue Reading</a>
+
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</section>
+
+{% endblock body %}

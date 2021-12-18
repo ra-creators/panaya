@@ -10,6 +10,7 @@ class Blog(models.Model):
     image = models.FileField(upload_to="blogs/", max_length=100)
     content = RichTextField()
     likes = models.IntegerField(default=0)
+    views = models.IntegerField(default=0)
 
     class Meta:
         ordering = ['-date']
