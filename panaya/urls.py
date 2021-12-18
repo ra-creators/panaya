@@ -22,6 +22,8 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('users/', include('user_manager.urls')),
     path('', include('pages_static.urls')),
+    path('blogs/', include('blogs.urls')),
+    path('^ckeditor/', include('ckeditor_uploader.urls')),
 ]
 
 if settings.DEBUG:
