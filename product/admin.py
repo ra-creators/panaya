@@ -32,12 +32,6 @@ class TagAdmin(admin.ModelAdmin):
     list_display = ['name', 'slug']
     prepopulated_fields = {'slug': ('name',)}
 
-
-@admin.register(ProductImage)
-class ProductImageAdmin(admin.ModelAdmin):
-    list_display = ['product', 'image']
-    list_filter = ['product']
-
 @admin.register(FAQ)
 class FAQAdmin(admin.ModelAdmin):
     list_display = ['question']

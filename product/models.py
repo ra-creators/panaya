@@ -58,7 +58,7 @@ class Review(models.Model):
     product = models.ForeignKey(Product, related_name='reviews', on_delete=models.CASCADE)
     user = models.ForeignKey(User, related_name='reviews', on_delete=models.CASCADE)
     stars = models.IntegerField(default=0)
-    body = RichTextField()
+    body = models.TextField()
 
     def __str__(self):
         return f"{self.stars} stars by {self.user.get_full_name()}"
