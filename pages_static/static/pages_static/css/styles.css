@@ -90,6 +90,12 @@
 
 .overlay-container {
   position: relative;
+  height: -webkit-fit-content;
+  height: -moz-fit-content;
+  height: fit-content;
+  width: -webkit-fit-content;
+  width: -moz-fit-content;
+  width: fit-content;
 }
 
 .overlay-container .overlay-text {
@@ -173,7 +179,7 @@
   width: 100vw;
   background-image: url("/static/pages_static/images/index/heirloom-bg.png");
   background-repeat: no-repeat;
-  background-size: contain;
+  background-size: cover;
   background-position: 0%;
 }
 /*# sourceMappingURL=styles.css.map */
