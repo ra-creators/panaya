@@ -1,0 +1,388 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Panaya{% endblock %}
+
+
+{% block css %}
+    <link rel="stylesheet" href="{% static 'pages_static/css/styles.css' %}" />
+{% endblock css %}
+
+{% block body %}
+    <main>
+      <section id="welcome-carousel">
+        <div class="owl-carousel owl-fw-carousel owl-theme">
+          <div class="item overlay-container">
+            <img src="{%static 'pages_static/images/index/Rectangle 52.png' %}" alt="" />
+            <div class="overlay-text text-white ms-5" style="top: 50%">
+              <h1 class="mb-3">Exclusive Banarasi Silk Saree</h1>
+              <button class="btn styled-btn-outline">Shop Now</button>
+            </div>
+          </div>
+          <div class="item overlay-container">
+            <img src="{%static 'pages_static/images/index/Rectangle 52.png' %}" alt="" />
+            <div class="overlay-text text-white ms-5" style="top: 50%">
+              <h1 class="mb-3">02 Exclusive Banarasi Silk Saree</h1>
+              <button class="btn styled-btn-outline">Shop Now</button>
+            </div>
+          </div>
+          <div class="item overlay-container">
+            <img src="{%static 'pages_static/images/index/Rectangle 52.png' %}" alt="" />
+            <div class="overlay-text text-white ms-5" style="top: 50%">
+              <h1 class="mb-3">03 Exclusive Banarasi Silk Saree</h1>
+              <button class="btn styled-btn-outline">Shop Now</button>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="mt-2 text-center" id="welcome-line">
+        <img
+          class="img-fluid"
+          src="{%static 'pages_static/images/index/imageedit_5_9031586909 1.png' %}"
+          alt=""
+        />
+        <h1>Welcome to Panaya</h1>
+        <p>
+          An immersion into the finest artisanal handwoven luxury from
+          Banaras.Slow luxury.
+        </p>
+        <img
+          class="flip-horizontal img-fluid"
+          src="{%static 'pages_static/images/index/imageedit_5_9031586909 1.png' %}"
+          alt=""
+        />
+      </section>
+
+      <section class="mt-2" id="explore-banaras">
+        <div class="section-heading">
+          <img src="{%static 'pages_static/images/section-heading-decor.png' %}" alt="" />
+          <h1>EXPLORE BANARAS</h1>
+          <img
+            class="flip-horizontal"
+            src="{%static 'pages_static/images/section-heading-decor.png' %}"
+            alt=""
+          />
+        </div>
+        <div class="conainer-lg m-2 m-md-5">
+          <div class="row g-2 g-md-5 row-cols-1 row-cols-md-2 row-cols-lg-3">
+            <div class="col text-center">
+              <div class="overlay-container">
+                <img
+                  class="img-fluid"
+                  src="{%static 'pages_static/images/index/Rectangle 55.png' %}"
+                  alt=""
+                />
+                <h4 class="overlay-text m-4 text-white">Banarasi Silk Saree</h4>
+              </div>
+            </div>
+            <div class="col text-center">
+              <div class="overlay-container">
+                <img
+                  class="img-fluid"
+                  src="{%static 'pages_static/images/index/Rectangle 56.png' %}"
+                  alt=""
+                />
+                <h4 class="overlay-text m-4 text-white">Jangla Saree</h4>
+              </div>
+            </div>
+            <div class="col text-center">
+              <div class="overlay-container">
+                <img
+                  class="img-fluid"
+                  src="{%static 'pages_static/images/index/Rectangle 60.png' %}"
+                  alt=""
+                />
+                <h4 class="overlay-text m-4 text-white">Tanchoi Saree</h4>
+              </div>
+            </div>
+            <div class="col text-center">
+              <div class="overlay-container">
+                <img
+                  class="img-fluid"
+                  src="{%static 'pages_static/images/index/Rectangle 61.png' %}"
+                  alt=""
+                />
+                <h4 class="overlay-text m-4 text-white">Cutwork Saree</h4>
+              </div>
+            </div>
+            <div class="col text-center">
+              <div class="overlay-container">
+                <img
+                  class="img-fluid"
+                  src="{%static 'pages_static/images/index/Rectangle 62.png' %}"
+                  alt=""
+                />
+                <h4 class="overlay-text m-4 text-white">Jamdani Saree</h4>
+              </div>
+            </div>
+            <div class="col text-center">
+              <div class="overlay-container">
+                <img
+                  class="img-fluid"
+                  src="{%static 'pages_static/images/index/Rectangle 63.png' %}"
+                  alt=""
+                />
+                <h4 class="overlay-text text-white">Tissue Saree</h4>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="mt-2" id="new-arrival">
+        <div class="section-heading">
+          <img src="{%static 'pages_static/images/section-heading-decor.png' %}" alt="" />
+          <h1>NEW ARRIVAL</h1>
+          <img
+            class="flip-horizontal"
+            src="{%static 'pages_static/images/section-heading-decor.png' %}"
+            alt=""
+          />
+        </div>
+        <div class="container-lg">
+          <h1 style="color: rgba(141, 0, 32, 1)" class="text-center my-2">
+            Exclusive New Collection for festival and bride look and off upto
+            20%
+          </h1>
+          <div class="row g-2 g-md-5 row-cols-1 row-cols-md-3">
+            <div class="col text-center">
+              <img
+                class="img-fluid"
+                src="{%static 'pages_static/images/index/Rectangle 68.png' %}"
+                alt=""
+              />
+              <h2 class="mt-5 text-sp-red">Banarasi Silk Saree</h2>
+              <p>view all</p>
+              <button class="btn styled-btn-filled">Shop Now</button>
+            </div>
+            <div class="col text-center">
+              <img
+                class="img-fluid"
+                src="{%static 'pages_static/images/index/Rectangle 68.png' %}"
+                alt=""
+              />
+              <h2 class="mt-5 text-sp-red">Banarasi Silk Saree</h2>
+              <p>view all</p>
+              <button class="btn styled-btn-filled">Shop Now</button>
+            </div>
+            <div class="col text-center">
+              <img
+                class="img-fluid"
+                src="{%static 'pages_static/images/index/Rectangle 68.png' %}"
+                alt=""
+              />
+              <h2 class="mt-5 text-sp-red">Banarasi Silk Saree</h2>
+              <p>view all</p>
+              <button class="btn styled-btn-filled">Shop Now</button>
+            </div>
+          </div>
+
+          <section id="heirlooms" class="my-5 mx-auto">
+            <div class="container-md">
+              <h1 class="text-center mb-5 text-sp-red">WOVEN HEIRLOOMS</h1>
+              <p>
+                Panaya GOLD is a luxury handmade textile brand, started in 2015.
+                Since its inception, it has been committed to preserving and
+                innovating with the highest levels of artistry and hand
+                craftsmanship in Banaras. Its single edition sarees are
+                contemporary heirlooms for today’s connoisseurs. Each
+                One-of-a-Kind saree is handwoven over several months,
+                benchmarking excellence in quality of materials and design which
+                attempt to match historical masterpieces, ensuring
+                simultaneously, comfort for today’s wearer.
+              </p>
+              <div class="container-fluid">
+                <div class="row g-2 row-cols-2">
+                  <div class="col">
+                    <img
+                      class="img-fluid"
+                      src="{%static 'pages_static/images/index/Rectangle 72.png' %}"
+                      alt=""
+                    />
+                  </div>
+                  <div class="col">
+                    <!-- <div class="row"> -->
+                    <img
+                      style="display: block"
+                      src="{%static 'pages_static/images/index/Rectangle 73.png' %}"
+                      alt=""
+                      class="pb-2 img-fluid"
+                    />
+                    <!-- </div> -->
+                    <!-- <div class="row"> -->
+                    <img
+                      style="display: block"
+                      src="{%static 'pages_static/images/index/Rectangle 74.png' %}"
+                      alt=""
+                      class="img-fluid"
+                    />
+                    <!-- </div> -->
+                  </div>
+                </div>
+              </div>
+            </div>
+          </section>
+          <section class="text-center my-5">
+            <h1 class="mb-5">"Handwoven stories written in eternal Banaras"</h1>
+            <p class="">
+              Each Panaya product has been made by the hands of a dedicated,
+              trained artisan, with skills passed down through generations.
+            </p>
+          </section>
+        </div>
+      </section>
+
+      <section
+        class="container-fluid d-flex align-items-center justify-content-center"
+        id="banaras-store"
+      >
+        <div
+          style="
+            background: linear-gradient(
+              180deg,
+              rgba(222, 214, 201, 0.9) 0%,
+              rgba(180, 141, 111, 0.76) 100%
+            );
+          "
+          class="p-5 text-center"
+        >
+          <h1>Our Banaras Store</h1>
+          <h3>Book an Appoinment</h3>
+          <p>We are avaliable for online as well as in store appoinments</p>
+          <button class="btn btn-light">Book Now</button>
+        </div>
+      </section>
+
+      <section class="mt-2" id="blogs">
+        <div class="section-heading">
+          <img src="{%static 'pages_static/images/section-heading-decor.png' %}" alt="" />
+          <h1>Blog Post</h1>
+          <img
+            class="flip-horizontal"
+            src="{%static 'pages_static/images/section-heading-decor.png' %}"
+            alt=""
+          />
+        </div>
+        <div class="container-lg py-2 m-md-5">
+          <div class="owl-carousel owl-theme">
+            <div class="item">
+              <div class="card">
+                <img
+                  src="{%static 'pages_static/images/index/Rectangle 79.png' %}"
+                  class="card-img-top"
+                  alt="..."
+                />
+                <div class="card-body">
+                  <h5 class="card-title">Singhanias - Celebrity Blog</h5>
+                  <p>August 20, 2021</p>
+                  <p class="card-text">
+                    Sailesh Singhanias is an iconic part of the tinsel world as
+                    celebrities breathe style in every l...Continue Reading
+                  </p>
+                </div>
+              </div>
+            </div>
+            <div class="item">
+              <div class="card">
+                <img
+                  src="{%static 'pages_static/images/index/Rectangle 79.png' %}"
+                  class="card-img-top"
+                  alt="..."
+                />
+                <div class="card-body">
+                  <h5 class="card-title">Singhanias - Celebrity Blog</h5>
+                  <p>August 20, 2021</p>
+                  <p class="card-text">
+                    Sailesh Singhanias is an iconic part of the tinsel world as
+                    celebrities breathe style in every l...Continue Reading
+                  </p>
+                </div>
+              </div>
+            </div>
+            <div class="item">
+              <div class="card">
+                <img
+                  src="{%static 'pages_static/images/index/Rectangle 79.png' %}"
+                  class="card-img-top"
+                  alt="..."
+                />
+                <div class="card-body">
+                  <h5 class="card-title">Singhanias - Celebrity Blog</h5>
+                  <p>August 20, 2021</p>
+                  <p class="card-text">
+                    Sailesh Singhanias is an iconic part of the tinsel world as
+                    celebrities breathe style in every l...Continue Reading
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+    </main>
+
+
+    <!-- jquery -->
+    <script
+      src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"
+      integrity="sha512-894YE6QWD5I59HgZOGReFYm4dnWc1Qt5NtvYSaNcOP+u1T9qYdvdihz0PPSiiqn/+/3e7Jo4EaG7TubfWGUrMQ=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    ></script>
+    <!-- Bootstrap JavaScript Bundle with Popper -->
+    <script
+      src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"
+      integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p"
+      crossorigin="anonymous"
+    ></script>
+
+    <!-- owl carousel -->
+    <script
+      src="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/owl.carousel.min.js"
+      integrity="sha512-bPs7Ae6pVvhOSiIcyUClR7/q2OAsRiovw4vAkX+zJbw3ShAeeqezq50RIIcIURq7Oa20rW2n2q+fyXBNcU9lrw=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    ></script>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.carousel.min.css"
+      integrity="sha512-tS3S5qG0BlhnQROyJXvNjeEM4UpMXHrQfTGmbQ1gKmelCxlSEBUaxhRBj/EFTzpbP4RVSrpEikbmdJobCvhE3g=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    /><link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.theme.default.min.css"
+      integrity="sha512-sMXtMNL1zRzolHYKEujM2AqCLUR9F2C4/05cdbxjjLSRvMQIciEPCQZo++nk7go3BtSuK9kfa/s+a4f4i5pLkw=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    />
+    <script>
+      $(".owl-fw-carousel").owlCarousel({
+        loop: true,
+        margin: 10,
+        nav: true,
+        responsive: {
+          0: {
+            items: 1,
+          },
+        },
+      });
+      $(".owl-carousel").owlCarousel({
+        // loop: true,
+        margin: 10,
+        nav: true,
+        responsive: {
+          0: {
+            items: 1,
+          },
+          800: {
+            items: 2,
+          },
+          1200: {
+            items: 3,
+          },
+        },
+      });
+    </script>
+{% endblock body%}
