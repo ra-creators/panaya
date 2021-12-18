@@ -3,9 +3,9 @@ from .models import Blog, BlogComment
 # Create your views here.
 
 
-def blogandnews(request):
+def blogs(request):
     blogs = Blog.objects.all()
-    return render(request, "blogandnews.html", {
+    return render(request, "blogs.html", {
         'blogs': blogs,
     })
 
@@ -13,6 +13,8 @@ def blogandnews(request):
 def blog(request, blogId):
     blogs = Blog.objects.all()
     blog = get_object_or_404(Blog, id=blogId)
+    blog.views = blog.views + 1
+    blog.save()
     comments = BlogComment.objects.filter(blog=blog)
     context = {'blog': blog, 'comments': comments, 'blogs': blogs}
     return render(request, 'blog_post.html', context)
