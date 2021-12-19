@@ -44,6 +44,7 @@ INSTALLED_APPS = [
     'pages_static',
     'product',
     'blogs',
+    'cart',
 
     # Third party apps
     'ckeditor',
@@ -144,5 +145,9 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 CKEDITOR_UPLOAD_PATH = 'ckeditor/'
 CKEDITOR_IMAGE_BACKEND = "pillow"
 CKEDITOR_UPLOAD_SLUGIFY_FILENAME = False
+
+# Setting the CART_SESSION_ID
+CART_SESSION_ID = 'cart'
+
 
 django_on_heroku.settings(locals())
