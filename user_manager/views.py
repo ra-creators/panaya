@@ -121,12 +121,12 @@ class OTPCheck(View):
 
 class PasswordChangeView(View):
     def get(self, request):
-        if not request.session['password_change']:
+        if request.session.get('password_change') is None:
             return redirect('login')
         return render(request, 'user_manager/password_change_form.html')
 
     def post(self, request):
-        if not request.session['password_change']:
+        if request.session.get('password_change') is None:
             return redirect('login')
         password = request.POST.get('password')
         password2 = request.POST.get('password2')

@@ -126,7 +126,7 @@ USE_L10N = True
 USE_TZ = True
 
 # Login, Logout redirect urls
-# LOGIN_REDIRECT_URL = 'home'
+LOGIN_REDIRECT_URL = 'index'
 LOGIN_URL = 'login'
 LOGOUT_URL = 'logout'
 
