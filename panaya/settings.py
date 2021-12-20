@@ -39,16 +39,16 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
 
+    # Third party apps
+    'ckeditor',
+    'ckeditor_uploader',
+
     # Custom apps
     'user_manager',
     'pages_static',
     'product',
     'blogs',
     'cart',
-
-    # Third party apps
-    'ckeditor',
-    'ckeditor_uploader',
 ]
 
 MIDDLEWARE = [

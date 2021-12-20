@@ -71,13 +71,67 @@ Products
     <img class="flip-horizontal" src="{% static 'pages_static/images/section-heading-decor.png' %}" alt="" />
 </section>
 
-<section id="products">
+<section id="search-filter">
     <div class="container-lg mt-5">
         <div class="row">
             <div class="col-md-auto">
-                <p class="fs-4">
-                    Showing <span class="fw-bold">100</span> results for saree
-                </p>
+                <form action="search" method="POST">
+                    {% csrf_token %}
+                    <div class="row justify-content-center">
+                        <div class="col-auto d-flex align-items-center">
+                            <input size="20" class="form-control" value="{{formdata.name}}" type="text" name="name"
+                                id="name" placeholder="search">
+                        </div>
+                        <div class="col-auto d-flex align-items-center">
+                            <select name="category" value="{{formdata.category}}" class="form-select"
+                                aria-label="Category select">
+                                <option value="" {% if '' == formdata.category %}selected="selected"{% endif %}>category all</option>
+                                {% for categorie in categories %}
+                                    {% if categorie.id|stringformat:"i" == formdata.category %}
+                                        <option 
+                                        value="{{categorie.id}}" 
+                                        data-bool="yes"
+                                        data-cat={{categorie.id}} 
+                                        data-form={{formdata.category}} 
+                                        selected="selected">
+                                            {{categorie}}
+                                        </option>
+                                    {% else %}
+                                        <option 
+                                        value="{{categorie.id}}" 
+                                        data-bool="no"
+                                        data-cat={{categorie.id}} 
+                                        data-form={{formdata.category}}>
+                                            {{categorie}}
+                                        </option>
+                                    {% endif %}
+                                {% endfor %}
+                            </select>
+                        </div>
+                        <div class="col-auto">
+                            <div class="row">
+                                <div class="col-auto d-flex align-items-center">
+                                    <label for="maxPrice">Min Price</label>
+                                </div>
+                                <div class="col-auto d-flex align-items-center">
+                                    <input value="{{formdata.maxPrice}}" size="4" type="number" min="1"
+                                        class="form-control" name="maxPrice" id="maxPrice">
+                                </div>
+                                <div class="col-auto d-flex align-items-center">
+                                    <label for="minPrice">Max Price</label>
+                                </div>
+                                <div class="col-auto d-flex align-items-center">
+                                    <input value="{{formdata.minPrice}}" size="4" type="number" max=""
+                                        class="form-control" name="minPrice" id="minPrice">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-auto">
+                            <button type="submit" style="padding: .375rem .75rem;"
+                                class="btn styled-btn-filled">Search</button>
+                        </div>
+                    </div>
+                </form>
             </div>
             <div class="col-md"></div>
             <div class="col-md-auto fs-4">
@@ -86,6 +140,14 @@ Products
                 <i class="fa fa-list cursor-pointer text-muted"></i>
             </div>
         </div>
+    </div>
+</section>
+
+<section id="products">
+    <div class="container-lg mt-2">
+        <p class="fs-4">
+            Showing <span class="fw-bold">{{products|length}}</span> results for saree
+        </p>
         <div class="mt-2 row g-2 g-md-5 row-cols-1 row-cols-md-2 row-cols-lg-3">
             {% comment %} <div class="col mt-0">
                 <div class="overlay-container">
@@ -131,6 +193,8 @@ Products
     </div>
 </section>
 {% endblock %}
+{% block js %}
+{% endblock js %}
 {% comment %} <div id="sidebar">
     <h3>Categories</h3>
     <ul>
