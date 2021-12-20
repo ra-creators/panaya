@@ -2,6 +2,10 @@ body {
   background: #ffefd1;
 }
 
+.page-link {
+  cursor: pointer;
+}
+
 #products {
   width: 100vw;
   background-image: url("/assets/img/shop/floral-background-hand-drawn-style_52683-60347 2.svg");

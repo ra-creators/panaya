@@ -39,9 +39,10 @@ def product_detail(request, id, slug=None):
 
 
 # @require_POST
-def product_search(request):
+def product_search(request, page=1):
     context = {}
     context['formdata'] = {}
+    context['number_pages'] = 1
     searched_products = Product.objects
     if request.method == 'POST':
         # print(request.POST)
@@ -54,7 +55,7 @@ def product_search(request):
                 name__icontains=post_data['name'])
 
         context['formdata']['category'] = post_data['category']
-        if(post_data['category'] != ''):
+        if(post_data['category'] != '0'):
             # print('cat')
             searched_products = searched_products.filter(
                 category=post_data['category'])
@@ -70,9 +71,7 @@ def product_search(request):
             # print('minpr')
             searched_products = searched_products.filter(
                 price__lte=post_data['minPrice'])
-        # pages = Paginator(searched_products, 24)
-        # context['pages'] = pages
-        # print(pages)
+        searched_products = searched_products.all()
     else:
         context['formdata']['name'] = ''
         context['formdata']['category'] = ''
@@ -80,7 +79,14 @@ def product_search(request):
         context['formdata']['minPrice'] = ''
         searched_products = searched_products.all()
     # print(searched_products)
-    context['products'] = searched_products
+
+    pages = Paginator(searched_products, 24)
+    print(pages)
+    context['pages'] = pages
+    context['number_pages'] = pages.num_pages
+    # context['current_page'] = pages.page(page)
+    context['current_page_number'] = (page)
+    context['products'] = pages.page(1)
     context['categories'] = Category.objects.all()
     return render(request, 'product/list.html', context=context)
 
