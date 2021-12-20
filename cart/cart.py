@@ -4,7 +4,6 @@ from product.models import Product
 
 class Cart(object):
     """Class for Cart"""
-
     def __init__(self, request):
         """
         Initialize the cart

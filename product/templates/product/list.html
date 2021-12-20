@@ -13,6 +13,7 @@ Products
 {% endblock css %}
 
 {% block body %}
+
 <section id="carousel">
     <div id="carouselShopIndicators" class="carousel slide" data-bs-ride="carousel">
         <div class="carousel-indicators">
@@ -130,7 +131,8 @@ Products
         </div>
     </div>
 </section>
-{% endblock %}
+
+
 {% comment %} <div id="sidebar">
     <h3>Categories</h3>
     <ul>
@@ -155,4 +157,5 @@ Products
         &#8377;{{ product.price }}
     </div>
     {% endfor %}
-</div> {% endcomment %}
+</div>  {% endcomment %}
+{% endblock %}
