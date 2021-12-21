@@ -106,6 +106,7 @@
                     </div>
                     <p>Hear about our new woven treasures and more...</p>
                     <form class='align-center form-row' action="" method='POST'>
+                        {% csrf_token %}
                         <input class='col-7' type="email" placeholder="Enter your E-mail" name='email'>
                         <input class='btn btn-warning col-3' type="submit" value='Send'>
                     </form>

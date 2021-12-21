@@ -1,5 +1,6 @@
 from django.db import models
 from product.models import Product
+from user_manager.models import UserAddress
 from django.contrib.auth import get_user_model
 
 User = get_user_model()
@@ -7,11 +8,12 @@ User = get_user_model()
 # Create your models here.
 class Order(models.Model):
     # user = models.ForeignKey(User, related_name='order_details', on_delete=models.CASCADE)
-    first_name = models.CharField(max_length=200)
-    last_name = models.CharField(max_length=200)
-    address = models.CharField(max_length=200)
-    postal_code = models.CharField(max_length=6)
-    city = models.CharField(max_length=200)
+    # first_name = models.CharField(max_length=200)
+    # last_name = models.CharField(max_length=200)
+    # address = models.CharField(max_length=200)
+    # postal_code = models.CharField(max_length=6)
+    # city = models.CharField(max_length=200)
+    address = models.ForeignKey(UserAddress, related_name='order_address', on_delete=models.CASCADE, null=False, blank=False)
     created = models.DateTimeField(auto_now_add=True)
     updated = models.DateTimeField(auto_now=True)
     paid = models.BooleanField(default=False)

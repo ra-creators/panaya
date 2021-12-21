@@ -1,4 +1,5 @@
 from django.shortcuts import redirect, render
+from django.contrib.auth.decorators import login_required
 from django.http import HttpResponse
 from django.contrib.auth import authenticate, login, logout
 from django.views.generic import View
@@ -55,18 +56,33 @@ class SignUpView(View):
             messages.error(request, 'Passwords do not match')
             return redirect('signup')
         if email and password:
-            fname = request.POST.get("first_name")
-            lname = request.POST.get("last_name")
-            dob = request.POST.get("date_of_birth")
-            phone = request.POST.get("phone")
-            user = User.objects.create_user(email=email,
-                                            fname=fname,
-                                            lname=lname,
-                                            dob=dob,
-                                            phone_number=phone,
-                                            password=password)
-            user.save()
-            return redirect('index')
+            try:
+                fname = request.POST.get("first_name")
+                lname = request.POST.get("last_name")
+                dob = request.POST.get("date_of_birth")
+                phone = request.POST.get("phone")
+                profile_pic = request.FILES.get('profile_pic')
+                if profile_pic:
+                    user = User.objects.create_user(email=email,
+                                                    fname=fname,
+                                                    lname=lname,
+                                                    dob=dob,
+                                                    phone_number=phone,
+                                                    password=password, 
+                                                    profile_pic=profile_pic)
+                else:
+                    user = User.objects.create_user(email=email,
+                                                    fname=fname,
+                                                    lname=lname,
+                                                    dob=dob,
+                                                    phone_number=phone,
+                                                    password=password)
+                user.save()
+                return redirect('index')
+            except Exception as e: 
+                print(e)
+                messages.error(request, 'Invalid signup')
+                return redirect('signup')
         else:
             messages.error(request, 'Invalid signup')
             return redirect('signup')
@@ -141,3 +157,7 @@ class PasswordChangeView(View):
         del request.session['email']
         messages.success(request, "Password changed successfully")
         return redirect('login')
+
+@login_required
+def profile(request):
+    return render(request, 'user_manager/profile.html')
