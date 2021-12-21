@@ -1,16 +1,8 @@
 from django.contrib import admin
 from django.contrib.auth import get_user_model
-from .models import OTP, UserAddress
+from .models import OTP
 User = get_user_model()
 # Register your models here.
 
-class UserAddressInline(admin.StackedInline):
-    model = UserAddress
-    can_delete = False
-    verbose_name_plural = 'UserAddress'
-
-@admin.register(User)
-class UserAdmin(admin.ModelAdmin):
-    inlines = (UserAddressInline,)
-
+admin.site.register(User)
 admin.site.register(OTP)

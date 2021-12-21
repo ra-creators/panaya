@@ -1,4 +1,4 @@
-{% extends 'base.html' %}
+{% extends 'base_product.html' %}
 {% load static %}
 
 {% block title %}
@@ -9,9 +9,3 @@
     <h1> Thank You </h1>
     <p>Your order has been successfully completed. Your order number is <strong>{{ order.id }}</strong>.</p>
 {% endblock body %}
-{% block js %}
-<script>
-    // to clear cilentside(clientbrowser) stored cart data
-    localStorage.removeItem('cart_items')
-</script>
-{% endblock js %}
