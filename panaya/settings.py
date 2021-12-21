@@ -39,15 +39,17 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
 
+    # Third party apps
+    'ckeditor',
+    'ckeditor_uploader',
+
     # Custom apps
     'user_manager',
     'pages_static',
     'product',
     'blogs',
-
-    # Third party apps
-    'ckeditor',
-    'ckeditor_uploader',
+    'cart',
+    'orders',
 ]
 
 MIDDLEWARE = [
@@ -126,7 +128,7 @@ USE_L10N = True
 USE_TZ = True
 
 # Login, Logout redirect urls
-# LOGIN_REDIRECT_URL = 'home'
+LOGIN_REDIRECT_URL = 'index'
 LOGIN_URL = 'login'
 LOGOUT_URL = 'logout'
 
@@ -144,5 +146,9 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 CKEDITOR_UPLOAD_PATH = 'ckeditor/'
 CKEDITOR_IMAGE_BACKEND = "pillow"
 CKEDITOR_UPLOAD_SLUGIFY_FILENAME = False
+
+# Setting the CART_SESSION_ID
+CART_SESSION_ID = 'cart'
+
 
 django_on_heroku.settings(locals())

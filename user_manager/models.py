@@ -3,20 +3,20 @@ from django.contrib.auth.models import AbstractBaseUser, BaseUserManager, Permis
 
 class UserProfileManager(BaseUserManager):
     """Manages the user profiles"""
-    def create_user(self, email, fname, lname, dob, password=None):
+    def create_user(self, email, fname, lname, phone_number, dob, password=None):
         """Create a new user profile"""
         if not email:
             raise ValueError('User must have an email address')
 
         email = self.normalize_email(email)
-        user = self.model(email=email, fname=fname, lname=lname, dob=dob)
+        user = self.model(email=email, fname=fname, lname=lname, dob=dob, phone_number=phone_number)
         user.set_password(password)
         user.save(using=self._db)
         return user
 
-    def create_superuser(self, email, fname, lname, dob, password=None):
+    def create_superuser(self, email, fname, lname, phone_number,  dob, password):
         """Create and save a new superuser with given details"""
-        user = self.create_user(email, fname, lname, dob, password)
+        user = self.create_user(email, fname, lname, phone_number, dob, password)
         user.is_staff = True
         user.is_superuser = True
         user.save(using=self._db)
@@ -53,7 +53,7 @@ class OTP(models.Model):
     This model is used to store the otp generated for the user.
     Otp should expire after 15 minutes of generation.
     """
-    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    user = models.OneToOneField(User, related_name='otp', on_delete=models.CASCADE)
     otp = models.CharField(max_length=6)
     created = models.DateTimeField(auto_now_add=True)
 

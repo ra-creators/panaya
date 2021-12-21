@@ -1,0 +1,237 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}
+{% if category %}
+{{ category.name }}
+{% else %}
+Products
+{% endif %}
+{% endblock title %}
+
+{% block css %}
+<link rel="stylesheet" href="{% static 'products/css/shop.css' %}">
+{% endblock css %}
+
+{% block body %}
+<section id="carousel">
+    <div id="carouselShopIndicators" class="carousel slide" data-bs-ride="carousel">
+        <div class="carousel-indicators">
+            <button type="button" data-bs-target="#carouselShopIndicators" data-bs-slide-to="0" class="active"
+                aria-current="true" aria-label="Slide 1"></button>
+            <button type="button" data-bs-target="#carouselShopIndicators" data-bs-slide-to="1"
+                aria-label="Slide 2"></button>
+            <button type="button" data-bs-target="#carouselShopIndicators" data-bs-slide-to="2"
+                aria-label="Slide 3"></button>
+        </div>
+        <div class="carousel-inner">
+            <div class="carousel-item active">
+                <div class="overlay-container">
+                    <img src="{% static 'products/img/Rectangle 120.png' %}" class="d-block w-100"
+                        alt="product image" />
+                    <p class="overlay-text text-white fs-1 overlay-center" style="height: fit-content">
+                        Banarasi Silk Saree
+                    </p>
+                </div>
+            </div>
+            <div class="carousel-item">
+                <div class="overlay-container">
+                    <img src="{% static 'products/img/Rectangle 120.png' %}" class="d-block w-100"
+                        alt="product image" />
+                    <p class="overlay-text text-white fs-1 overlay-center" style="height: fit-content">
+                        Banarasi Silk Saree
+                    </p>
+                </div>
+            </div>
+            <div class="carousel-item">
+                <div class="overlay-container">
+                    <img src="{% static 'products/img/Rectangle 120.png' %}" class="d-block w-100"
+                        alt="product image" />
+                    <p class="overlay-text text-white fs-1 overlay-center" style="height: fit-content">
+                        Banarasi Silk Saree
+                    </p>
+                </div>
+            </div>
+        </div>
+        <button class="carousel-control-prev" type="button" data-bs-target="#carouselShopIndicators"
+            data-bs-slide="prev">
+            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Previous</span>
+        </button>
+        <button class="carousel-control-next" type="button" data-bs-target="#carouselShopIndicators"
+            data-bs-slide="next">
+            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Next</span>
+        </button>
+    </div>
+</section>
+
+<section id="heading" class="section-heading">
+    <img src="{% static 'pages_static/images/section-heading-decor.png' %}" alt="" />
+    <h1>Shop</h1>
+    <img class="flip-horizontal" src="{% static 'pages_static/images/section-heading-decor.png' %}" alt="" />
+</section>
+
+<section id="search-filter">
+    <div class="container-lg mt-5">
+        <div class="row">
+            <div class="col-md-auto">
+                <form action="/shop/search" method="POST" id="search-form">
+                    {% csrf_token %}
+                    <div class="row justify-content-center">
+                        <div class="col-auto d-flex align-items-center">
+                            <input size="20" class="form-control" value="{{formdata.name}}" type="text" name="name"
+                                id="name" placeholder="search">
+                        </div>
+                        <div class="col-auto d-flex align-items-center">
+                            <select name="category" value="{{formdata.category}}" class="form-select"
+                                aria-label="Category select">
+                                <option value="0" {% if '' == formdata.category %}selected="selected"{% endif %}>category all</option>
+                                {% for categorie in categories %}
+                                    {% if categorie.id|stringformat:"i" == formdata.category %}
+                                        <option 
+                                        value="{{categorie.id}}" 
+                                        data-bool="yes"
+                                        data-cat={{categorie.id}} 
+                                        data-form={{formdata.category}} 
+                                        selected="selected">
+                                            {{categorie}}
+                                        </option>
+                                    {% else %}
+                                        <option 
+                                        value="{{categorie.id}}" 
+                                        data-bool="no"
+                                        data-cat={{categorie.id}} 
+                                        data-form={{formdata.category}}>
+                                            {{categorie}}
+                                        </option>
+                                    {% endif %}
+                                {% endfor %}
+                            </select>
+                        </div>
+                        <div class="col-auto">
+                            <div class="row">
+                                <div class="col-auto d-flex align-items-center">
+                                    <label for="maxPrice">Min Price</label>
+                                </div>
+                                <div class="col-auto d-flex align-items-center">
+                                    <input value="{{formdata.maxPrice}}" size="4" type="number" min="1"
+                                        class="form-control" name="maxPrice" id="maxPrice">
+                                </div>
+                                <div class="col-auto d-flex align-items-center">
+                                    <label for="minPrice">Max Price</label>
+                                </div>
+                                <div class="col-auto d-flex align-items-center">
+                                    <input value="{{formdata.minPrice}}" size="4" type="number" max=""
+                                        class="form-control" name="minPrice" id="minPrice">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-auto">
+                            <button type="submit" style="padding: .375rem .75rem;"
+                                class="btn styled-btn-filled">Search</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="col-md"></div>
+            {% comment %} <div class="col-md-auto fs-4">
+                <i class="fa fa-filter cursor-pointer me-2"></i>
+                <i class="fa fa-th cursor-pointer me-2"></i>
+                <i class="fa fa-list cursor-pointer text-muted"></i>
+            </div> {% endcomment %}
+        </div>
+    </div>
+</section>
+
+<section id="products">
+    <div class="container-lg mt-2">
+        <p class="fs-4">
+            Showing <span class="fw-bold">{{products|length}}</span> results for saree
+        </p>
+        <div class="mt-2 row g-2 g-md-5 row-cols-1 row-cols-md-2 row-cols-lg-3">
+            {% comment %} <div class="col mt-0">
+                <div class="overlay-container">
+                    <img loading="lazy" class="" style="width: 100%" src="/assets/img/index/Rectangle 68.png" alt="" />
+                    <div class="overlay-shopnow">
+                        <button class="btn overlay-bottom overlay-shopnow-btn">
+                            Shop Now
+                        </button>
+                    </div>
+                </div>
+                <h2 class="mt-2 fs-5">Banarasi Silk Saree</h2>
+                <p class="fs-5 fw-bold">Rs. 4500</p>
+            </div> {% endcomment %}
+            {% for product in products %}
+            <div class="col mt-0">
+                <div class="overlay-container">
+                    <img loading="lazy" class="" style="width: 100%" src="{{product.get_primary_img }}" alt="" />
+                    <div class="overlay-shopnow">
+                        <a href="{{ product.get_absolute_url }}">
+                            <button class="btn overlay-bottom overlay-shopnow-btn">
+                                Shop Now
+                            </button>
+                        </a>
+                    </div>
+                </div>
+                <h2 class="mt-2 fs-5">{{product.name}}</h2>
+                <p class="fs-5 fw-bold">Rs. {{product.price}}</p>
+            </div>
+            {% endfor %}
+
+        </div>
+        {% if number_pages %}
+        <div class="rom mt-2 text-center">
+            <nav aria-label="Page navigation">
+                <ul class="pagination">
+                    {% for _ in ''|center:number_pages %}
+                    {% if current_page_number == forloop.counter %}
+                    <li class="page-item"><a class="page-link active" onClick="pagination(event)" data-href={{forloop.counter}}>{{forloop.counter}}</a></li>
+                    {% else %}
+                    <li class="page-item"><a class="page-link" onClick="pagination(event)" data-href={{forloop.counter}}>{{forloop.counter}}</a></li>
+                    {% endif %}
+                    {% endfor %}
+                    {% comment %} <li class="page-item"><a class="page-link" href="#">3</a></li> {% endcomment %}
+                </ul>
+            </nav>
+        </div>
+        {% endif %}
+    </div>
+</section>
+{% endblock %}
+{% block js %}
+<script>
+let pagination = (e)=>{
+    e.preventDefault();
+    let pageN = e.target.dataset.href;
+    let searchForm = document.getElementById('search-form');
+    searchForm.action = '/shop/search/'+pageN
+    // console.log(searchForm)
+    searchForm.submit()
+}
+</script>
+{% endblock js %}
+{% comment %} <div id="sidebar">
+    <h3>Categories</h3>
+    <ul>
+        <li {% if not category %}class="selected" {% endif %}>
+            <a href="{% url "product_list" %}">All</a>
+        </li>
+        {% for c in categories %}
+        <li {% if category.slug == c.slug %}class="selected" {% endif %}>
+            <a href="{{ c.get_absolute_url }}">{{ c.name }}</a>
+        </li>
+        {% endfor %}
+    </ul>
+</div>
+<div id="main" class="product-list">
+    <h1>{% if category %}{{ category.name }}{% else %}Products{% endif %}</h1>
+    {% for product in products %}
+    <div class="item">
+        <a href="{{ product.get_absolute_url }}">
+        </a>
+        <a href="{{ product.get_absolute_url }}">{{ product.name }}</a>
+        <br>
+        &#8377;{{ product.price }}
+    </div>
+    {% endfor %}
+</div> {% endcomment %}

@@ -36,25 +36,24 @@ body{
 
 .sign-in-form{
     width: 100%;
-    
     box-shadow: 0 0 2px 0 rgba(0,0,0,0.3);
     background: #fff;
     padding: 20px;
     margin: 5% 4% 5% 3%;
     text-align: center;
     float: right;
-  padding-bottom: 5%;
+    padding-bottom: 1%;
     border-radius: 5px;
     max-width: 500px;
     max-height: 700px;
 }
 
 .sign-in-form h1{
-    text-align: left;
+    text-align: center;
     margin-top: 1%;
 }
 
-#email, #password{
+.entry{
     box-sizing: border-box;
     padding: 10px;
     margin: 10px 10px 0 0;
@@ -80,12 +79,30 @@ button{
     word-spacing: .1px;
 }
 
+#buttons{
+    display: flex;
+    justify-content: space-between;
+}
+
+#buttons a{
+    text-decoration: none;
+    background: #2F80ED;
+    color: #fff;
+    border-radius: 10px;
+    width: 45%;
+    height: 6vh;
+    max-height: 8vh;
+    padding-top: 3%;
+    margin-top:auto;
+}
+
 .continue{
     background: #2F80ED;
     width: 45%;
-    float: right;
-    
+    height: 8vh;
+    max-height: 8vh;
 }
+
 .signup-google{
     background: #fff;
     border: 1px solid #828282;
@@ -186,4 +203,74 @@ hr{
     .sign-in-form{
         max-width: 250px;
     }
+}
+
+.otc {
+	position: relative;
+	width: 320px;
+	margin: 0 auto;
+}
+
+.otc fieldset {
+	border: 0;
+	padding: 0;
+	margin: 0;
+}
+
+.otc fieldset div {
+	display: flex;
+	align-items: center;
+}
+
+.otc legend {
+	margin: 0 auto 1em;
+	color: #5555FF;
+}
+
+input[type="number"] {
+	width: .82em;
+	line-height: 1;
+	margin: .1em;
+	padding: 8px 0 4px;
+	font-size: 2.65em;
+	text-align: center;
+	appearance: textfield;
+	-webkit-appearance: textfield;
+	border: 2px solid #BBBBFF;
+	color: purple;
+	border-radius: 4px;
+}
+
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+/* 2 group of 3 items */
+input[type="number"]:nth-child(n+4) {
+	order: 2;
+}
+.otc div::before {
+	content: '';
+	height: 2px;
+	width: 24px;
+	margin: 0 .25em;
+	order: 1;
+	background: #BBBBFF;
+}
+
+/* From: https://gist.github.com/ffoodd/000b59f431e3e64e4ce1a24d5bb36034 */
+.otc label {
+	border: 0 !important;
+	clip: rect(1px, 1px, 1px, 1px) !important;
+	-webkit-clip-path: inset(50%) !important;
+	clip-path: inset(50%) !important;
+	height: 1px !important;
+	margin: -1px !important;
+	overflow: hidden !important;
+	padding: 0 !important;
+	position: absolute !important;
+	width: 1px !important;
+	white-space: nowrap !important;
 }

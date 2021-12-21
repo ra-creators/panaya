@@ -1,6 +1,12 @@
 from django.db import models
+from django.contrib.auth import get_user_model
+from ckeditor.fields import RichTextField
+from django.urls import reverse
 
+User = get_user_model()
 # Create your models here.
+
+
 class Tag(models.Model):
     name = models.CharField(max_length=200, db_index=True)
     slug = models.SlugField(max_length=200, db_index=True)
@@ -12,6 +18,7 @@ class Tag(models.Model):
 
     def __str__(self):
         return self.name
+
 
 class Category(models.Model):
     name = models.CharField(max_length=200, db_index=True)
@@ -25,8 +32,14 @@ class Category(models.Model):
     def __str__(self):
         return self.name
 
+    def get_absolute_url(self):
+        return reverse('product_list_by_category',
+                       args=[self.slug])
+
+
 class Product(models.Model):
-    category = models.ForeignKey(Category, related_name='products', on_delete=models.CASCADE)
+    category = models.ForeignKey(
+        Category, related_name='products', on_delete=models.CASCADE)
     name = models.CharField(max_length=200, db_index=True)
     slug = models.SlugField(max_length=200, db_index=True)
     description = models.TextField(blank=True)
@@ -44,9 +57,43 @@ class Product(models.Model):
     def __str__(self):
         return self.name
 
+    def get_absolute_url(self):
+        return reverse('product_detail', args=[self.id, self.slug])
+
+    def get_primary_img(self):
+        return self.images.all()[0]
+
+
 class ProductImage(models.Model):
-    product = models.ForeignKey(Product, related_name='images', on_delete=models.CASCADE)
+    product = models.ForeignKey(
+        Product, related_name='images', on_delete=models.CASCADE)
     image = models.ImageField(upload_to='products/%Y/%m/%d', blank=True)
 
     def __str__(self):
         return self.image.url
+
+
+class Review(models.Model):
+    product = models.ForeignKey(
+        Product, related_name='reviews', on_delete=models.CASCADE)
+    user = models.ForeignKey(
+        User, related_name='reviews', on_delete=models.CASCADE)
+    stars = models.IntegerField(default=0)
+    body = models.TextField()
+    timestamp = models.DateTimeField(auto_now=False, auto_now_add=True)
+
+    def __str__(self):
+        return f"{self.stars} stars by {self.user.get_full_name()}"
+
+    def get_rating_stars(self):
+        pos_stars = "&#9733;"*self.stars
+        neg_stars = "&#9733;"*(5-self.stars)
+        return [pos_stars, neg_stars]
+
+
+class FAQ(models.Model):
+    question = models.TextField()
+    answer = RichTextField()
+
+    def __str__(self):
+        return self.question

@@ -1,29 +1,31 @@
+{% extends 'base_user.html' %}
 {% load static %}
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Sign in</title>
-    <link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css" integrity="sha384-AYmEC3Yw5cVb3ZcuHtOA93w35dYTsvhLPVnYs9eStHfGJvOvKxVfELGroGkvsg+p" crossorigin="anonymous"/>
-   <link href="{% static 'user_manager/css/styles.css' %}" rel="stylesheet">
-    
-</head>
-<body>
-    <div class="container">
-        <img src="{% static 'user_manager/images/crown.png' %}">
-        <h1>PANAYA</h1>
-    </div>
+
+{% block title %}
+Sign in
+{% endblock title %}
+
+
+{% block body %}
     <div class="sign-in-form">
+        {% if messages %}
+            <ul class="messages">
+                {% for message in messages %}
+                <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+                {% endfor %}
+            </ul>
+        {% endif %}
         <form method='post'>
         {% csrf_token %}
         <h1>Sign in</h1>
-        <p>New user ? <a href="#">Create an Account</a></p>
+        <p>New user ? <a href="{% url 'signup' %}">Create an Account</a></p>
         
-        <input type="email" placeholder="Enter your Email Address" name="email" id="email" required>
-        <input type="password" placeholder="Enter Password" name='password' id="password" required >
-        <button type="submit" class="continue">Continue</button>
+        <input type="email" placeholder="Enter your Email Address" name="email" class='entry' required>
+        <input type="password" placeholder="Enter Password" name='password' class='entry' required >
+        <div id='buttons'>
+            <a href="{% url 'forgot_password' %}" >Forgot Password?</a>
+            <button type="submit" class="continue">Continue</button>
+        </div>
         <hr>
         <p class="or"> or </p>
         <button type="button" id="signup-google" class="signup-google" ><i class="fab fa-google"></i>
@@ -33,5 +35,4 @@
 
         </form>
     </div>
-</body>
-</html>
+{% endblock %}

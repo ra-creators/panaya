@@ -1,3 +1,5 @@
+@import url("https://fonts.googleapis.com/css2?family=Playfair+Display&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Corinthia:wght@700&display=swap");
 .styled-btn-outline {
   border: 4px solid #ffce76;
   -webkit-box-sizing: border-box;
@@ -160,6 +162,108 @@
 .pagination .active {
   color: #8d0020;
   font-size: 2.2rem;
+}
+
+/* Header Part */
+header {
+  background: url("/static/pages_static/images/about/nav bg.png");
+  color: #fff;
+  padding: 20px;
+  font-size: 1.2rem;
+}
+
+header #nav {
+  padding-bottom: 0;
+}
+
+header nav a {
+  text-decoration: none;
+  color: #ffe65c;
+  padding: 0 9%;
+  margin-bottom: 1%;
+  margin-top: 7%;
+}
+
+header nav div {
+  width: 33%;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  margin: 0 10px;
+}
+
+/* Footer */
+footer {
+  background: #8D0020;
+  color: #FFCE76;
+  padding: 3%;
+}
+
+footer a {
+  text-decoration: none;
+  color: #FFCE76;
+}
+
+footer .footer-left {
+  margin-top: 11%;
+  padding: 1%;
+}
+
+footer .icons {
+  height: 20px;
+  width: 20px;
+}
+
+footer .footer-about {
+  margin-top: 0;
+  margin-bottom: 0;
+  padding-top: 0;
+}
+
+header .middle,
+footer .middle {
+  color: #FFCE76;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+}
+
+header .middle h2,
+footer .middle h2 {
+  color: #FFCE76;
+  font-family: 'Playfair Display', serif;
+  font-size: 3.5rem;
+}
+
+header .middle p,
+footer .middle p {
+  font-family: 'Corinthia', cursive;
+  font-size: 1.5rem;
+}
+
+header h2,
+footer h2 {
+  color: #FFCE76;
+}
+
+header a:hover,
+footer a:hover {
+  color: #e0bc1b;
+}
+
+.btn-warning {
+  color: #8D0020;
+  background-color: #FFCE76;
 }
 
 #banaras-store {

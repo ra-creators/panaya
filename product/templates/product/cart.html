@@ -1,0 +1,84 @@
+{% extends 'base.html' %} 
+{% load static %} 
+{% block title %} 
+Cart
+{% endblock title %} 
+{% block css %}
+<link rel="stylesheet" href="{% static 'products/css/cart.css' %}" />
+{% endblock css %} 
+{% block body %}
+<section id="heading" class="section-heading">
+    <img
+      src="{% static 'pages_static/images/section-heading-decor.png' %}"
+      alt=""
+    />
+    <h1>My Cart</h1>
+    <img
+      class="flip-horizontal"
+      src="{% static 'pages_static/images/section-heading-decor.png' %}"
+      alt=""
+    />
+</section>
+
+<!-- Cart Section -->
+<div class="row m-0">
+    <div class="col-sm-8 cart_section">
+        <div class="mt-5 cart">My  Cart
+            {% comment %} <span class="items">1 items</span> {% endcomment %}
+        </div>
+        <hr class="mt-3 c_h">
+        <div class="row mt-3">
+            <div class="col-6">
+                Description
+            </div>
+            <div class="col-2 text-center tab">
+                Quantity
+            </div>
+            <div class="col-2 text-center tab">
+                Price
+            </div>
+            <div class="col-2 tab">
+                Remove
+            </div>
+        </div>
+        <div id="cart-container"></div>
+        <div class="continue mt-5">
+            <a href="/shop">
+                <i class="fa fa-arrow-left" aria-hidden="true"></i>  Continue Shopping
+            </a>
+        </div>
+    </div>
+
+    <!-- Summary Section -->
+    <div class="col-sm-4 summary_sec" style="background-color:#FFEFD1;">
+        <div class="summary text-center mt-5">Order Summary</div>
+            <div id="cart-summary-container" class="mt-5"></div>
+            <div class="row mt-3">
+                <div class="col-sm-6 i_name"> Delivery Charges</div>
+                <div class="col-sm-6 free">FREE</div>
+            </div>
+
+            <div class="i_name mt-3">PROMO Code</div>
+            <input class="e_promo mt-3" type="text" placeholder="ENTER CODE">
+            <br>
+            <button class="apply mt-3">Apply</button>
+            <div class="row mt-5">
+                <div class="col-sm-6 i_name">Total Cost</div>
+                <div id="cart-total" class="col-sm-6 i_price">₹ 56000</div>
+            </div>
+            <div class="text-center">
+                <button class="mt-5 mb-5 p_order">Place Order</button>
+            </div>
+    </div>
+</div>
+
+{% endblock body %}
+
+{% block js %}
+<script src="{% static 'products/js/cart.js' %} "></script>
+<script>
+window.addEventListener("DOMContentLoaded", (event) => {
+    cart = new Cart(true);
+});
+</script>
+{% endblock js %}
