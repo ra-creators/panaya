@@ -1,0 +1,53 @@
+{% extends 'base.html' %} 
+{% load static %} 
+{% block title %}
+    Payment Gateway
+{% endblock title %} 
+{% block css %}
+    <link rel="stylesheet" href="{% static 'payment/css/gateway.css' %}">
+{% endblock css %} 
+{% block body %}
+    <div class="prod_sec_header">
+        <div class="head_top"></div>
+        <div class="header">Customert Details, Order Summery and Payment Getway</div>
+        <div class="head_bottom"></div>
+    </div>
+    <div class="container mt-5">
+        <img class="edit" src="/assets/img/edit.svg" alt="">
+        <div class="main">1. LOGIN <img class="check" src="/assets/img/check.svg" alt=""></div>
+        <div class="details pb-5">
+            <div><span class="ans ms-3">Pooja Gaikwad</span><span class="ms-3">Poojagaikwad102@gmail.com</span></div>
+        </div>
+    </div>
+    <div class="container mt-5">
+        <img class="edit" src="/assets/img/edit.svg" alt="">
+        <div class="main">2. DELIVERY  ADDRESS <img class="check" src="/assets/img/check.svg" alt=""></div>
+        <div class="details pb-5">
+            <div><span class="ans ms-3">Pooja Gaikwad</span><span class="ms-3">Kundra Housing Society  Baner,Pune,Maharashtra Pune-411003 9875325457</span></div>
+        </div>
+    </div>
+    <div class="container mt-5">
+        <div class="main">3. ORDER DETAILS </div>
+        <div class="details pb-5 text-center">
+            {% for item in cart %}
+                <div class="row text-start mt-2">
+                    <div class="col-2">
+                        <img src="{{item.product.images.all.0}}" class="img-fluid" alt="">
+                    </div>
+                    <div class="col-4 offset-1">
+                        <div class="ans"><p class="fs-2">{{ item.product.name }}</p></div>
+                        <div><p class="fs-5">Qty-{{ item.quantity }} X Rs. {{item.price}}</p> </div>
+                        <div class="ans"><p class="fs-5">Price-{{ item.total_price }}</p></div>
+                    </div>
+                    <div class="col-4">
+                        <div> <p class="fw-bold">Delivery by Sun Jul  12</p> </div>
+                    </div>
+                </div>
+            {% endfor %}
+            <button class="continue mt-2">Continue</button>
+        </div>
+    </div>
+    <div class="container mt-5 mb-5">
+        <div class="main">4. PAYMENT DETAILS </div>
+    </div>
+{% endblock body%}

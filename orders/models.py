@@ -5,8 +5,11 @@ from django.contrib.auth import get_user_model
 User = get_user_model()
 
 # Create your models here.
+
+
 class Order(models.Model):
-    # user = models.ForeignKey(User, related_name='order_details', on_delete=models.CASCADE)
+    user = models.ForeignKey(
+        User, related_name='order_details', on_delete=models.CASCADE)
     first_name = models.CharField(max_length=200)
     last_name = models.CharField(max_length=200)
     address = models.CharField(max_length=200)
@@ -21,13 +24,14 @@ class Order(models.Model):
 
     def __str__(self):
         return f"Order {self.id}"
-    
+
     def get_total_cost(self):
         return sum(item.get_cost() for item in self.items.all())
-    
+
+
 class OrderItem(models.Model):
     order = models.ForeignKey(Order,
-                              related_name='items', 
+                              related_name='items',
                               on_delete=models.CASCADE)
     product = models.ForeignKey(Product,
                                 related_name='order_items',

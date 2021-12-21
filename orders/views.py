@@ -1,11 +1,43 @@
-from django.contrib.auth import get_user_model
 from django.shortcuts import render
-from django.views.generic import View
-from .models import OrderItem
-from .forms import OrderCreateForm
+from django.contrib.auth.decorators import login_required
 from cart.cart import Cart
+from .forms import OrderCreateForm
+from .models import OrderItem
 
-def order_create(request):
+
+@login_required
+def start(request):
+    context = {}
+    user = request.user
+    context['user'] = user
+    return render(request, 'payment/order_start.html', context=context)
+
+
+@login_required
+def address(request):
+    context = {}
+    user = request.user
+    context['user'] = user
+    return render(request, 'payment/order_address.html', context=context)
+
+
+@login_required
+def add_address(request):
+    context = {}
+    user = request.user
+    context['user'] = user
+    return render(request, 'payment/order_add_address.html', context=context)
+
+
+# def order(request):
+#     context = {}
+#     user = request.user
+#     context['user'] = user
+#     return render(request, 'payment/order_order_details.html',
+# context=context)
+
+@login_required
+def order(request):
     cart = Cart(request)
     if request.method == 'POST':
         form = OrderCreateForm(request.POST)
@@ -16,13 +48,13 @@ def order_create(request):
                                          product=item['product'],
                                          price=item['price'],
                                          quantity=item['quantity'])
-    
+
             cart.clear()
             return render(request,
-                        'orders/order/created.html',
-                        {'order': order})
+                          'orders/order/created.html',
+                          {'order': order})
     else:
         form = OrderCreateForm()
     return render(request,
-                'orders/order/create.html',
-                {'cart': cart, 'form': form})
+                  'payment/order_order_details.html',
+                  {'cart': cart, 'form': form})
