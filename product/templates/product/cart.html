@@ -24,7 +24,7 @@ Cart
 <div class="row m-0">
     <div class="col-sm-8 cart_section">
         <div class="mt-5 cart">My  Cart
-            <span class="items">1 items</span>
+            {% comment %} <span class="items">1 items</span> {% endcomment %}
         </div>
         <hr class="mt-3 c_h">
         <div class="row mt-3">
@@ -42,13 +42,17 @@ Cart
             </div>
         </div>
         <div id="cart-container"></div>
-        <div class="continue mt-5"><i class="fa fa-arrow-left" aria-hidden="true"></i>  Continue Shopping</div>
+        <div class="continue mt-5">
+            <a href="/shop">
+                <i class="fa fa-arrow-left" aria-hidden="true"></i>  Continue Shopping
+            </a>
+        </div>
     </div>
 
     <!-- Summary Section -->
     <div class="col-sm-4 summary_sec" style="background-color:#FFEFD1;">
         <div class="summary text-center mt-5">Order Summary</div>
-            <div id="cart-summary-container"></div>
+            <div id="cart-summary-container" class="mt-5"></div>
             <div class="row mt-3">
                 <div class="col-sm-6 i_name"> Delivery Charges</div>
                 <div class="col-sm-6 free">FREE</div>

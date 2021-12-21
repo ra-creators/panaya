@@ -28,12 +28,16 @@ class Cart {
   constructor(cardDetails = false) {
     this.container = document.getElementById("cart-container");
     this.summaryContainer = document.getElementById("cart-summary-container");
-    this.items = this.getFromLS();
+    this.items = {};
+    this.savedItems = this.getFromLS();
     this.cardDetails = cardDetails;
-    for (let item in this.items) {
+    this.addCartUrl = "/cart/add/";
+    this.removeCartUrl = "/cart/remove/";
+    for (let item in this.savedItems) {
       //   console.log(new Item(this.items[item]));
-      this.items[item] = new Item(this.items[item]);
-      this.addToDom(this.items[item]);
+      // this.items[item] = new Item(this.items[item]);
+      // this.addToDom(this.items[item]);
+      this.addItem(new Item(this.savedItems[item]));
     }
     this.save();
   }
@@ -66,7 +70,7 @@ class Cart {
           <div class="col-2 text-center"><i onClick="cart.removeItem(${item.id})" class="fa fa-trash" aria-hidden="true"></i></i></div>
         </div>`;
       this.summaryContainer.innerHTML += `
-        <div class="row mt-5" id="item-summary-${item.id}">
+        <div class="row" id="item-summary-${item.id}">
           <div class="col-sm-6 i_name"> ${item.name}</div>
           <div class="col-sm-6 i_price">₹ ${item.total}</div>
         </div>
@@ -95,6 +99,30 @@ class Cart {
     }
   }
   addItem(item) {
+    fetch(this.addCartUrl, {
+      method: "POST",
+      cache: "no-cache", // *default, no-cache, reload, force-cache, only-if-cached
+      credentials: "same-origin", // include, *same-origin, omit
+      mode: "same-origin",
+      headers: {
+        "Content-Type": "application/json",
+        "X-CSRFToken": csrftoken,
+        // 'Content-Type': 'application/x-www-form-urlencoded',
+      },
+      redirect: "follow", // manual, *follow, error
+      referrerPolicy: "no-referrer", // no-referrer, *no-referrer-when-downgrade, origin, origin-when-cross-origin, same-origin, strict-origin, strict-origin-when-cross-origin, unsafe-url
+      body: JSON.stringify(item),
+    })
+      .then((res) => res.json())
+      .then((res) => {
+        if (res == 400) {
+          console.error("malformed data");
+          return;
+        }
+        if (res != 200) return;
+      })
+      .catch((err) => console.error("cart add error", err));
+
     if (item instanceof Item) {
       this.items[item.id] = item;
       this.save();
@@ -103,6 +131,30 @@ class Cart {
     }
   }
   removeItem(id) {
+    fetch(this.removeCartUrl, {
+      method: "POST",
+      cache: "no-cache", // *default, no-cache, reload, force-cache, only-if-cached
+      credentials: "same-origin", // include, *same-origin, omit
+      mode: "same-origin",
+      headers: {
+        "Content-Type": "application/json",
+        "X-CSRFToken": csrftoken,
+        // 'Content-Type': 'application/x-www-form-urlencoded',
+      },
+      redirect: "follow", // manual, *follow, error
+      referrerPolicy: "no-referrer", // no-referrer, *no-referrer-when-downgrade, origin, origin-when-cross-origin, same-origin, strict-origin, strict-origin-when-cross-origin, unsafe-url
+      body: JSON.stringify({ id: id }),
+    })
+      .then((res) => res.json())
+      .then((res) => {
+        if (res == 400) {
+          console.error("malformed data");
+          return;
+        }
+        if (res != 200) return;
+      })
+      .catch((err) => console.error("cart add error", err));
+
     delete this.items[id];
     this.removeFromDom(id);
     this.save();
