@@ -5,7 +5,7 @@ from django.contrib.auth.models import AbstractBaseUser, BaseUserManager, Permis
 class UserProfileManager(BaseUserManager):
     """Manages the user profiles"""
 
-    def create_user(self, email, fname, lname, phone_number, dob, password=None, profile_pic=None):
+    def create_user(self, email, fname, lname, dob, phone_number=None, password=None, profile_pic=None):
         """Create a new user profile"""
         if not email:
             raise ValueError('User must have an email address')
@@ -17,10 +17,10 @@ class UserProfileManager(BaseUserManager):
         user.save(using=self._db)
         return user
 
-    def create_superuser(self, email, fname, lname, phone_number,  dob, password, profile_pic=None):
+    def create_superuser(self, email, fname, lname, dob, password, phone_number=None, profile_pic=None):
         """Create and save a new superuser with given details"""
         user = self.create_user(email, fname, lname,
-                                phone_number, dob, password, profile_pic)
+                                 dob,  phone_number, password, profile_pic)
         user.is_staff = True
         user.is_superuser = True
         user.save(using=self._db)
@@ -33,7 +33,7 @@ class User(AbstractBaseUser, PermissionsMixin):
     fname = models.CharField(max_length=255)
     lname = models.CharField(max_length=255)
     dob = models.DateField()
-    phone_number = models.CharField(max_length=10, blank=True)
+    phone_number = models.CharField(max_length=10, blank=True, null=True)
     profile_pic = models.ImageField(
         upload_to='profile_pics/%Y/%m/%d', default='default/images/profile_pic.png')
     is_staff = models.BooleanField(default=False)
