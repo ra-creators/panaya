@@ -2,8 +2,10 @@ from decimal import Decimal
 from django.conf import settings
 from product.models import Product
 
+
 class Cart(object):
     """Class for Cart"""
+
     def __init__(self, request):
         """
         Initialize the cart
@@ -25,34 +27,36 @@ class Cart(object):
         cart = self.cart.copy()
         for product in products:
             cart[str(product.id)]['product'] = product
-        
+
         for item in cart.values():
             item['price'] = Decimal(item['price'])
-            item['total_price'] = item['price'] * item['quantity']
+            item['total_price'] = Decimal(
+                item['price']) * int(item['quantity'])
             yield item
 
     def __len__(self):
         """
         Count all items in the cart.
         """
-        return sum(item['quantity'] for item in self.cart.values())
+        return sum(int(item['quantity']) for item in self.cart.values())
 
     def save(self):
-        # Mark a session as "modified" to make sure 
+        # Mark a session as "modified" to make sure
+        # print(self.cart)
         self.session.modified = True
-    
-    def add(self, product, quantity=1, override=False ):
+
+    def add(self, product, quantity=1, override=False):
         """
         Add a product to the cart or update its quantity
         """
         product_id = str(product.id)
         if product_id not in self.cart:
             self.cart[product_id] = {'quantity': 0,
-                                     'price': str(product.price)}
+                                     'price': (str(product.price))}
         if override:
-            self.cart[product_id]['quantity'] = quantity
+            self.cart[product_id]['quantity'] = int(str(quantity))
         else:
-            self.cart[product_id]['quantity'] += quantity
+            self.cart[product_id]['quantity'] += int(str(quantity))
         self.save()
 
     def remove(self, product):
@@ -66,7 +70,7 @@ class Cart(object):
 
     def get_total_price(self):
         return sum(Decimal(item['price']) * item['quantity'] for item in self.cart.values())
-    
+
     def clear(self):
         # remove cart from session
         del self.session[settings.CART_SESSION_ID]
