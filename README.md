@@ -16,16 +16,3 @@
 
     `pip install -r requirements.txt`
 
-## TODOS :
-
-### Shop :
-
-- [ ] pagination
-- [ ] short vs long description
-- [ ] dont let cart go above stock
-- [ ] buy now
-- [ ] ?per product Q&A
-
-### Cart :
-### Order :
-### RazorPay integration :
