@@ -9,3 +9,15 @@ def index_view(request):
 
 def about_view(request):
     return render(request, 'pages_static/about.html')
+
+
+def tnc(request):
+    return render(request, 'pages_static/tnc.html')
+
+
+def privacy_p1(request):
+    return render(request, 'pages_static/privacy_p1.html')
+
+
+def privacy_p2(request):
+    return render(request, 'pages_static/privacy_p2.html')

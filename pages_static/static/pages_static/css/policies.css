@@ -1,0 +1,92 @@
+@media all and (max-width: 360px) {
+  .heading h1 {
+    font-size: 100%;
+  }
+}
+
+@media all and (min-width: 768px) {
+  .heading h1 {
+    font-size: 200%;
+  }
+  .heading img {
+    width: 40vw;
+  }
+}
+
+* {
+  margin: 0;
+  padding: 0;
+}
+body {
+  text-align: justify;
+  background: url("/static/pages_static/images/policies/back_img.png");
+  background-color: rgba(255, 239, 209, 0.77);
+  font-family: sans-serif, "Poppins";
+}
+.header,
+.footer {
+  height: 18vh;
+  background-color: #fff;
+}
+.heading {
+  height: 17vh;
+  padding: 0;
+  text-align: center;
+  background-color: rgba(255, 206, 118, 0.71);
+  color: #670017;
+}
+.heading img {
+  height: 17vh;
+  width: 20vw;
+}
+.heading h1 {
+  font-family: "Anlogue";
+  font-style: normal;
+  position: relative;
+  top: -75%;
+}
+.container,
+ol {
+  padding: 3% 4% 4% 4%;
+}
+ol {
+  padding: 1% 3%;
+}
+ol li {
+  padding-top: 0.5%;
+}
+.container p {
+  padding: 1% 0;
+}
+.container h4 {
+  padding: 2% 0;
+  color: #8d0020;
+}
+.container h5 {
+  padding: 3% 0 1%;
+}
+
+@media all and (max-width: 1024px) {
+  .heading h1 {
+    font-size: 200%;
+  }
+}
+@media all and (max-width: 550px) {
+  .container,
+  ol {
+    padding: 3% 5% 5% 5%;
+  }
+  .heading img {
+    height: 11vh;
+    width: 50vw;
+  }
+  .heading {
+    height: 10vh;
+  }
+  .heading h1 {
+    font-size: 100%;
+  }
+  .header {
+    height: 10vh;
+  }
+}
