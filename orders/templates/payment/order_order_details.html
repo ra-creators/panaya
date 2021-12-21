@@ -23,7 +23,28 @@
         <img class="edit" src="/assets/img/edit.svg" alt="">
         <div class="main">2. DELIVERY  ADDRESS <img class="check" src="/assets/img/check.svg" alt=""></div>
         <div class="details pb-5">
-            <div><span class="ans ms-3">Pooja Gaikwad</span><span class="ms-3">Kundra Housing Society  Baner,Pune,Maharashtra Pune-411003 9875325457</span></div>
+            <div class="addr_all" id="addr_{{address.id}}">
+                <div class="row">
+                    <div class="col-12">
+                        <label for="inputFname" class="form-label">Full Name</label>
+                        <input disabled type="text" class="form-control" value="{{address.fname}}" id="inputFname" placeholder="Apartment, studio, or floor">
+                    </div>
+                    <div class="col-12">
+                        <label for="inputAddress" class="form-label">Address</label>
+                        <input disabled type="text" class="form-control" value="{{address.address}}" id="inputAddress" placeholder="1234 Main St">
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-auto">
+                        <label for="inputCity" class="form-label">City</label>
+                        <input disabled type="text" class="form-control" value="{{address.city}}" id="inputCity">
+                    </div>
+                    <div class="col-auto">
+                        <label for="inputZip" class="form-label">Postal Code</label>
+                        <input disabled type="text" class="form-control" value="{{address.postal_code}}" id="inputZip">
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
     <div class="container mt-5">
@@ -44,7 +65,11 @@
                     </div>
                 </div>
             {% endfor %}
-            <button class="continue mt-2">Continue</button>
+            <form action="{% url 'order_create' %}" method="POST">
+                {% csrf_token %}
+                <input type="hidden" name="addrId" value={{address.id}}>
+                <button type="submit" class="continue mt-2">Continue</button>
+            </form>
         </div>
     </div>
     <div class="container mt-5 mb-5">
