@@ -1,8 +1,8 @@
 from django.shortcuts import render
 from django.contrib.auth.decorators import login_required
+from .models import OrderItem
 from cart.cart import Cart
 from .forms import OrderCreateForm
-from .models import OrderItem
 
 
 @login_required
