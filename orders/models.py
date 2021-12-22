@@ -21,6 +21,7 @@ class Order(models.Model):
     created = models.DateTimeField(auto_now_add=True)
     updated = models.DateTimeField(auto_now=True)
     paid = models.BooleanField(default=False)
+    razorpay_order_id = models.CharField(default='nil', max_length=30)
 
     class Meta:
         ordering = ('-created',)
@@ -29,7 +30,7 @@ class Order(models.Model):
         return f"Order {self.id}"
 
     def get_total_cost(self):
-        return sum(item.get_cost() for item in self.items.all())
+        return float(sum(item.get_cost() for item in self.items.all()))
 
     @property
     def name(self):
@@ -40,7 +41,7 @@ class Order(models.Model):
         total = 0
         for item in self.items.all():
             total = total + item.get_cost()
-        return total
+        return float(total)
 
 
 class OrderItem(models.Model):
