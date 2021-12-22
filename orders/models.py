@@ -9,7 +9,8 @@ User = get_user_model()
 
 
 class Order(models.Model):
-    # user = models.ForeignKey(User, related_name='order_details', on_delete=models.CASCADE)
+    user = models.ForeignKey(
+        User, related_name='order_details', on_delete=models.CASCADE)
     # first_name = models.CharField(max_length=200)
     # last_name = models.CharField(max_length=200)
     # address = models.CharField(max_length=200)
@@ -29,6 +30,10 @@ class Order(models.Model):
 
     def get_total_cost(self):
         return sum(item.get_cost() for item in self.items.all())
+
+    @property
+    def name(self):
+        return self.__str__()
 
     @property
     def total(self):
