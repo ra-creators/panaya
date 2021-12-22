@@ -2,6 +2,10 @@ from django.urls import path
 from . import views
 
 urlpatterns = [
-    # path('create/', views.order_create, name='order_create')
-    # path('create/', views.OrderCreate.as_view(), name='order_create'),
+    path('', views.start, name="order_start"),
+    path('address/', views.address, name="order_address"),
+    path('add_address/', views.add_address, name="order_add_address"),
+    path('order_details/', views.order, name="order_order_details"),
+    path('create_order/', views.create_order, name="order_create"),
+    path('rp_callback', views.rp_callback, name="rp_callback"),
 ]
