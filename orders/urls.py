@@ -6,5 +6,6 @@ urlpatterns = [
     path('address/', views.address, name="order_address"),
     path('add_address/', views.add_address, name="order_add_address"),
     path('order_details/', views.order, name="order_order_details"),
-    path('create_order/', views.create_order, name="order_create")
+    path('create_order/', views.create_order, name="order_create"),
+    path('rp_callback', views.rp_callback, name="rp_callback"),
 ]

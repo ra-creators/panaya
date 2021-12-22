@@ -19,4 +19,4 @@ class OrderAdmin(admin.ModelAdmin):
     list_display = ['id', 'paid', 'created', 'updated']
     list_filter = ['paid', 'created', 'updated']
     inlines = [OrderItemInline]
-    readonly_fields = ('created', 'address', 'total',)
+    readonly_fields = ('created', 'updated', 'address', 'total', 'user')
