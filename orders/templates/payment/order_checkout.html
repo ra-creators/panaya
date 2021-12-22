@@ -1,0 +1,15 @@
+{% extends 'base.html' %} 
+{% load static %} 
+{% block title %}
+    Payment Gateway
+{% endblock title %} 
+{% block css %}
+    <link rel="stylesheet" href="{% static 'payment/css/gateway.css' %}">
+{% endblock css %} 
+{% block body %}
+<button class="btn styled-btn-filled" id="rzp-button1">Pay</button>
+{% endblock %}
+{% block js %}
+<script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+<script src="{% static 'payment/js/razorpay.js' %}"></script>
+{% endblock js %}
