@@ -1,7 +1,6 @@
 document.addEventListener("DOMContentLoaded", (e) => {
   let orderBtn = document.getElementById("order-btn");
-  orderForm = document.getElementById("order-form");
-  if (!(orderBtn && orderForm)) {
+  if (!orderBtn) {
     console.error("error ", "element not found");
     return;
   }
@@ -10,11 +9,10 @@ document.addEventListener("DOMContentLoaded", (e) => {
   orderBtn.addEventListener("click", (e) => {
     e.preventDefault();
     // console.log(e);
-    // console.log(orderForm);
     data = { addrId: e.target.dataset.addrid };
     // console.log(data);
     if (!orderCreated)
-      fetch(createOrderUrl, {
+      fetch(window.location.href, {
         method: "POST",
         cache: "no-cache",
         credentials: "same-origin",
@@ -36,7 +34,7 @@ document.addEventListener("DOMContentLoaded", (e) => {
           }
           if (res["status"] != 200) return;
           // orderCreated = true;
-          console.log(res);
+          // console.log(res);
           data = res["rapay_data"];
           // console.log(data);
           razor_pay_init(data);
@@ -48,7 +46,7 @@ document.addEventListener("DOMContentLoaded", (e) => {
 const razor_pay_init = (data) => {
   console.log(data);
   var options = {
-    key: "rzp_test_zQH7ZMXqeZqmAK",
+    key: data["key"],
     amount: data["amount"],
     currency: data["currency"],
     name: data["name"],
@@ -61,14 +59,9 @@ const razor_pay_init = (data) => {
     //   payment['order_id'] = (response.razorpay_order_id);
     //   payment['signature'] = (response.razorpay_signature);
     // },
-    callback_url: "/orders/rp_callback",
-    prefill: {
-      name: "Gaurav Kumar",
-      email: "gaurav.kumar@example.com",
-      contact: "9999999999",
-    },
+    callback_url: redirectUrl,
     notes: {
-      address: "Razorpay Corporate Office",
+      address: "Panaya.in ",
     },
     theme: {
       color: "#8d0020",

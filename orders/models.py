@@ -21,7 +21,8 @@ class Order(models.Model):
     created = models.DateTimeField(auto_now_add=True)
     updated = models.DateTimeField(auto_now=True)
     paid = models.BooleanField(default=False)
-    razorpay_order_id = models.CharField(default='nil', max_length=30)
+    razorpay_order_id = models.CharField(
+        default='nil', max_length=30, )
 
     class Meta:
         ordering = ('-created',)

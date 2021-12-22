@@ -26,6 +26,7 @@ urlpatterns = [
     path('cart/', include('cart.urls')),
     path('', include('pages_static.urls')),
     path('blogs/', include('blogs.urls')),
+    path('razor_pay/', include('razor_pay.urls')),
     re_path('^ckeditor/', include('ckeditor_uploader.urls')),
 ]
 
