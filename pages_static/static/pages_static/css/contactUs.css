@@ -1,0 +1,126 @@
+.prod_sec_header{
+    width:100%;
+    height: 184px;
+    background: rgba(255, 206, 118, 0.71);
+    background-image: url('/assets/img/section-heading-bg.png');
+}
+
+.head_top{
+    width: 249.31px;
+    height: 72.15px;
+    background-image: url('/assets/img/section-heading-decor.png');
+    margin: auto;
+}
+
+.head_bottom{
+    width: 249.31px;
+    height: 72.15px;
+    background-image: url('/assets/img/section-heading-decor.png');
+    transform: matrix(1, 0, 0, -1, 0, 0);
+    margin: auto;
+}
+
+.header{
+    font-family: Analogue;
+    font-style: normal;
+    font-weight: normal;
+    font-size: 43.7452px;
+    line-height: 45px;
+    /* identical to box height */
+    text-align: center;
+    color: #670017;
+    margin: auto;
+}
+.c_img{
+    width: 100%;
+    background-color: black;
+}
+.touch{
+    position: absolute;
+    top: 50%;
+    font-family: Alegreya;
+    font-style: normal;
+    font-weight: bold;
+    font-size: 50px;
+    line-height: 131px;
+    color: #FFFFFF;
+    z-index: 1;
+}
+.find{
+    font-family: Alegreya;
+    font-style: normal;
+    font-weight: bold;
+    font-size: 40px;
+    line-height: 98px;
+    color: #8D0020;
+    margin-left: 20px;
+}
+.service_img{
+    width: 30px;
+    height: 30px;
+}
+.service_text{
+    font-family: Alegreya;
+    font-style: normal;
+    font-weight: bold;
+    font-size: 40.2393px;
+    line-height: 98px;
+    color: #8D0020;
+}
+.service_details{
+    font-family: Poppins;
+    font-style: normal;
+    font-weight: 600;
+    font-size: 30px;
+    text-align: center;
+    color: #000000;
+    word-break: break-all;
+}
+.row{
+    width: 100%;
+}
+#map {
+    height: 400px;
+    width: 100%;
+    background-color: #685f5f;
+  }
+/* Responsive */
+@media only screen and (max-width: 700px) {
+    .header {
+        font-size: 23.7452px;
+        line-height: 25px;
+    }
+    .touch {
+        top: 36%;
+        font-size: 25px;
+        line-height: 131px;
+    }
+    .service_text{
+        font-size: 25px;
+    }
+    .service_details{
+        font-size: 20px;
+    }
+    .find{
+        font-size: 30px;
+    }
+    #map{
+        height: 200px;
+    }
+}
+
+@media only screen and (min-width: 700px) and (max-width: 996px) {
+    .header {
+        font-size: 28.7452px;
+        line-height: 30px;
+    }
+    .service_text{
+        font-size: 30px;
+    }
+    .service_details{
+        font-size: 20px;
+    }
+    .find{
+        font-size: 30px;
+    }
+}

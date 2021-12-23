@@ -21,8 +21,8 @@
     <header id='nav'>
         <nav class="navbar navbar-expand-lg navbar-light">
             <div id='nav-left'>
-                <a class="nav-item" href="#">Home</a>
-                <a class="nav-item" href="#">Our Story</a>
+                <a class="nav-item" href="{% url 'index' %}">Home</a>
+                <a class="nav-item" href="{% url 'about' %}">Our Story</a>
                 <a class="nav-item" href="#">Collection</a></li>
             </div>
             <div class='middle'>
@@ -31,8 +31,8 @@
             </div>
             <div id='nav-right'>
                 <a class="nav-item" href="#">Categories</a>
-                <a class="nav-item" href="#">Blogs</a>
-                <a class="nav-item" href="#">Contact Us</a>
+                <a class="nav-item" href="{% url 'blogs' %}">Blogs</a>
+                <a class="nav-item" href="{% url 'contact' %}">Contact Us</a>
             </div>
         </nav>
     </header>
@@ -55,11 +55,11 @@
                         <div>
                             <div class='row align-center footer-about'>
                                 <a class='col' href="#">Returns & Cancellation</a>
-                                <a class='col' href="#">Privacy Policy</a>
+                                <a class='col' href="{% url 'privacy_p1' %}">Privacy Policy</a>
                             </div>
                             <div class='row align-center footer-about'>
-                                <a class='col' href="#">Delivery & Shipping</a>
-                                <a class='col' href="#">Terms & Conditions</a>
+                                <a class='col' href="{% url 'privacy_p2' %}">Delivery & Shipping</a>
+                                <a class='col' href="{% url 'tnc' %}">Terms & Conditions</a>
                             </div>
                         </div>
                     </div>
@@ -92,12 +92,12 @@
                         </div>
                         <div>
                             <div class='row align-center footer-about'>
-                                <a class='col' href="">Our Story</a>
+                                <a class='col' href="{% url 'about' %}">Our Story</a>
                                 <a class='col' href="">Categories</a>
                             </div>
                             <div class="row align-center footer-about">
-                                <a class='col' href="">Blog Post</a>
-                                <a class='col' href="">Contact Us</a>
+                                <a class='col' href="{% url 'blogs' %}">Blog Post</a>
+                                <a class='col' href="{% url 'contact' %}">Contact Us</a>
                             </div>
                         </div>
                     </div>
