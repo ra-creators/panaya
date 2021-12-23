@@ -59,6 +59,13 @@ nav div{
     font-size: 1.5rem;
 }
 
+.col-nav{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
 /* Main Body Part */
 .story{
     font-family: 'Playfair Display', serif;
