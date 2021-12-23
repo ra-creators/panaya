@@ -141,6 +141,8 @@ class Review(models.Model):
 
 
 class FAQ(models.Model):
+    product = models.ForeignKey(
+        Product, related_name="faqs", on_delete=models.CASCADE)
     question = models.TextField()
     answer = RichTextField()
 

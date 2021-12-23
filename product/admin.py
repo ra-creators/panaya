@@ -27,6 +27,11 @@ class ReviewInLine(admin.StackedInline):
     extra = 0
 
 
+class FaqInLine(admin.StackedInline):
+    model = FAQ
+    extra = 0
+
+
 @admin.register(Product)
 class ProductAdmin(admin.ModelAdmin):
     list_display = ['name', 'slug', 'price',
@@ -34,7 +39,7 @@ class ProductAdmin(admin.ModelAdmin):
     list_filter = ['available', 'created', 'updated']
     list_editable = ['price', 'available']
     prepopulated_fields = {'slug': ('name',)}
-    inlines = [ProductImageInline, ReviewInLine]
+    inlines = [ProductImageInline, ReviewInLine, FaqInLine]
 
 
 @admin.register(Tag)

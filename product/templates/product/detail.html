@@ -66,7 +66,20 @@
       </h5>
     </li>
   </ul>
-  <div class="tab" id="qa" style="display: none">qa</div>
+  <div class="tab" id="qa" style="display: none">
+    <div class="container-lg my-2">
+      {% for faq in faqs.all %}
+      <div class="row">
+        <div class="row">
+          <p class="mb-0 text-sp-red">{{faq.question}}</p>
+        </div>
+        <div class="row">
+          <div class="">{{faq.answer|safe}}</div>
+        </div>
+      </div>
+      {% endfor %}
+    </div>
+  </div>
   <div class="tab" id="description">{{product.description}}</div>
   <div class="tab" id="reviews" style="display: none">
     <div class="conainer-lg my-2" style="width: 100%">

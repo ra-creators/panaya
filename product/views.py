@@ -69,12 +69,14 @@ def product_detail(request, id, slug=None):
                                     available=True)
     cart_product_form = CartAddProductForm()
     related = product.realted()
-    print(related)
+    faqs = product.faqs
+    # print(related)
     return render(request,
                   'product/detail.html',
                   {'product': product,
                    'cart_product_form': cart_product_form,
                    'related': related,
+                   'faqs': faqs,
                    })
 
 
