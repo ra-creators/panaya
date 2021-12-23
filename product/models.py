@@ -1,3 +1,4 @@
+from typing import Collection
 from django.db import models
 from django.contrib.auth import get_user_model
 from ckeditor.fields import RichTextField
@@ -37,9 +38,28 @@ class Category(models.Model):
                        args=[self.slug])
 
 
+class Collection(models.Model):
+    name = models.CharField(max_length=200, db_index=True)
+    slug = models.SlugField(max_length=200, unique=True)
+
+    class Meta:
+        ordering = ('name', )
+        verbose_name = 'collection'
+        verbose_name_plural = 'collections'
+
+    def __str__(self):
+        return self.name
+
+    def get_absolute_url(self):
+        return reverse('product_list_by_collection',
+                       args=[self.slug])
+
+
 class Product(models.Model):
     category = models.ForeignKey(
-        Category, related_name='products', on_delete=models.CASCADE)
+        Category, related_name='products', on_delete=models.SET_NULL, null=True)
+    collection = models.ForeignKey(
+        Collection, related_name='products', on_delete=models.SET_NULL, null=True)
     name = models.CharField(max_length=200, db_index=True)
     slug = models.SlugField(max_length=200, db_index=True)
     description = models.TextField(blank=True)
