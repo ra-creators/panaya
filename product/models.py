@@ -2,7 +2,10 @@ from typing import Collection
 from django.db import models
 from django.contrib.auth import get_user_model
 from ckeditor.fields import RichTextField
+from django.db.models.query import QuerySet
 from django.urls import reverse
+from django.core.validators import MaxValueValidator, MinValueValidator
+from itertools import chain
 
 User = get_user_model()
 # Create your models here.
@@ -57,9 +60,9 @@ class Collection(models.Model):
 
 class Product(models.Model):
     category = models.ForeignKey(
-        Category, related_name='products', on_delete=models.SET_NULL, null=True)
+        Category, related_name='products', on_delete=models.SET_NULL, null=True, blank=True)
     collection = models.ForeignKey(
-        Collection, related_name='products', on_delete=models.SET_NULL, null=True)
+        Collection, related_name='products', on_delete=models.SET_NULL, null=True, blank=True)
     name = models.CharField(max_length=200, db_index=True)
     slug = models.SlugField(max_length=200, db_index=True)
     description = models.TextField(blank=True)
@@ -69,6 +72,9 @@ class Product(models.Model):
     created = models.DateTimeField(auto_now_add=True)
     updated = models.DateTimeField(auto_now=True)
     tags = models.ManyToManyField(Tag, blank=True)
+    avg_rating = models.DecimalField(max_digits=10, decimal_places=2,
+                                     validators=[MaxValueValidator(5), MinValueValidator(0)])
+    no_rating = models.PositiveBigIntegerField()
 
     class Meta:
         ordering = ('name', )
@@ -82,6 +88,25 @@ class Product(models.Model):
 
     def get_primary_img(self):
         return self.images.all()[0]
+
+    def update_rating(self, new_rating):
+        self.avg_rating = ((self.avg_rating*self.no_rating) +
+                           new_rating)/(self.no_rating+1)
+        self.no_rating = self.no_rating + 1
+        self.save()
+
+    def realted(self, num_items=3):
+        related_category = []
+        related_collection = []
+        if self.collection:
+            related_collection = Collection.objects.get(
+                id=self.collection.id).products.order_by('avg_rating')[:num_items]
+        if self.category:
+            related_category = Category.objects.get(
+                id=self.category.id).products.order_by('avg_rating')[:num_items]
+        related_all = sorted(
+            chain(related_collection, related_collection), key=lambda obj: obj.avg_rating)
+        return related_category[:num_items]
 
 
 class ProductImage(models.Model):
@@ -99,11 +124,15 @@ class Review(models.Model):
     user = models.ForeignKey(
         User, related_name='reviews', on_delete=models.CASCADE)
     stars = models.IntegerField(default=0)
-    body = models.TextField()
+    body = models.TextField(blank=True)
     timestamp = models.DateTimeField(auto_now=False, auto_now_add=True)
 
     def __str__(self):
         return f"{self.stars} stars by {self.user.get_full_name()}"
+
+    def save(self, *args, **kwargs):
+        super().save(*args, **kwargs)  # Call the "real" save() method.
+        self.product.update_rating(self.stars)
 
     def get_rating_stars(self):
         pos_stars = "&#9733;"*self.stars

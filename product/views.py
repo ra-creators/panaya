@@ -21,6 +21,7 @@ def product_list(request, category_slug=None):
                       'products': products
                   })
 
+
 def categories(request, category_slug=None):
     category = None
     categories = Category.objects.all()
@@ -38,6 +39,7 @@ def categories(request, category_slug=None):
                       'products': products
                   })
 
+
 def collections(request, collection_slug=None):
     collection = None
     collections = Collection.objects.all()
@@ -54,6 +56,7 @@ def collections(request, collection_slug=None):
                       'products': products
                   })
 
+
 def product_detail(request, id, slug=None):
     if slug:
         product = get_object_or_404(Product,
@@ -65,10 +68,14 @@ def product_detail(request, id, slug=None):
                                     id=id,
                                     available=True)
     cart_product_form = CartAddProductForm()
+    related = product.realted()
+    print(related)
     return render(request,
                   'product/detail.html',
                   {'product': product,
-                   'cart_product_form': cart_product_form})
+                   'cart_product_form': cart_product_form,
+                   'related': related,
+                   })
 
 
 # @require_POST
