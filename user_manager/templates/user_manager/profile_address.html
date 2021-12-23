@@ -27,19 +27,19 @@
         <div class="container" id='container'>
             <div class="row mt-3">
                 <div class="col-3 text-center"><img class="l_img" src="/assets/img/user_logo.svg" alt=""></div>
-                <div class="col-9 acc">ACCOUNT SETTING</div>
+                <div class="col-9 acc" style='color: #333333;'><a href="{% url 'profile' %}" style='color: #333333;'>ACCOUNT SETTING</a></div>
             </div>
             <div class="m_add mt-3 text-center"><a href="{% url 'profile' %}">Profile Information</a></div>
             <div class="p_info mt-3 text-center"><a href="{% url 'address' %}">Manage Address</a></div>
             <hr>
             <div class="row ">
                 <div class="col-3 text-center"><img class="l_img" src="/assets/img/order_logo.jpg" alt=""></div>
-                <div class="col-9 acc">MY ORDER</div>
+                <div class="col-9 acc"><a href="{% url 'profile' %}" style='color: #333333;'>MY ORDER</a></div>
             </div>
             <hr>
             <div class="row ">
                 <div class="col-3 text-center"><img class="l_img" src="/assets/img/logout.svg" alt=""></div>
-                <div class="col-9 acc">LOGOUT</div>
+                <div class="col-9 acc"><a href="{% url 'logout' %}" style='color: #333333;'>LOGOUT</a></div>
             </div>
             <hr>
         </div>
