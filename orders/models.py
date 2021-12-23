@@ -17,7 +17,8 @@ class Order(models.Model):
     # postal_code = models.CharField(max_length=6)
     # city = models.CharField(max_length=200)
     address = models.ForeignKey(UserAddress, related_name='order_address',
-                                on_delete=models.CASCADE, null=False, blank=False)
+                                on_delete=models.CASCADE, null=False,
+                                blank=False)
     created = models.DateTimeField(auto_now_add=True)
     updated = models.DateTimeField(auto_now=True)
     paid = models.BooleanField(default=False)

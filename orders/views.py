@@ -88,7 +88,7 @@ def create_order(request):
         try:
             addr_id = json.loads(request.body)['addrId']
         except:
-            return JsonResponse({'status': 400})
+            return JsonResponse({'status': 400, 'payload': 'malformed data'})
     else:
         addr_id = request.user.addresses.all()[0].id
     order = Order.objects.create(
@@ -102,23 +102,31 @@ def create_order(request):
             price=item['price'],
             quantity=item['quantity'])
 
-    cart.clear()
+    try:
+        order_data = {}
+        order_data['amount'] = math.floor(float(order.total)*100)
+        order_data['currency'] = 'INR'
 
-    order_data = {}
-    order_data['amount'] = math.floor(float(order.total)*100)
-    order_data['currency'] = 'INR'
-    payment = razorpay.order.create(data=order_data)
-    RazorPayOrder.objects.create(
-        order=order,
-        rp_id=payment['id']
-    )
+        payment = razorpay.order.create(data=order_data)
 
-    order.razorpay_order_id = payment['id']
-    order.save()
+        order.razorpay_order_id = payment['id']
+        order.save()
 
-    context['status'] = 200
-    context['redirect'] = '/orders/order/'+str(order.id)
+        RazorPayOrder.objects.create(
+            order=order,
+            rp_id=payment['id']
+        )
+        context['status'] = 200
+        context['redirect'] = '/orders/order/'+str(order.id)
+        cart.clear()
+    except:
+        order.delete()
+        context['status'] = 500
+        context['payload'] = "razorpay api error"
+
+    return JsonResponse(context)
+
     # return render(request,
     #               'payment/order_checkout.html',
     #               context=context)
-    return HttpResponse(json.dumps(context), content_type="application/json")
+    # return HttpResponse(json.dumps(context), content_type="application/json")

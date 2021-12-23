@@ -30,11 +30,17 @@ document.addEventListener("DOMContentLoaded", (e) => {
         .then((res) => res.json())
         .then((res) => {
           // console.log(res);
+          if (res["status"] != 200) {
+            alert(
+              "error occured !!, make sure cart no empty or try again after some time"
+            );
+            console.error("error : ", res.payload);
+            return;
+          }
           if (res["status"] == 400) {
             console.error("malformed data");
             return;
           }
-          if (res["status"] != 200) return;
           localStorage.removeItem("cart_items");
           // orderCreated = true;
           //   console.log(res);

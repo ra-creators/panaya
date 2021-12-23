@@ -42,6 +42,20 @@
   color: rgba(255, 206, 118, 0.86);
 }
 
+.st-btn-fill-yellow {
+  background: rgba(255, 206, 118, 0.86);
+  border: 1.36732px solid rgba(255, 206, 118, 0.86);
+  -webkit-box-sizing: border-box;
+          box-sizing: border-box;
+  border-radius: 5.20882px;
+  padding: 1rem 2rem;
+  font-family: Alegreya;
+  font-style: normal;
+  font-weight: bold;
+  text-align: center;
+  color: #8d0020;
+}
+
 .flip-horizontal {
   -webkit-transform: scale(-1);
   transform: scale(-1);
@@ -194,14 +208,14 @@ header nav div {
 
 /* Footer */
 footer {
-  background: #8D0020;
-  color: #FFCE76;
+  background: #8d0020;
+  color: #ffce76;
   padding: 3%;
 }
 
 footer a {
   text-decoration: none;
-  color: #FFCE76;
+  color: #ffce76;
 }
 
 footer .footer-left {
@@ -222,7 +236,7 @@ footer .footer-about {
 
 header .middle,
 footer .middle {
-  color: #FFCE76;
+  color: #ffce76;
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -240,20 +254,20 @@ footer .middle {
 
 header .middle h2,
 footer .middle h2 {
-  color: #FFCE76;
-  font-family: 'Playfair Display', serif;
+  color: #ffce76;
+  font-family: "Playfair Display", serif;
   font-size: 3.5rem;
 }
 
 header .middle p,
 footer .middle p {
-  font-family: 'Corinthia', cursive;
+  font-family: "Corinthia", cursive;
   font-size: 1.5rem;
 }
 
 header h2,
 footer h2 {
-  color: #FFCE76;
+  color: #ffce76;
 }
 
 header a:hover,
@@ -262,8 +276,8 @@ footer a:hover {
 }
 
 .btn-warning {
-  color: #8D0020;
-  background-color: #FFCE76;
+  color: #8d0020;
+  background-color: #ffce76;
 }
 
 #banaras-store {
