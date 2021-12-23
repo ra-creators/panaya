@@ -1,5 +1,8 @@
+import json
+from django.http.response import HttpResponsePermanentRedirect
 from django.shortcuts import redirect, render
 from django.contrib.auth.decorators import login_required
+from django.views.decorators.csrf import csrf_exempt
 from django.http import HttpResponse
 from django.contrib.auth import authenticate, login, logout
 from django.views.generic import View
@@ -161,3 +164,19 @@ class PasswordChangeView(View):
 @login_required
 def profile(request):
     return render(request, 'user_manager/profile.html')
+
+@login_required
+def profile_address(request):
+    return render(request, 'user_manager/profile_address.html')
+
+@login_required
+@csrf_exempt
+def update_phone(request, user_id):
+    user = User.objects.get(id=user_id)
+    if request.method == 'POST':
+        phone_number = json.loads(request.body)['phone_number']
+        user.phone_number = str(phone_number)
+        user.save()
+        return HttpResponse(200)
+    return HttpResponse(400)
+

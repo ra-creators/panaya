@@ -300,4 +300,11 @@ footer a:hover {
   background-size: cover;
   background-position: 0%;
 }
+
+.col-nav{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
 /*# sourceMappingURL=styles.css.map */
