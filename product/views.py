@@ -1,6 +1,6 @@
 from django.shortcuts import render, get_object_or_404, HttpResponse
 from django.core.paginator import Paginator
-from .models import Category, Product
+from .models import Category, Product, Collection
 from cart.forms import CartAddProductForm
 # Create your views here.
 
@@ -9,6 +9,7 @@ def product_list(request, category_slug=None):
     category = None
     categories = Category.objects.all()
     products = Product.objects.filter(available=True)
+    # print(category_slug)
     if category_slug:
         category = get_object_or_404(Category, slug=category_slug)
         products = products.filter(category=category)
@@ -20,6 +21,38 @@ def product_list(request, category_slug=None):
                       'products': products
                   })
 
+def categories(request, category_slug=None):
+    category = None
+    categories = Category.objects.all()
+    products = Product.objects.filter(available=True)
+    # print(category_slug)
+    if category_slug:
+        category = get_object_or_404(Category, slug=category_slug)
+        categories = [category]
+        products = products.filter(category=category)
+    return render(request,
+                  'product/categories.html',
+                  {
+                      'category': category,
+                      'categories': categories,
+                      'products': products
+                  })
+
+def collections(request, collection_slug=None):
+    collection = None
+    collections = Collection.objects.all()
+    products = Product.objects.filter(available=True)
+    print(collection_slug)
+    if collection_slug:
+        collection = get_object_or_404(Collection, slug=collection_slug)
+        collections = [collection]
+        products = products.filter(collection=collection)
+    return render(request,
+                  'product/collections.html',
+                  {
+                      'collections': collections,
+                      'products': products
+                  })
 
 def product_detail(request, id, slug=None):
     if slug:
