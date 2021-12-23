@@ -1,0 +1,102 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}Categories{% endblock title %}
+
+{% block css %}
+<link rel="stylesheet" href="{% static 'products/css/shop.css' %}">
+{% endblock css %}
+
+{% block body %}
+<section id="carousel">
+    <div id="carouselShopIndicators" class="carousel slide" data-bs-ride="carousel">
+        <div class="carousel-indicators">
+            <button type="button" data-bs-target="#carouselShopIndicators" data-bs-slide-to="0" class="active"
+                aria-current="true" aria-label="Slide 1"></button>
+            <button type="button" data-bs-target="#carouselShopIndicators" data-bs-slide-to="1"
+                aria-label="Slide 2"></button>
+            <button type="button" data-bs-target="#carouselShopIndicators" data-bs-slide-to="2"
+                aria-label="Slide 3"></button>
+        </div>
+        <div class="carousel-inner">
+            <div class="carousel-item active">
+                <div class="overlay-container">
+                    <img src="{% static 'products/img/Rectangle 120.png' %}" class="d-block w-100"
+                        alt="product image" />
+                    <p class="overlay-text text-white fs-1 overlay-center" style="height: fit-content">
+                        Banarasi Silk Saree
+                    </p>
+                </div>
+            </div>
+            <div class="carousel-item">
+                <div class="overlay-container">
+                    <img src="{% static 'products/img/Rectangle 120.png' %}" class="d-block w-100"
+                        alt="product image" />
+                    <p class="overlay-text text-white fs-1 overlay-center" style="height: fit-content">
+                        Banarasi Silk Saree
+                    </p>
+                </div>
+            </div>
+            <div class="carousel-item">
+                <div class="overlay-container">
+                    <img src="{% static 'products/img/Rectangle 120.png' %}" class="d-block w-100"
+                        alt="product image" />
+                    <p class="overlay-text text-white fs-1 overlay-center" style="height: fit-content">
+                        Banarasi Silk Saree
+                    </p>
+                </div>
+            </div>
+        </div>
+        <button class="carousel-control-prev" type="button" data-bs-target="#carouselShopIndicators"
+            data-bs-slide="prev">
+            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Previous</span>
+        </button>
+        <button class="carousel-control-next" type="button" data-bs-target="#carouselShopIndicators"
+            data-bs-slide="next">
+            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Next</span>
+        </button>
+    </div>
+</section>
+
+<section id="heading" class="section-heading">
+    <img src="{% static 'pages_static/images/section-heading-decor.png' %}" alt="" />
+    <h1>Categories</h1>
+    <img class="flip-horizontal" src="{% static 'pages_static/images/section-heading-decor.png' %}" alt="" />
+</section>
+
+<section id="products">
+    <div class="container-lg mt-2">
+        {% for category in categories %}
+        <div class="row">
+            <div class="col-auto">
+                <h2 class="text-sp-red">{{category.name}}</h2>
+            </div>
+            <div class="col"></div>
+            <div class="col-auto">
+                <a class="text-sp-red" href="{% url 'product_list_by_category' category.slug %}">find more</a>
+            </div>
+        </div>
+        <div class="mt-2 row g-2 g-md-5 row-cols-1 row-cols-md-2 row-cols-lg-3">
+            {% for product in category.products.all %}
+            <div class="col mt-0">
+                <div class="overlay-container">
+                    <img loading="lazy" class="" style="width: 100%" src="{{product.get_primary_img }}" alt="" />
+                    <div class="overlay-shopnow">
+                        <a href="{{ product.get_absolute_url }}">
+                            <button class="btn overlay-bottom overlay-shopnow-btn">
+                                Shop Now
+                            </button>
+                        </a>
+                    </div>
+                </div>
+                <h2 class="mt-2 fs-5">{{product.name}}</h2>
+                <p class="fs-5 fw-bold">Rs. {{product.price}}</p>
+            </div>
+            {% endfor %}
+
+        </div>
+        {% endfor %}
+    </div>
+</section>
+{% endblock %}
