@@ -30,7 +30,7 @@
                 <p>The Heritage Collection</p>
             </div>
             <div id='nav-right container'>
-                <a class="nav-item" href="#">Categories</a>
+                <a class="nav-item" href="{% url 'product_list' %}">Shop</a>
                 <div class='col-nav' >
                     <a href="{% if request.user.is_authenticated %}{% url 'profile' %}{% else %}{% url 'login' %}{% endif %}" class='row'>
                         <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-person" viewBox="0 0 16 16">
@@ -108,7 +108,7 @@
                         <div>
                             <div class='row align-center footer-about'>
                                 <a class='col' href="{% url 'about' %}">Our Story</a>
-                                <a class='col' href="{% url 'product_list' %}">Categories</a>
+                                <a class='col' href="{% url 'product_list' %}">Shop</a>
                             </div>
                             <div class="row align-center footer-about">
                                 <a class='col' href="{% url 'blogs' %}">Blog Post</a>
