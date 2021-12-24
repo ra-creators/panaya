@@ -39,6 +39,7 @@ def verify_order(request, product_id=None):
                   context=context)
 
 
+@login_required
 def buy_now(request, product_id):
     context = {}
 
