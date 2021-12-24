@@ -33,7 +33,7 @@
       <h3 class="text-secondary">Rs. {{product.price}}</h3>
       <div class="number-input">
         <button onclick="this.parentNode.querySelector('input[type=number]').stepDown()"></button>
-        <input class="quantity" id="quantity" min="0" name="quantity" value="1" type="number" />
+        <input form="buynow-form" class="quantity" id="quantity" min="0" name="quantity" value="1" type="number" />
         <button onclick="this.parentNode.querySelector('input[type=number]').stepUp()" class="plus"></button>
       </div>
       <p class="fw-light mt-1">Only {{product.stocks}} piece in stock</p>
@@ -43,9 +43,10 @@
         dat-stock="{{product.stock}}" data-img="{{product.images.all.0}}">
         Add to your trunk
       </button>
-      <a href="{% url 'buy_now' product.id %}">
-        <button class="btn styled-btn-filled my-2">Buy Now</button>
-      </a>
+      <form action="{% url 'buy_now' product.id %}" method="POST" id="buynow-form">
+        {% csrf_token %}
+        <button type="submit" class="btn styled-btn-filled my-2">Buy Now</button>
+      </form>
     </div>
   </div>
 </section>

@@ -42,6 +42,10 @@ def verify_order(request, product_id=None):
 @login_required
 def buy_now(request, product_id):
     context = {}
+    quantity = 1
+
+    if(request.method == 'POST' and 'quantity' in request.POST):
+        quantity = int(request.POST['quantity'])
 
     user = request.user
     context['user'] = user
@@ -49,7 +53,7 @@ def buy_now(request, product_id):
     product = Product.objects.get(id=product_id)
     cart = {
         'product': product,
-        'quantity': 1,
+        'quantity': quantity,
         'total_price': product.price,
     }
     context['cart'] = [cart]
