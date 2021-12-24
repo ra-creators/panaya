@@ -53,17 +53,17 @@
 <section id="info" class="container-lg mt-5">
   <ul class="nav">
     <li class="nav-item">
-      <h5 class="nav-link tab-parent active" onclick="changeTab(event)" data-target="description" href="#">
+      <h5 class="tab-parent active" onclick="changeTab(event)" data-target="description" href="#">
         Description
       </h5>
     </li>
     <li class="nav-item">
-      <h5 class="nav-link tab-parent" onclick="changeTab(event)" data-target="reviews" href="#">
+      <h5 class="tab-parent" onclick="changeTab(event)" data-target="reviews" href="#">
         Reviews
       </h5>
     </li>
     <li class="nav-item">
-      <h5 class="nav-link tab-parent" onclick="changeTab(event)" data-target="qa" href="#">
+      <h5 class="tab-parent" onclick="changeTab(event)" data-target="qa" href="#">
         Question and Answer
       </h5>
     </li>
@@ -73,45 +73,7 @@
   <div class="tab" id="reviews" style="display: none">
     <div class="conainer-lg my-2" style="width: 100%">
       <div class="owl-carousel owl-theme">
-        {% comment %}
-        <div class="item">
-          <div class="card">
-            <div class="card-body">
-              <div class="row">
-                <div class="col-auto">
-                  <div class="usr-img">JL</div>
-                </div>
-                <div class="col">
-                  <h5 class="card-title fw-bold">Product Review</h5>
-                  <div class="stars">
-                    <div class="stars-pos">&#9733;&#9733;&#9733;&#9733;</div>
-                    <div class="stars-neg">&#9733;</div>
-                  </div>
-                  <p class="card-text fw-light">
-                    But I must explain to you how all this mistaken idea of
-                    denouncing pleasure and praising pain was born and I will
-                    give you a complete account of the system, and expound the
-                    actual teachings of the great explorer of the truth, the
-                    master-builder of human happines.
-                  </p>
-                  <footer class="card-footer d-flex justify-content-between">
-                    <div class="d-flex align-items-center justify-content-center">
-                      <div class="me-2">
-                        <img class="usr-img" src="/assets/img/shop/Author avatar.png" alt="" />
-                      </div>
-                      <p>
-                        John Lucas<span class="fw-light"> • 5 minutes ago</span>
-                      </p>
-                    </div>
-
-                    <p>+</p>
-                  </footer>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-        {% endcomment %} {% for review in product.reviews.all %}
+        {% for review in product.reviews.all %}
         <div class="item">
           <div class="card">
             <div class="card-body">
