@@ -7,8 +7,12 @@ body {
   cursor: pointer;
 }
 
-#info .nav .nav-item .active {
+#info .nav .nav-item {
   color: #8d0020;
+  margin: 0 1rem;
+}
+
+#info .nav .nav-item .active {
   border-bottom: 2px solid #8d0020;
 }
 

@@ -68,7 +68,20 @@
       </h5>
     </li>
   </ul>
-  <div class="tab" id="qa" style="display: none">qa</div>
+  <div class="tab" id="qa" style="display: none">
+    <div class="container-lg my-2">
+      {% for faq in faqs.all %}
+      <div class="row">
+        <div class="row">
+          <p class="mb-0 text-sp-red">{{faq.question}}</p>
+        </div>
+        <div class="row">
+          <div class="">{{faq.answer|safe}}</div>
+        </div>
+      </div>
+      {% endfor %}
+    </div>
+  </div>
   <div class="tab" id="description">{{product.description}}</div>
   <div class="tab" id="reviews" style="display: none">
     <div class="conainer-lg my-2" style="width: 100%">
@@ -119,21 +132,15 @@
 <section id="recommendations" class="container-lg mt-5">
   <h1 class="text-center text-sp-red my-4">You may also like</h1>
   <div class="row g-2 g-md-5 row-cols-1 row-cols-md-3">
+    {% for product in related %}
     <div class="col">
-      <img class="img-fluid" src="/assets/img/index/Rectangle 68.png" alt="" />
-      <h2 class="mt-2 text-sp-red">Banarasi Silk Saree</h2>
-      <p class="fs-4 fw-bold">Rs. 4500</p>
+      <img class="img-fluid" src="{{product.images.all.0}}" alt="" />
+      <a href="{% url 'product_detail' product.id %}">
+        <h2 class="mt-2 text-sp-red">{{product}}</h2>
+      </a>
+      <p class="fs-4 fw-bold">Rs. {{product.price}}</p>
     </div>
-    <div class="col">
-      <img class="img-fluid" src="/assets/img/index/Rectangle 68.png" alt="" />
-      <h2 class="mt-2 text-sp-red">Banarasi Silk Saree</h2>
-      <p class="fs-4 fw-bold">Rs. 4500</p>
-    </div>
-    <div class="col">
-      <img class="img-fluid" src="/assets/img/index/Rectangle 68.png" alt="" />
-      <h2 class="mt-2 text-sp-red">Banarasi Silk Saree</h2>
-      <p class="fs-4 fw-bold">Rs. 4500</p>
-    </div>
+    {% endfor %}
   </div>
 </section>
 <!-- POP UP -->
