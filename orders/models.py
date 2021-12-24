@@ -65,3 +65,10 @@ class OrderItem(models.Model):
 
     def get_cost(self):
         return self.price * self.quantity
+
+    def save(self, *args, **kwargs):
+        try:
+            self.product.update_stocks(self.quantity)
+        except Exception as err:
+            raise err
+        super().save(*args, **kwargs)

@@ -58,10 +58,12 @@ let createOrder = (e) => {
     .then((res) => {
       // console.log(res);
       if (res["status"] != 200) {
-        alert(
-          "error occured !!\nmake sure cart is not empty or try again after some time"
-        );
-        console.error("error : ", res.payload);
+        if ("error" in res) alert("error occured !!\n" + res["error"]);
+        else
+          alert(
+            "error occured !!\nmake sure cart is not empty or try again after some time"
+          );
+        console.error("error : ", res);
         return;
       }
       if (res["status"] == 400) {

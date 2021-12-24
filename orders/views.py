@@ -60,11 +60,17 @@ def buy_now(request, product_id):
                   context=context)
 
 
-def undo_create_order(order, status, msg):
-    order.delete()
+def undo_create_order(order, status, msg, err):
+    print(err)
+    try:
+        order.delete()
+    except Exception as exc_err:
+        # print(exc_err)
+        pass
     context = {}
-    context['status'] = status
     context['msg'] = msg
+    context['error'] = err
+    context['status'] = status
     return JsonResponse(context)
 
 
@@ -96,6 +102,7 @@ def create_order(request):
     try:
         for item in items:
             # print(item)
+            item['quantity'] = int(item['quantity'])
             OrderItem.objects.create(
                 order=order,
                 product_id=item['id'],
@@ -104,7 +111,7 @@ def create_order(request):
     except Exception as e:
         # print(e)
         # order.delete()
-        undo_create_order(order, 400, 'malformed data')
+        return undo_create_order(order, 400, 'malformed data', str(e))
     # print(order)
 
     try:
@@ -128,7 +135,7 @@ def create_order(request):
     except Exception as e:
         # print('razorpay exception :', e)
         # order.delete()
-        undo_create_order(order, 500, "razorpay api error")
+        return undo_create_order(order, 500, "razorpay api error", str(e))
 
     return JsonResponse(context)
 

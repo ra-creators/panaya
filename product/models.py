@@ -95,6 +95,16 @@ class Product(models.Model):
         self.no_rating = self.no_rating + 1
         self.save()
 
+    def update_stocks(self, quantity):
+        quantity = int(quantity)
+        if self.stocks < quantity:
+            raise ValueError("quantity more than stocks")
+
+        self.stocks = self.stocks-quantity
+        if(self.stocks == 0):
+            self.available = False
+        self.save()
+
     def realted(self, num_items=3):
         related_category = []
         related_collection = []
