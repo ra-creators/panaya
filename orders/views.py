@@ -3,6 +3,7 @@ from django.http.response import HttpResponse, JsonResponse
 from django.shortcuts import get_object_or_404, render
 from django.contrib.auth.decorators import login_required
 from .models import Order, OrderItem
+from product.models import Product
 from user_manager.models import UserAddress
 from cart.cart import Cart
 from .forms import OrderCreateForm
@@ -14,46 +15,126 @@ from razor_pay.razorpay_key import razorpay, razorpay_key
 
 
 @login_required
-def start(request):
+def verify_order(request, product_id=None):
     context = {}
-    user = request.user
-    context['user'] = user
-    return render(request, 'payment/order_start.html', context=context)
 
-
-@login_required
-def address(request):
-    context = {}
-    user = request.user
-    context['user'] = user
-    context['addresses'] = user.addresses.all()
-    return render(request, 'payment/order_address.html', context=context)
-
-
-@login_required
-def add_address(request):
-    context = {}
-    user = request.user
-    context['user'] = user
-    return render(request, 'payment/order_add_address.html', context=context)
-
-
-@login_required
-def verify_order(request):
     cart = Cart(request)
-    address = ''
-    if(request.method == 'POST'):
-        addr_id = request.POST['addrId']
-        address = get_object_or_404(UserAddress, id=addr_id)
-    else:
-        address = request.user.addresses.all()[0]
-    # request.session['address'] = str(address.id)
-    # print(address.id)
-    form = OrderCreateForm()
+    context['cart'] = cart
+
+    user = request.user
+    context['user'] = user
+
+    if(product_id):
+        product = Product.objects.get(id=product_id)
+        cart = {
+            'product': product,
+            'quantity': 1,
+            'total_price': product.price,
+        }
+        context['cart'] = [cart]
+
+    context['addresses'] = user.addresses.all()
     return render(request,
                   'payment/order_verify_details.html',
-                  context={'user': request.user, 'cart': cart, 'form': form,
-                           'address': address})
+                  context=context)
+
+
+def buy_now(request, product_id):
+    context = {}
+
+    user = request.user
+    context['user'] = user
+
+    product = Product.objects.get(id=product_id)
+    cart = {
+        'product': product,
+        'quantity': 1,
+        'total_price': product.price,
+    }
+    context['cart'] = [cart]
+
+    context['addresses'] = user.addresses.all()
+    return render(request,
+                  'payment/order_verify_details.html',
+                  context=context)
+
+
+def undo_create_order(order, status, msg):
+    order.delete()
+    context = {}
+    context['status'] = status
+    context['msg'] = msg
+    return JsonResponse(context)
+
+
+@login_required
+def create_order(request):
+
+    if request.method == 'GET':
+        return verify_order(request)
+
+    cart = Cart(request)
+    addr_id = ""
+    context = {}
+    if request.method != 'POST':
+        return HttpResponse("no allowed")
+
+    post_data = json.loads(request.body)
+    if('addrId' not in post_data or 'items' not in post_data):
+        return JsonResponse({'status': 400, 'payload': 'malformed data'})
+
+    addr_id = json.loads(request.body)['addrId']
+    items = json.loads(request.body)['items']
+    requesting_url = json.loads(request.body)['requestingUrl']
+
+    order = Order.objects.create(
+        user=request.user,
+        address_id=addr_id
+    )
+
+    try:
+        for item in items:
+            # print(item)
+            OrderItem.objects.create(
+                order=order,
+                product_id=item['id'],
+                price=Product.objects.get(id=item['id']).price,
+                quantity=item['quantity'])
+    except Exception as e:
+        # print(e)
+        # order.delete()
+        undo_create_order(order, 400, 'malformed data')
+    # print(order)
+
+    try:
+        order_data = {}
+        order_data['amount'] = math.floor(float(order.total)*100)
+        order_data['currency'] = 'INR'
+
+        payment = razorpay.order.create(data=order_data)
+
+        order.razorpay_order_id = payment['id']
+        order.save()
+
+        RazorPayOrder.objects.create(
+            order=order,
+            rp_id=payment['id']
+        )
+        context['status'] = 200
+        context['redirect'] = '/orders/order/'+str(order.id)
+        if(requesting_url == '/orders/create/'):
+            cart.clear()
+    except Exception as e:
+        # print('razorpay exception :', e)
+        # order.delete()
+        undo_create_order(order, 500, "razorpay api error")
+
+    return JsonResponse(context)
+
+    # return render(request,
+    #               'payment/order_checkout.html',
+    #               context=context)
+    # return HttpResponse(json.dumps(context), content_type="application/json")
 
 
 @login_required
@@ -77,56 +158,3 @@ def order_details(request, order_id):
     context = {'order': order, 'paid': order.paid,
                'transactions': order.transactions}
     return render(request, 'payment/order_details.html', context=context)
-
-
-@login_required
-def create_order(request):
-    cart = Cart(request)
-    addr_id = ""
-    context = {}
-    if request.method == 'POST':
-        try:
-            addr_id = json.loads(request.body)['addrId']
-        except:
-            return JsonResponse({'status': 400, 'payload': 'malformed data'})
-    else:
-        addr_id = request.user.addresses.all()[0].id
-    order = Order.objects.create(
-        user=request.user,
-        address_id=addr_id
-    )
-    for item in cart:
-        OrderItem.objects.create(
-            order=order,
-            product=item['product'],
-            price=item['price'],
-            quantity=item['quantity'])
-
-    try:
-        order_data = {}
-        order_data['amount'] = math.floor(float(order.total)*100)
-        order_data['currency'] = 'INR'
-
-        payment = razorpay.order.create(data=order_data)
-
-        order.razorpay_order_id = payment['id']
-        order.save()
-
-        RazorPayOrder.objects.create(
-            order=order,
-            rp_id=payment['id']
-        )
-        context['status'] = 200
-        context['redirect'] = '/orders/order/'+str(order.id)
-        cart.clear()
-    except:
-        order.delete()
-        context['status'] = 500
-        context['payload'] = "razorpay api error"
-
-    return JsonResponse(context)
-
-    # return render(request,
-    #               'payment/order_checkout.html',
-    #               context=context)
-    # return HttpResponse(json.dumps(context), content_type="application/json")
