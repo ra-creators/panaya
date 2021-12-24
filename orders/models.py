@@ -17,7 +17,8 @@ class Order(models.Model):
     # postal_code = models.CharField(max_length=6)
     # city = models.CharField(max_length=200)
     address = models.ForeignKey(UserAddress, related_name='order_address',
-                                on_delete=models.CASCADE, null=False, blank=False)
+                                on_delete=models.CASCADE, null=False,
+                                blank=False)
     created = models.DateTimeField(auto_now_add=True)
     updated = models.DateTimeField(auto_now=True)
     paid = models.BooleanField(default=False)
@@ -64,3 +65,10 @@ class OrderItem(models.Model):
 
     def get_cost(self):
         return self.price * self.quantity
+
+    def save(self, *args, **kwargs):
+        try:
+            self.product.update_stocks(self.quantity)
+        except Exception as err:
+            raise err
+        super().save(*args, **kwargs)

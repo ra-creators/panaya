@@ -1,5 +1,5 @@
-@import url('https://fonts.googleapis.com/css2?family=Playfair+Display&display=swap');
-@import url('https://fonts.googleapis.com/css2?family=Corinthia:wght@700&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Playfair+Display&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Corinthia:wght@700&display=swap");
 
 // common utilities
 .styled-btn-outline {
@@ -50,6 +50,22 @@
   text-align: center;
 
   color: rgba(255, 206, 118, 0.86);
+}
+
+.st-btn-fill-yellow {
+  background: rgba(255, 206, 118, 0.86);
+  border: 1.36732px solid rgba(255, 206, 118, 0.86);
+  box-sizing: border-box;
+  border-radius: 5.20882px;
+
+  padding: 1rem 2rem;
+
+  font-family: Alegreya;
+  font-style: normal;
+  font-weight: bold;
+  text-align: center;
+
+  color: #8d0020;
 }
 
 .flip-horizontal {
@@ -126,11 +142,13 @@
   position: absolute;
   top: 0;
   left: 0;
-  background: linear-gradient(180deg,
-      rgba(255, 255, 255, 0) 0%,
-      rgba(255, 255, 255, 0) 50%,
-      rgba(141, 0, 32, 0.7) 97%,
-      rgba(141, 0, 32, 0.9) 100%);
+  background: linear-gradient(
+    180deg,
+    rgba(255, 255, 255, 0) 0%,
+    rgba(255, 255, 255, 0) 50%,
+    rgba(141, 0, 32, 0.7) 97%,
+    rgba(141, 0, 32, 0.9) 100%
+  );
 
   .overlay-shopnow-btn {
     background: #ffce76;
@@ -165,7 +183,7 @@
 // header
 /* Header Part */
 header {
-  background: url('/static/pages_static/images/about/nav bg.png');
+  background: url("/static/pages_static/images/about/nav bg.png");
   color: #fff;
   padding: 20px;
   font-size: 1.2rem;
@@ -187,18 +205,17 @@ header {
     display: flex;
     margin: 0 10px;
   }
-
 }
 
 /* Footer */
 footer {
-  background: #8D0020;
-  color: #FFCE76;
+  background: #8d0020;
+  color: #ffce76;
   padding: 3%;
 
   a {
     text-decoration: none;
-    color: #FFCE76;
+    color: #ffce76;
   }
 
   .footer-left {
@@ -220,28 +237,27 @@ footer {
 
 header,
 footer {
-
   .middle {
-    color: #FFCE76;
+    color: #ffce76;
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
 
     h2 {
-      color: #FFCE76;
-      font-family: 'Playfair Display', serif;
+      color: #ffce76;
+      font-family: "Playfair Display", serif;
       font-size: 3.5rem;
     }
 
     p {
-      font-family: 'Corinthia', cursive;
+      font-family: "Corinthia", cursive;
       font-size: 1.5rem;
     }
   }
 
   h2 {
-    color: #FFCE76;
+    color: #ffce76;
   }
 
   a:hover {
@@ -249,10 +265,9 @@ footer {
   }
 }
 
-
 .btn-warning {
-  color: #8D0020;
-  background-color: #FFCE76;
+  color: #8d0020;
+  background-color: #ffce76;
 }
 
 // specifice styles
