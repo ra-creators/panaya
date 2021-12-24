@@ -65,7 +65,11 @@ class Cart {
               </div>
             </div>
           </div>
-          <div class="col-2 text-center p_m"><span class="minus">-</span><span class="num">${item.quantity}</span><span class="plus">+</span></div>
+          <div class="col-2 text-center p_m">
+            <span data-id="${item.id}" data-quantity="${item.quantity}" class="minus" onClick="decreaseQuantity(event)">-</span>
+            <span class="num">${item.quantity}</span>
+            <span data-id="${item.id}" data-quantity="${item.quantity}" class="plus" onClick="increaseQuantity(event)">+</span>
+          </div>
           <div class="col-2 text-center c_price">₹ ${item.total}</div>
           <div class="col-2 text-center"><i onClick="cart.removeItem(${item.id})" class="fa fa-trash" aria-hidden="true"></i></i></div>
         </div>`;
@@ -198,4 +202,19 @@ let removeFromCart = (event) => {
   let itemId = event.target.dataset.targetid;
   //   console.log(itemId);
   if (itemId) cart.removeItem(itemId);
+};
+
+const increaseQuantity = (e) => {
+  console.log("clicked");
+  id = e.target.dataset.id;
+  oldItem = cart.items[id];
+  oldItem.quantity++;
+  cart.addItem(oldItem);
+};
+const decreaseQuantity = (e) => {
+  console.log("clicked");
+  id = e.target.dataset.id;
+  oldItem = cart.items[id];
+  oldItem.quantity--;
+  cart.addItem(oldItem);
 };
