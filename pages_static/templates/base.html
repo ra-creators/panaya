@@ -6,13 +6,14 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="shortcut icon" type="image/png" href="{% static 'favicon.ico' %}"/>
+    <link rel="shortcut icon" type="image/png" href="{% static 'favicon.ico' %}" />
     <title> {% block title %} Home {% endblock title %}</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
-    {% comment %} <link rel="stylesheet" href="{% static 'pages_static/css/about.css' %}"> {% endcomment %}
+    {% comment %}
+    <link rel="stylesheet" href="{% static 'pages_static/css/about.css' %}"> {% endcomment %}
     <link rel="stylesheet" href="{% static 'pages_static/css/styles.css' %}">
-        {% block css %}{% endblock css %}
+    {% block css %}{% endblock css %}
 </head>
 
 <body>
@@ -21,22 +22,45 @@
     <header id='nav'>
         <nav class="navbar navbar-expand-lg navbar-light">
             <div id='nav-left'>
-                <a class="nav-item" href="#">Home</a>
-                <a class="nav-item" href="#">Our Story</a>
-                <a class="nav-item" href="#">Collection</a></li>
+                <a class="nav-item" href="{% url 'index' %}">Home</a>
+                <a class="nav-item" href="{% url 'about' %}">Our Story</a>
+                <a class="nav-item" href="{% url 'collections' %}">Collection</a></li>
             </div>
             <div class='middle'>
                 <h2>PANAYA</h2>
                 <p>The Heritage Collection</p>
             </div>
-            <div id='nav-right'>
-                <a class="nav-item" href="#">Categories</a>
-                <a class="nav-item" href="#">Blogs</a>
-                <a class="nav-item" href="#">Contact Us</a>
+            <div id='nav-right container'>
+                <a class="nav-item" href="{% url 'product_list' %}">Shop</a>
+                <div class='col-nav'>
+                    <a href="{% if request.user.is_authenticated %}{% url 'profile' %}{% else %}{% url 'login' %}{% endif %}"
+                        class='row'>
+                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor"
+                            class="bi bi-person" viewBox="0 0 16 16">
+                            <path
+                                d="M8 8a3 3 0 1 0 0-6 3 3 0 0 0 0 6zm2-3a2 2 0 1 1-4 0 2 2 0 0 1 4 0zm4 8c0 1-1 1-1 1H3s-1 0-1-1 1-4 6-4 6 3 6 4zm-1-.004c-.001-.246-.154-.986-.832-1.664C11.516 10.68 10.289 10 8 10c-2.29 0-3.516.68-4.168 1.332-.678.678-.83 1.418-.832 1.664h10z" />
+                        </svg>
+                    </a>
+                    <a class="nav-item col" href="{% url 'blogs' %}">Blogs</a>
+                </div>
+                <div class='col-nav'>
+                    <a class='row'
+                        href="{% if request.user.is_authenticated %}{% url 'cart' %}{% else %}{% url 'login' %}{% endif %}">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor"
+                            class="bi bi-cart" viewBox="0 0 16 16">
+                            <path
+                                d="M0 1.5A.5.5 0 0 1 .5 1H2a.5.5 0 0 1 .485.379L2.89 3H14.5a.5.5 0 0 1 .491.592l-1.5 8A.5.5 0 0 1 13 12H4a.5.5 0 0 1-.491-.408L2.01 3.607 1.61 2H.5a.5.5 0 0 1-.5-.5zM3.102 4l1.313 7h8.17l1.313-7H3.102zM5 12a2 2 0 1 0 0 4 2 2 0 0 0 0-4zm7 0a2 2 0 1 0 0 4 2 2 0 0 0 0-4zm-7 1a1 1 0 1 1 0 2 1 1 0 0 1 0-2zm7 0a1 1 0 1 1 0 2 1 1 0 0 1 0-2z" />
+                        </svg>
+                    </a>
+                    <a class="nav-item row" href="{% url 'contact' %}">Contact Us</a>
+                </div>
+
             </div>
         </nav>
     </header>
-    {% block body %}{% endblock body %}
+    <main id="main-container">
+        {% block body %}{% endblock body %}
+    </main>
     <footer>
         <div class='container'>
             <div class='row'>
@@ -53,11 +77,11 @@
                         <div>
                             <div class='row align-center footer-about'>
                                 <a class='col' href="#">Returns & Cancellation</a>
-                                <a class='col' href="#">Privacy Policy</a>
+                                <a class='col' href="{% url 'privacy_p1' %}">Privacy Policy</a>
                             </div>
                             <div class='row align-center footer-about'>
-                                <a class='col' href="#">Delivery & Shipping</a>
-                                <a class='col' href="#">Terms & Conditions</a>
+                                <a class='col' href="{% url 'privacy_p2' %}">Delivery & Shipping</a>
+                                <a class='col' href="{% url 'tnc' %}">Terms & Conditions</a>
                             </div>
                         </div>
                     </div>
@@ -90,12 +114,12 @@
                         </div>
                         <div>
                             <div class='row align-center footer-about'>
-                                <a class='col' href="">Our Story</a>
-                                <a class='col' href="">Categories</a>
+                                <a class='col' href="{% url 'about' %}">Our Story</a>
+                                <a class='col' href="{% url 'product_list' %}">Shop</a>
                             </div>
                             <div class="row align-center footer-about">
-                                <a class='col' href="">Blog Post</a>
-                                <a class='col' href="">Contact Us</a>
+                                <a class='col' href="{% url 'blogs' %}">Blog Post</a>
+                                <a class='col' href="{% url 'contact' %}">Contact Us</a>
                             </div>
                         </div>
                     </div>
@@ -106,6 +130,7 @@
                     </div>
                     <p>Hear about our new woven treasures and more...</p>
                     <form class='align-center form-row' action="" method='POST'>
+                        {% csrf_token %}
                         <input class='col-7' type="email" placeholder="Enter your E-mail" name='email'>
                         <input class='btn btn-warning col-3' type="submit" value='Send'>
                     </form>
@@ -117,7 +142,7 @@
     {% endblock body_without_nav %}
     {% csrf_token %}
     <script>
-    const csrftoken = document.querySelector('[name=csrfmiddlewaretoken]').value;
+        const csrftoken = document.querySelector('[name=csrfmiddlewaretoken]').value;
     </script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous">

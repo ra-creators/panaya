@@ -1,0 +1,232 @@
+.prod_sec_header{
+    width:100%;
+    height: 20vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: rgba(255, 206, 118, 0.71);
+    background-image: url('/assets/img/section-heading-bg.png');
+}
+
+.head_top{
+    background-image: url('/assets/img/section-heading-decor.png');
+    margin: auto;
+}
+
+.head_bottom{
+    background-image: url('/assets/img/section-heading-decor.png');
+    transform: matrix(1, 0, 0, -1, 0, 0);
+    margin: auto;
+}
+a{
+    text-decoration: none;
+}
+
+.header{
+    font-family: Analogue;
+    font-style: normal;
+    font-weight: normal;
+    font-size: 43.7452px;
+    line-height: 45px;
+    /* identical to box height */
+    text-align: center;
+    color: #670017;
+    margin: auto;
+}
+.pro_sec{
+    border-right: 3px solid rgba(0, 0, 0, 0.31);
+}
+.profile_img {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.profile_img img{
+    width: 50%;
+    border-radius: 120px;
+}
+.hello{
+    font-weight: 500;
+    font-size: 30px;
+    line-height: 22px;
+    letter-spacing: -0.408px;
+    color: rgba(0, 0, 0, 0.66);
+    font-family: Poppins;
+    font-style: normal;
+}
+.name{
+    font-family: Poppins;
+    font-style: normal;
+    font-weight: 600;
+    font-size: 40px;
+    line-height: 40px;
+    letter-spacing: -0.408px;
+    color: #8D0020;
+}
+.l_img{
+    width: 30px;
+    cursor: pointer;
+}
+.acc {
+    align-items: center;
+    font-family: Poppins;
+    font-style: normal;
+    font-weight: 500;
+    font-size: 25.2698px;
+    line-height: 31px;
+    letter-spacing: -0.574869px;
+    color: rgba(0, 0, 0, 0.63);
+    cursor: pointer;
+}
+.p_info{
+    font-family: Poppins;
+    font-style: normal;
+    font-weight: 500;
+    font-size: 20.1799px;
+    line-height: 31px;
+    letter-spacing: -0.574869px;
+    color: #2F80ED;
+    border-left: 2px solid #2F80ED;
+}
+.active{
+    color: #2F80ED;
+}
+.m_add{
+    font-family: Poppins;
+    font-style: normal;
+    font-weight: 500;
+    font-size: 20.1799px;
+    line-height: 31px;
+    letter-spacing: -0.574869px;
+    color: #000000;
+}
+.details{
+    font-family: Poppins;
+    font-style: normal;
+    font-weight: 600;
+    font-size: 37.3538px;
+    line-height: 35px;
+    letter-spacing: -0.644012px;
+    color: #8D0020;
+}
+.per_info{
+    font-family: Poppins;
+    font-style: normal;
+    font-weight: 600;
+    font-size: 25.6758px;
+    line-height: 33px;
+    letter-spacing: -0.606489px;
+    color: #333333;
+}
+.h{
+    font-family: Poppins;
+    font-style: normal;
+    font-weight: 600;
+    font-size: 20.7299px;
+    line-height: 33px;
+    letter-spacing: -0.606489px;
+    color: #333333;
+}
+.email{
+    font-family: Poppins;
+    font-style: normal;
+    font-weight: 600;
+    font-size: 25.6758px;
+    line-height: 33px;
+    letter-spacing: -0.606489px;
+    color: #333333;
+}
+.edit{
+    font-family: Poppins;
+    font-style: normal;
+    font-weight: 600;
+    font-size: 18.7299px;
+    line-height: 33px;
+    text-align: center;
+    letter-spacing: -0.606489px;
+    color: #2F80ED;
+    margin-left: 3rem;
+}
+.mails{
+    font-size: 18px;
+}
+.row{
+    width: 100%;
+}
+
+#addr{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.address{
+    width: 100%;
+    box-sizing: border-box;
+    padding: 0px;
+    margin: 0px;
+}
+
+.address p{
+    box-sizing: border-box;
+    padding: 0px;
+    margin: 0px;
+}
+
+.address-wrapper{
+    display: flex;
+    justify-content: space-between;
+    border: 1px solid black;
+    border-radius: 10px;
+    padding: 1rem;
+    margin: 2%;
+}
+
+.user-name-in-address{
+    font-family: Poppins;
+    font-style: normal;
+    font-weight: 600;
+    font-size: 25.6758px;
+    line-height: 33px;
+    letter-spacing: -0.606489px;
+    color: #333333;
+}
+
+.edit-button-wrapper{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    vertical-align: middle;
+}
+
+/* Responsive */
+@media only screen and (max-width: 700px) {
+    .header {
+        font-size: 23.7452px;
+        line-height: 25px;
+    }
+    .pro_sec{
+        border-right: none !important;
+    }
+    .h{
+        font-size: 15px;
+    }
+    .email{
+        font-size: 20px;
+    }
+    .edit{
+        font-size: 15px;
+        margin-left: 1rem;
+    }
+}
+
+@media only screen and (min-width: 700px) and (max-width: 996px) {
+    .header {
+        font-size: 28.7452px;
+        line-height: 30px;
+    }
+    .h{
+        font-size: 15px;
+    }
+}
