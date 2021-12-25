@@ -85,26 +85,20 @@ Products
                         <div class="col-auto d-flex align-items-center">
                             <select name="category" value="{{formdata.category}}" class="form-select"
                                 aria-label="Category select">
-                                <option value="0" {% if '' == formdata.category %}selected="selected"{% endif %}>category all</option>
+                                <option value="0" {% if '' == formdata.category %}selected="selected" {% endif %}>
+                                    category all</option>
                                 {% for categorie in categories %}
-                                    {% if categorie.id|stringformat:"i" == formdata.category %}
-                                        <option 
-                                        value="{{categorie.id}}" 
-                                        data-bool="yes"
-                                        data-cat={{categorie.id}} 
-                                        data-form={{formdata.category}} 
-                                        selected="selected">
-                                            {{categorie}}
-                                        </option>
-                                    {% else %}
-                                        <option 
-                                        value="{{categorie.id}}" 
-                                        data-bool="no"
-                                        data-cat={{categorie.id}} 
-                                        data-form={{formdata.category}}>
-                                            {{categorie}}
-                                        </option>
-                                    {% endif %}
+                                {% if categorie.id|stringformat:"i" == formdata.category %}
+                                <option value="{{categorie.id}}" data-bool="yes" data-cat={{categorie.id}}
+                                    data-form={{formdata.category}} selected="selected">
+                                    {{categorie}}
+                                </option>
+                                {% else %}
+                                <option value="{{categorie.id}}" data-bool="no" data-cat={{categorie.id}}
+                                    data-form={{formdata.category}}>
+                                    {{categorie}}
+                                </option>
+                                {% endif %}
                                 {% endfor %}
                             </select>
                         </div>
@@ -185,9 +179,11 @@ Products
                 <ul class="pagination">
                     {% for _ in ''|center:number_pages %}
                     {% if current_page_number == forloop.counter %}
-                    <li class="page-item"><a class="page-link active" onClick="pagination(event)" data-href={{forloop.counter}}>{{forloop.counter}}</a></li>
+                    <li class="page-item"><a class="page-link active" onClick="pagination(event)"
+                            data-href={{forloop.counter}}>{{forloop.counter}}</a></li>
                     {% else %}
-                    <li class="page-item"><a class="page-link" onClick="pagination(event)" data-href={{forloop.counter}}>{{forloop.counter}}</a></li>
+                    <li class="page-item"><a class="page-link" onClick="pagination(event)"
+                            data-href={{forloop.counter}}>{{forloop.counter}}</a></li>
                     {% endif %}
                     {% endfor %}
                     {% comment %} <li class="page-item"><a class="page-link" href="#">3</a></li> {% endcomment %}
@@ -200,14 +196,14 @@ Products
 {% endblock %}
 {% block js %}
 <script>
-let pagination = (e)=>{
-    e.preventDefault();
-    let pageN = e.target.dataset.href;
-    let searchForm = document.getElementById('search-form');
-    searchForm.action = '/shop/search/'+pageN
-    // console.log(searchForm)
-    searchForm.submit()
-}
+    let pagination = (e) => {
+        e.preventDefault();
+        let pageN = e.target.dataset.href;
+        let searchForm = document.getElementById('search-form');
+        searchForm.action = '/shop/search/' + pageN
+        // console.log(searchForm)
+        searchForm.submit()
+    }
 </script>
 {% endblock js %}
 {% comment %} <div id="sidebar">

@@ -28,11 +28,17 @@ document.addEventListener("DOMContentLoaded", (e) => {
         .then((res) => res.json())
         .then((res) => {
           // console.log(res);
-          if (res["status"] == 400) {
-            console.error("malformed data");
+          if (res["status"] != 200) {
+            alert(
+              "error occured !!, make sure cart no empty or try again after some time"
+            );
+            console.error("error : ", res.payload);
             return;
           }
-          if (res["status"] != 200) return;
+          // if (res["status"] == 400) {
+          //   console.error("malformed data");
+          //   return;
+          // }
           // orderCreated = true;
           // console.log(res);
           data = res["rapay_data"];

@@ -2,10 +2,8 @@ from django.urls import path
 from . import views
 
 urlpatterns = [
-    path('start/', views.start, name="order_start"),
+    path('create/', views.create_order, name="create_order"),
+    path('buy/<int:product_id>', views.buy_now, name="buy_now"),
+
     path('order/<int:order_id>', views.order_details, name="order_details"),
-    path('address/', views.address, name="order_address"),
-    path('add_address/', views.add_address, name="order_add_address"),
-    path('order_details/', views.verify_order, name="order_verify_details"),
-    path('create_order/', views.create_order, name="order_create"),
 ]
