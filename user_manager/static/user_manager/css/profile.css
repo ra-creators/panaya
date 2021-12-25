@@ -192,13 +192,11 @@ a{
     color: #333333;
 }
 
-.edit-button-wrapper{
+/* .show-orders{
     display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    vertical-align: middle;
-}
+    flex-direction: row;
+    justify-content: space-between;
+} */
 
 /* Responsive */
 @media only screen and (max-width: 700px) {
