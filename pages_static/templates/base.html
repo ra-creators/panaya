@@ -129,10 +129,10 @@
                         <h2>Stay In Touch</h2>
                     </div>
                     <p>Hear about our new woven treasures and more...</p>
-                    <form class='align-center form-row' action="" method='POST'>
+                    <form class='align-center form-row'>
                         {% csrf_token %}
-                        <input class='col-7' type="email" placeholder="Enter your E-mail" name='email'>
-                        <input class='btn btn-warning col-3' type="submit" value='Send'>
+                        <input class='col-7' type="email" placeholder="Enter your E-mail" name='email' id='send-email'>
+                        <input class='btn btn-warning col-3' id='email-send-button' type="submit" value='Send'>
                     </form>
                 </div>
             </div>
@@ -153,5 +153,27 @@
     {% block js %}
     {% endblock %}
 </body>
-
+<script>
+    $('#email-send-button').click(function(e) {
+        e.preventDefault();
+        $.ajax({
+            url: "{% url 'contactUsEmailSend' %}",
+            type: "POST",
+            data: {
+                'email': $('#send-email').val(),
+            },
+            success: function(response) {
+                if (response == 200) {
+                    $('#email-send-button').attr('disabled', true);
+                    $('#email-send-button').val('Sent');
+                } else {
+                    alert('Error');
+                }
+            },
+            error: function(response) {
+                alert("Email Already Exists");
+            }
+        });
+    });
+</script>
 </html>

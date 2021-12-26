@@ -1,4 +1,5 @@
 import json
+from datetime import datetime, timedelta
 from django.http.response import HttpResponseBadRequest, HttpResponseNotFound, HttpResponsePermanentRedirect
 from django.shortcuts import redirect, render
 from django.contrib.auth.decorators import login_required
@@ -9,7 +10,7 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 from django.views.generic import View
 from django.contrib.auth import get_user_model
 from django.contrib import messages
-from .models import OTP
+from .models import OTP, ConnectEmails
 from .helpers import *
 # Create your views here.
 
@@ -129,7 +130,10 @@ class OTPCheck(View):
         otp = request.POST.get('otp')
         if otp:
             otp_ = OTP.objects.get(user=User.objects.get(email=email))
-            if otp == otp_.otp :
+            if otp == otp_.otp:
+                if otp_.created + timedelta(minutes=15) > datetime.now():
+                    messages.error(request, 'OTP Expired')
+                    return redirect('reset_password')
                 request.session['password_change'] = True
                 return redirect('password_change')
             else:
@@ -241,6 +245,7 @@ def profile_edit_address_success(request):
             return HttpResponseNotFound()    
     return HttpResponseBadRequest()
 
+
 @login_required
 def orders_tracking(request):
     return render(request, 'user_manager/orders.html')
@@ -266,3 +271,13 @@ def update_phone(request, user_id):
         return HttpResponse(200)
     return HttpResponse(400)
 
+@csrf_exempt
+def contactUsEmailSend(request):
+    if request.method == 'POST':
+        email = request.POST.get('email')
+        if ConnectEmails.objects.filter(email=email).exists():
+            return HttpResponse(400)
+        email_ = ConnectEmails.objects.create(email=email)
+        email_.save()
+        return HttpResponse(200)
+    return HttpResponseBadRequest()

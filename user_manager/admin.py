@@ -1,6 +1,6 @@
 from django.contrib import admin
 from django.contrib.auth import get_user_model
-from .models import OTP, UserAddress
+from .models import OTP, UserAddress, ConnectEmails
 from orders.models import Order
 User = get_user_model()
 
@@ -30,3 +30,4 @@ class UserAdmin(admin.ModelAdmin):
 
 
 admin.site.register(OTP)
+admin.site.register(ConnectEmails)

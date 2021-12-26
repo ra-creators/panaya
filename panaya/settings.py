@@ -50,7 +50,8 @@ INSTALLED_APPS = [
     'blogs',
     'cart',
     'orders',
-    'razor_pay'
+    'razor_pay',
+    'coupons',
 ]
 
 MIDDLEWARE = [

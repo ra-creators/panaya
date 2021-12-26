@@ -17,4 +17,5 @@ urlpatterns = [
     path('otp_check/', views.OTPCheck.as_view(), name='otp_check'),
     path('password_change/', views.PasswordChangeView.as_view(), name='password_change'),
     path('profile/api/user/<int:user_id>/', views.update_phone, name='update_phone'),
+    path('api/add_contact_email/', views.contactUsEmailSend, name='contactUsEmailSend'),
 ]
