@@ -24,6 +24,7 @@ urlpatterns = [
     path('orders/', include('orders.urls')),
     path('shop/', include('product.urls')),
     path('cart/', include('cart.urls')),
+    path('connect/', include('connectUs.urls')),
     path('', include('pages_static.urls')),
     path('blogs/', include('blogs.urls')),
     path('razor_pay/', include('razor_pay.urls')),

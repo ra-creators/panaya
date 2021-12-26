@@ -89,12 +89,3 @@ class UserAddress(models.Model):
     def fname(self):
         return (self.first_name + " " + self.last_name)
 
-
-class ConnectEmails(models.Model):
-    email = models.EmailField(max_length=255, unique=True)
-
-    def __str__(self):
-        return self.email
-
-    class Meta:
-        verbose_name_plural = 'ConnectEmails'

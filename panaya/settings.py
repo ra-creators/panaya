@@ -52,6 +52,7 @@ INSTALLED_APPS = [
     'orders',
     'razor_pay',
     'coupons',
+    'connectUs',
 ]
 
 MIDDLEWARE = [

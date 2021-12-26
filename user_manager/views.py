@@ -10,7 +10,7 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 from django.views.generic import View
 from django.contrib.auth import get_user_model
 from django.contrib import messages
-from .models import OTP, ConnectEmails
+from .models import OTP
 from .helpers import *
 # Create your views here.
 
@@ -270,14 +270,3 @@ def update_phone(request, user_id):
         user.save()
         return HttpResponse(200)
     return HttpResponse(400)
-
-@csrf_exempt
-def contactUsEmailSend(request):
-    if request.method == 'POST':
-        email = request.POST.get('email')
-        if ConnectEmails.objects.filter(email=email).exists():
-            return HttpResponse(400)
-        email_ = ConnectEmails.objects.create(email=email)
-        email_.save()
-        return HttpResponse(200)
-    return HttpResponseBadRequest()
