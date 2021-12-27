@@ -219,6 +219,7 @@ footer {
 footer a {
   text-decoration: none;
   color: #ffce76;
+  display: flex;
 }
 
 footer .footer-left {
@@ -315,7 +316,7 @@ footer a:hover {
 }
 .hamburger {
   display: none;
-  position: fixed;
+  position: absolute !important;
   float: right;
   top: 0;
   margin-right: 20px;
@@ -330,10 +331,57 @@ footer a:hover {
   margin: 5px auto;
   -webkit-transition: all 0.3s ease-in-out;
   transition: all 0.3s ease-in-out;
-  background-color: #101010;
+  background-color: #ffce76;
 }
 .mnav{
   display: none;
+}
+.logos{
+  display: flex;
+  justify-content: space-between;
+  width: 20%;
+}
+#pop_up{
+  display: none;
+  position: fixed;
+  top: 0;
+  z-index: 999;
+  width: 100%;
+  height: 100vh;
+  align-items: center;
+}
+#pop_up.active{
+  display: flex;
+}
+.p_cont{
+  background: #8d0020;
+  padding: 5%;
+  color: white;
+  width : 40%;
+  margin: auto;
+}
+.cross{
+  float: right;
+  transform: rotate(45deg);
+  color: #ffce76;
+  font-size: 30px;
+  font-weight: bolder;
+  margin-top: -10%;
+  cursor: pointer;
+}
+.p_cont label {
+  color: #ffce76;
+  font-size: 20px;
+  font-weight: bold;
+}
+.sub_btn {
+  border: none;
+  background: #ffce76;
+}
+.nav_items{
+  color: #8d0020;
+  background: #ffe65c;
+  border-radius: 10px;
 }
 /*# sourceMappingURL=styles.css.map */
 
@@ -381,7 +429,21 @@ footer a:hover {
       transform: translateY(-8px) rotate(-45deg);
   }
   .mnav.active{
-    display: grid;
+    display: block;
+    width: auto;
+  }
+  .logos{
+    width: 30%;
+  }
+  .p_cont{
+    width: 90%;
+  }
+  .p_cont input {
+    width: -webkit-fill-available;
+  }
+  .cross{
+    margin-top: -4%;
+    font-size: 25px;
   }
 }
 @media only screen and (min-width: 700px) and (max-width: 900px) {
@@ -390,5 +452,8 @@ footer a:hover {
   }
   header nav div{
     width: 30%;
+  }
+  .mail_input{
+    font-size: 8px;
   }
 }

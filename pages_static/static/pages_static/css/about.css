@@ -353,6 +353,7 @@ footer{
 footer a{
     text-decoration: none;
     color: #FFCE76;
+    display: flex;
 }
 
 .footer-left{
