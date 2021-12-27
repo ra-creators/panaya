@@ -98,10 +98,12 @@ def create_order(request):
     items = json.loads(request.body)['items']
     requesting_url = json.loads(request.body)['requestingUrl']
 
-    if request.session.get('coupon_id'):
+    if cart.coupon:
         order = Order.objects.create(
             user=request.user,
             address_id=addr_id,
+            coupon=cart.coupon,
+            discount=cart.coupon.discount,
         )
     else:
         order = Order.objects.create(

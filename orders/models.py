@@ -20,6 +20,7 @@ class Order(models.Model):
                                null=True,
                                blank=True,
                                on_delete=models.SET_NULL)
+    discount = models.IntegerField(default=0)
     created = models.DateTimeField(auto_now_add=True)
     updated = models.DateTimeField(auto_now=True)
     paid = models.BooleanField(default=False)
@@ -33,7 +34,8 @@ class Order(models.Model):
         return f"Order {self.id}"
 
     def get_total_cost(self):
-        return float(sum(item.get_cost() for item in self.items.all()))
+        total_cost = sum(item.get_cost() for item in self.items.all())
+        return total_cost - total_cost * (self.discount / 100)
 
     @property
     def name(self):
