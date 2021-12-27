@@ -89,16 +89,18 @@ Cart
                 code: c
             },
             success: function(response) {
-                if (response == 200){
-                    alert("Success");
-                    /*if (data.status == 'success') {
-                        $('#cart-total').html(data.total);
-                    } else {
-                        alert(data.message);
-                    }*/
+                console.log(response);
+                var data = JSON.parse(response);
+                if (data.status == 'success'){
+                    $('#cart-total').html(data.total);
+                    $('#promo-apply-button').html('Applied');
+                    $('#promo-apply-button').attr('disabled', true);
                 } else {
                     alert("Invalid Code");
                 }
+            },
+            error: function(response) {
+                alert("Error");
             }
         });
     });

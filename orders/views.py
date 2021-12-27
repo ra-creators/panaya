@@ -98,10 +98,16 @@ def create_order(request):
     items = json.loads(request.body)['items']
     requesting_url = json.loads(request.body)['requestingUrl']
 
-    order = Order.objects.create(
-        user=request.user,
-        address_id=addr_id
-    )
+    if request.session.get('coupon_id'):
+        order = Order.objects.create(
+            user=request.user,
+            address_id=addr_id,
+        )
+    else:
+        order = Order.objects.create(
+            user=request.user,
+            address_id=addr_id,
+        )
 
     try:
         for item in items:

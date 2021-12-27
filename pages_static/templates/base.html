@@ -160,10 +160,9 @@
                         <h2>Stay In Touch</h2>
                     </div>
                     <p>Hear about our new woven treasures and more...</p>
-                    <form class='align-center form-row' action="" method='POST'>
-                        {% csrf_token %}
-                        <input class='col-7' type="email" placeholder="Enter your E-mail" name='email'>
-                        <input class='btn btn-warning col-3' type="submit" value='Send'>
+                    <form class='align-center form-row'>
+                        <input class='col-7' type="email" placeholder="Enter your E-mail" name='email' id='email'>
+                        <input class='btn btn-warning col-3' id='email-send-button' type="submit" value='Send'>
                     </form>
                 </div>
             </div>
@@ -181,10 +180,34 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/js/all.min.js"
         integrity="sha512-Tn2m0TIpgVyTzzvmxLNuqbSJH3JP8jm+Cy3hvHrW7ndTDcJ1w5mBiksqDBb8GpE2ksktFvDB/ykZ0mDpsZj20w=="
         crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     {% block js %}
     {% endblock %}
 </body>
 <script>
+
+    $('#email-send-button').click(function(e) {
+        e.preventDefault();
+        $.ajax({
+            url: "{% url 'contactUsEmailSend' %}",
+            type: "POST",
+            data: {
+                'email': $('#email').val(),
+            },
+            success: function(response) {
+                if (response == 200) {
+                    $('#email-send-button').attr('disabled', true);
+                    $('#email-send-button').val('Sent');
+                } else {
+                    alert("Email Already Exists");
+                }
+            },
+            error: function(response) {
+                alert("Error");
+            }
+        });
+    });
+
     const hamburger = document.querySelector(".hamburger");
     const navMenu = document.querySelector(".mnav");
 
