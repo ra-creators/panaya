@@ -79,6 +79,7 @@ class UserAddress(models.Model):
     address = models.TextField(max_length=200)
     postal_code = models.CharField(max_length=6)
     city = models.CharField(max_length=200)
+    country = models.CharField(max_length=200, default="India")
 
     def __str__(self) -> str:
         return (self.postal_code + " : " + self.address[0:50])

@@ -52,9 +52,13 @@ Cart
         </div>
 
         <div class="i_name mt-3">PROMO Code</div>
-        <input class="e_promo mt-3" type="text" placeholder="ENTER CODE">
-        <br>
-        <button class="apply mt-3">Apply</button>
+
+        <form action="">
+            <input class="e_promo mt-3" type="text" placeholder="ENTER CODE" name='code' id='code'>
+            <br>
+            <button class="apply mt-3" id='promo-apply-button'>Apply</button>
+        </form>
+        
         <div class="row mt-5">
             <div class="col-sm-6 i_name">Total Cost</div>
             <div id="cart-total" class="col-sm-6 i_price">₹ 56000</div>
@@ -72,6 +76,31 @@ Cart
 <script>
     window.addEventListener("DOMContentLoaded", (event) => {
         cart = new Cart(true);
+    });
+
+    // write a ajax
+    $('#promo-apply-button').click(function(e) {
+        e.preventDefault();
+        var c = $('#code').val();
+        $.ajax({
+            url: "{% url 'promo_apply' %}",
+            type: "POST",
+            data: {
+                code: c
+            },
+            success: function(response) {
+                if (response == 200){
+                    alert("Success");
+                    /*if (data.status == 'success') {
+                        $('#cart-total').html(data.total);
+                    } else {
+                        alert(data.message);
+                    }*/
+                } else {
+                    alert("Invalid Code");
+                }
+            }
+        });
     });
 </script>
 {% endblock js %}
