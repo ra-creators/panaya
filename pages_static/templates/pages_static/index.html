@@ -64,9 +64,9 @@
             alt=""
           />
         </div>
-        <div class="conainer-lg m-2 m-md-5">
-          <div class="row g-2 g-md-5 row-cols-1 row-cols-md-2 row-cols-lg-3">
-            <div class="col text-center">
+        <div class="container" style="text-align: -webkit-center;">
+          <div class="row">
+            <div class="col-sm-4 mt-5 text-center">
               <div class="overlay-container">
                 <img
                   class="img-fluid"
@@ -76,7 +76,7 @@
                 <h4 class="overlay-text m-4 text-white">Banarasi Silk Saree</h4>
               </div>
             </div>
-            <div class="col text-center">
+            <div class="col-sm-4 mt-5 text-center">
               <div class="overlay-container">
                 <img
                   class="img-fluid"
@@ -86,7 +86,7 @@
                 <h4 class="overlay-text m-4 text-white">Jangla Saree</h4>
               </div>
             </div>
-            <div class="col text-center">
+            <div class="col-sm-4 mt-5 text-center">
               <div class="overlay-container">
                 <img
                   class="img-fluid"
@@ -96,7 +96,8 @@
                 <h4 class="overlay-text m-4 text-white">Tanchoi Saree</h4>
               </div>
             </div>
-            <div class="col text-center">
+            
+            <div class="col-sm-4 mt-5 text-center">
               <div class="overlay-container">
                 <img
                   class="img-fluid"
@@ -106,7 +107,7 @@
                 <h4 class="overlay-text m-4 text-white">Cutwork Saree</h4>
               </div>
             </div>
-            <div class="col text-center">
+            <div class="col-sm-4 mt-5 text-center">
               <div class="overlay-container">
                 <img
                   class="img-fluid"
@@ -116,7 +117,7 @@
                 <h4 class="overlay-text m-4 text-white">Jamdani Saree</h4>
               </div>
             </div>
-            <div class="col text-center">
+            <div class="col-sm-4 mt-5 text-center">
               <div class="overlay-container">
                 <img
                   class="img-fluid"
@@ -251,10 +252,44 @@
           <h1>Our Banaras Store</h1>
           <h3>Book an Appoinment</h3>
           <p>We are avaliable for online as well as in store appoinments</p>
-          <button class="btn btn-light">Book Now</button>
+          <button class="btn btn-light" onclick="OpenPopUp()">Book Now</button>
         </div>
       </section>
 
+      <div id="pop_up">
+        <div class="container p_cont">
+          <div class="cross" onclick="closePopUp()">+</div>
+          <form action="">
+            <div class="row mt-5">
+              <div class="col-6">
+                <label for="name">Name</label>
+              </div>
+              <div class="col-6">
+                <input type="text">
+              </div>
+            </div>
+            <div class="row mt-5">
+              <div class="col-6">
+                <label for="mobile">Mobile No.</label>
+              </div>
+              <div class="col-6">
+                <input type="number">
+              </div>
+            </div>
+            <div class="row mt-5">
+              <div class="col-6">
+                <label for="remark">Remarks</label>
+              </div>
+              <div class="col-6">
+                <input type="text">
+              </div>
+            </div>
+            <div class="text-center mt-5">
+              <input class="sub_btn" type="submit">
+            </div>
+          </form>
+        </div>
+      </div>
       <section class="mt-2" id="blogs">
         <div class="section-heading">
           <img src="{%static 'pages_static/images/section-heading-decor.png' %}" alt="" />
@@ -383,5 +418,14 @@
           },
         },
       });
+    </script>
+    <script>
+      const popUp = document.getElementById('pop_up')
+      function OpenPopUp() {
+        popUp.classList.add("active");
+      }
+      function closePopUp(){
+        popUp.classList.remove("active")
+      }
     </script>
 {% endblock body%}
