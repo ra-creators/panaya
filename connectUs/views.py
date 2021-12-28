@@ -3,6 +3,7 @@ from django.http import HttpResponse, HttpResponseBadRequest
 from django.views.decorators.csrf import csrf_exempt
 from .models import ConnectEmails, ConnectUs
 # Create your views here.
+
 @csrf_exempt
 def contactUsEmailSend(request):
     if request.method == 'POST':
@@ -14,13 +15,14 @@ def contactUsEmailSend(request):
         return HttpResponse(200)
     return HttpResponseBadRequest()
 
+
 @csrf_exempt
 def connectUs(request):
     if request.method == 'POST':
         email = request.POST.get('email')
         phone = request.POST.get('phone')
         name = request.POST.get('name')
-        query = request.POST.get('query')
+        query = request.POST.get('remarks')
         if email and phone and name and query:
             obj = ConnectUs.objects.create(
                 email=email, phone=phone, name=name, query=query)

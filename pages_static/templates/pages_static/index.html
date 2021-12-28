@@ -259,13 +259,22 @@
       <div id="pop_up">
         <div class="container p_cont">
           <div class="cross" onclick="closePopUp()">+</div>
-          <form action="">
+          <form>
+            {% csrf_token %}
             <div class="row mt-5">
               <div class="col-6">
                 <label for="name">Name</label>
               </div>
               <div class="col-6">
-                <input type="text">
+                <input type="text" id='contact-name' name="name">
+              </div>
+            </div>
+            <div class="row mt-5">
+              <div class="col-6">
+                <label for="name">Email</label>
+              </div>
+              <div class="col-6">
+                <input type="text" id='contact-email' name="email">
               </div>
             </div>
             <div class="row mt-5">
@@ -273,7 +282,7 @@
                 <label for="mobile">Mobile No.</label>
               </div>
               <div class="col-6">
-                <input type="number">
+                <input type="number" name="phone" id='contact-phone'>
               </div>
             </div>
             <div class="row mt-5">
@@ -281,11 +290,11 @@
                 <label for="remark">Remarks</label>
               </div>
               <div class="col-6">
-                <input type="text">
+                <input type="text" name='remarks' id='contact-remarks'>
               </div>
             </div>
             <div class="text-center mt-5">
-              <input class="sub_btn" type="submit">
+              <input class="sub_btn" type="submit" id='contact-send-button'>
             </div>
           </form>
         </div>
@@ -418,6 +427,31 @@
           },
         },
       });
+
+      $('#contact-send-button').click(function(e) {
+        e.preventDefault();
+        $.ajax({
+            url: "{% url 'contact_us' %}",
+            type: "POST",
+            data: {
+                'email': $('#contact-email').val(),
+                'phone': $('#contact-phone').val(),
+                'remarks': $('#contact-remarks').val(),
+                "name": $('#contact-name').val(),
+            },
+            success: function(response) {
+                if (response == 200) {
+                    alert("Contact Information Sent!");
+                } else {
+                    alert('Error');
+                }
+            },
+            error: function(response) {
+                alert("Error");
+            }
+        });
+    });
+
     </script>
     <script>
       const popUp = document.getElementById('pop_up')
