@@ -15,12 +15,12 @@ class Order(models.Model):
     address = models.ForeignKey(UserAddress, related_name='order_address',
                                 on_delete=models.CASCADE, null=False,
                                 blank=False)
-    coupon = models.ForeignKey(Coupon, 
+    coupon = models.ForeignKey(Coupon,
                                related_name='order_coupon',
                                null=True,
                                blank=True,
                                on_delete=models.SET_NULL)
-    discount = models.IntegerField(default=0)
+    discount = models.DecimalField(max_digits=10, decimal_places=2, default=0)
     created = models.DateTimeField(auto_now_add=True)
     updated = models.DateTimeField(auto_now=True)
     paid = models.BooleanField(default=False)
@@ -35,7 +35,7 @@ class Order(models.Model):
 
     def get_total_cost(self):
         total_cost = sum(item.get_cost() for item in self.items.all())
-        return total_cost - total_cost * (self.discount / 100)
+        return float(total_cost)
 
     @property
     def name(self):
@@ -43,10 +43,22 @@ class Order(models.Model):
 
     @property
     def total(self):
-        total = 0
-        for item in self.items.all():
-            total = total + item.get_cost()
-        return float(total)
+        return float(self.get_total_cost())-float(self.discount)
+
+    def save(self, *args, **kwargs):
+        try:
+            if(self.coupon):
+                # print(self.coupon)
+                if(self.coupon.percentage):
+                    self.discount = self.get_total_cost()*(self.coupon.discount/100)
+                else:
+                    self.discount = self.coupon.discount
+            if self.discount > self.get_total_cost():
+                self.discount = self.get_total_cost()
+
+        except Exception as err:
+            raise err
+        super().save(*args, **kwargs)
 
 
 class OrderItem(models.Model):

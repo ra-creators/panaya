@@ -103,7 +103,6 @@ def create_order(request):
             user=request.user,
             address_id=addr_id,
             coupon=cart.coupon,
-            discount=cart.coupon.discount,
         )
     else:
         order = Order.objects.create(
@@ -126,9 +125,13 @@ def create_order(request):
         return undo_create_order(order, 400, 'malformed data', str(e))
     # print(order)
 
+    # print('pre razorcall', order.coupon, order.discount, order.total)
+    order.save()
     try:
         order_data = {}
-        order_data['amount'] = math.floor(float(order.total)*100)
+        # print('razorcall', order.coupon, order.discount, order.total)
+        # print(order.total, order.total*100)
+        order_data['amount'] = ((order.total)*100)
         order_data['currency'] = 'INR'
 
         payment = razorpay.order.create(data=order_data)
@@ -142,8 +145,8 @@ def create_order(request):
         )
         context['status'] = 200
         context['redirect'] = '/orders/order/'+str(order.id)
-        if(requesting_url == '/orders/create/'):
-            cart.clear()
+        # if(requesting_url == '/orders/create/'):
+        # cart.clear()
     except Exception as e:
         # print('razorpay exception :', e)
         # order.delete()
@@ -161,6 +164,7 @@ def create_order(request):
 def order_details(request, order_id):
     context = {}
     order = get_object_or_404(Order, id=order_id)
+    # print('details', order.coupon, order.discount, order.total)
     if request.method == 'POST':
         order_data = {}
         order_data['key'] = razorpay_key['id']

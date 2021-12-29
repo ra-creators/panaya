@@ -58,7 +58,7 @@ Cart
             <br>
             <button class="apply mt-3" id='promo-apply-button'>Apply</button>
         </form>
-        
+
         <div class="row mt-5">
             <div class="col-sm-6 i_name">Total Cost</div>
             <div id="cart-total" class="col-sm-6 i_price">₹ 56000</div>
@@ -79,7 +79,7 @@ Cart
     });
 
     // write a ajax
-    $('#promo-apply-button').click(function(e) {
+    $('#promo-apply-button').click(function (e) {
         e.preventDefault();
         var c = $('#code').val();
         $.ajax({
@@ -88,18 +88,19 @@ Cart
             data: {
                 code: c
             },
-            success: function(response) {
-                console.log(response);
+            success: function (response) {
+                // console.log(response);
                 var data = JSON.parse(response);
-                if (data.status == 'success'){
+                if (data.status == 'success') {
                     $('#cart-total').html(data.total);
                     $('#promo-apply-button').html('Applied');
                     $('#promo-apply-button').attr('disabled', true);
+                    alert("promo applied")
                 } else {
                     alert("Invalid Code");
                 }
             },
-            error: function(response) {
+            error: function (response) {
                 alert("Error");
             }
         });
