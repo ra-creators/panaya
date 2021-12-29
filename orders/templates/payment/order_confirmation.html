@@ -44,12 +44,14 @@
     {% endfor %}
 
     <h5>Payment status :</h5>
-    {% if order.paid %}
-    {% for transaction in transactions.all %}
-    <div class="col">{{transaction}}</div>
-    <div class="col">{{transaction.timestamp|time}}</div>
-    {% endfor %}
+    <div>
+        {% if order.paid %}
+        {% for transaction in transactions.all %}
+        <div class="col">{{transaction}}</div>
+        <div class="col">{{transaction.timestamp|time}}</div>
+        {% endfor %}
     </div>
+    <a href="{{order_url}}">Details</a>
     {% else %}
     <h5>payment pending</h5>
     <a href="{{order_url}}">Continue to Pay</a>
