@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html>
+<style>
+    table {
+        font-family: arial, sans-serif;
+        border-collapse: collapse;
+        width: 100%;
+    }
+
+    td,
+    th {
+        border: 1px solid #dddddd;
+        text-align: left;
+        padding: 8px;
+    }
+
+    tr:nth-child(even) {
+        background-color: #dddddd;
+    }
+</style>
+
+<body>
+
+    <h4>{{order.user.get_full_name}} Thanks for shopping with us.</h4>
+
+    <h5>Your order details,</h5>
+    {% for item in order.items.all %}
+    <table>
+        <thead>
+            <tr>
+                <th>Item</th>
+                <th>Quantity</th>
+                <th>Total</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>{{ item.product.name }}</td>
+                <td>Qty-{{ item.quantity }} X Rs. {{item.price}}</td>
+                <td>Price-{{ item.sub_total }}</td>
+            </tr>
+        </tbody>
+    </table>
+    {% endfor %}
+
+    <h5>Payment status :</h5>
+    {% if order.paid %}
+    {% for transaction in transactions.all %}
+    <div class="col">{{transaction}}</div>
+    <div class="col">{{transaction.timestamp|time}}</div>
+    {% endfor %}
+    </div>
+    {% else %}
+    <h5>payment pending</h5>
+    <a href="{{order_url}}">Continue to Pay</a>
+    {% endif %}
+</body>

@@ -14,6 +14,10 @@ from razor_pay.models import RazorPayOrder
 from razor_pay.razorpay_key import razorpay, razorpay_key
 
 
+# mail util
+from utils.mail import order_confirmation
+
+
 @login_required
 def verify_order(request, product_id=None):
     context = {}
@@ -145,13 +149,16 @@ def create_order(request):
         )
         context['status'] = 200
         context['redirect'] = '/orders/order/'+str(order.id)
-        # if(requesting_url == '/orders/create/'):
-        # cart.clear()
+        if(requesting_url == '/orders/create/'):
+            cart.clear()
     except Exception as e:
         # print('razorpay exception :', e)
         # order.delete()
         return undo_create_order(order, 500, "razorpay api error", str(e))
-
+    try:
+        order_confirmation.send_order_confirmation_mail(request, order)
+    except Exception as err:
+        print("email error", err)
     return JsonResponse(context)
 
     # return render(request,
