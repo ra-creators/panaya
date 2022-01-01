@@ -10,6 +10,7 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/3.0/ref/settings/
 """
 
+from settings_secrets import *
 import os
 import django_on_heroku
 
@@ -50,7 +51,9 @@ INSTALLED_APPS = [
     'blogs',
     'cart',
     'orders',
-    'razor_pay'
+    'razor_pay',
+    'coupons',
+    'connectUs',
 ]
 
 MIDDLEWARE = [

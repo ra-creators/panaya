@@ -45,32 +45,24 @@
         </div>
     </div>
     <div class="col-sm-8" id='addr'>
-        <h2 class='details' style="margin-top: 3%;">Address</h2>
+        <h2 class='details' style="margin-top: 3%;">Orders</h2>
         <div class='address'>
             {% if user.is_authenticated %}
-                {% for address in request.user.addresses.all %}
+                {% for order in request.user.order_details.all %}
                     <div class='address-wrapper'>
                         <div>
-                            <p class='user-name-in-address'>{{ address.first_name }} {{ address.last_name }}<p>
-                            <p>{{ address.address }}</p>
-                            <p>{{ address.city }}, {{ address.postal_code }}</p>
-                            <p>India</p>
-                        </div>
-                        <div class='edit-button-wrapper'>
-                            <form method="post">
-                                {% csrf_token %}
-                                <input type="text" name='id' value="{{ address.id }}" hidden>
-                                <button class='edit-button btn btn-primary' formaction="{% url 'edit_address' %}">Edit</button>
-                                <button class='edit-button btn btn-primary' formaction="{% url 'delete_address' %}">Delete</button>
-                            </form>
+                            <div class='user-name-in-address show-orders'>
+                                {% for item in order.items.all %}
+                                    {{ item.product.name }}{% if not forloop.last %}, {% endif %}
+                                {% endfor %}    
+                            </div>
+                            <p>Price: {{ order.get_total_cost }}</p>
+                            <p>Date and Time: {{ order.updated }}</p>
                         </div>
                     </div>   
                 {% empty %}
                 {% endfor %}             
             {% endif %}
-        </div>
-        <div>
-            <a href="{% url 'add_address' %}" class='btn btn-primary'>Add</a>
         </div>
     </div>
 </div>
@@ -85,39 +77,5 @@
     integrity="sha384-QJHtvGhmr9XOIpI6YVutG+2QOK9T+ZnN4kzFN1RtK3zEFEIsxhlmWl5/YESvpZ13"
     crossorigin="anonymous"></script>
 
-<script>
-    function saveEventListener(){
-        document.getElementById('save-phone').addEventListener('click', function() {
-            // Check if input is len 10
-            if(document.getElementById('edit-phone-input').value.length == 10){
-                document.getElementById('edit-phone-input').disabled = true;
-                document.getElementById('save-phone').remove();
-                body_ = JSON.stringify({
-                    phone_number: document.getElementById('edit-phone-input').value
-                })
-                console.log(body_)
-                fetch('api/user/' + {{ request.user.id }} + '/', {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                    },
-                    body: body_
-                }).then(function(response) {
-                    return response.json();
-                }).then(function(data) {
-                    console.log(data);
-                    alert('Phone number updated successfully');
-                });    
-            } else {
-                alert('Phone number must be 10 digits long');
-            }
-        });
-    };
 
-    function editPhoneInputCheck(){
-        document.getElementById('edit-phone-input').disabled = false;
-        document.getElementById('edit-phone-wrapper').innerHTML += '<a href="#" class="save" id="save-phone">Save</a>'; 
-        saveEventListener();
-    }
-</script>
 {% endblock body %}
