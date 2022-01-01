@@ -1,5 +1,6 @@
 from django.db import models
 from product.models import Product
+from coupons.models import Coupon
 from user_manager.models import UserAddress
 from django.contrib.auth import get_user_model
 
@@ -11,14 +12,15 @@ User = get_user_model()
 class Order(models.Model):
     user = models.ForeignKey(
         User, related_name='order_details', on_delete=models.CASCADE)
-    # first_name = models.CharField(max_length=200)
-    # last_name = models.CharField(max_length=200)
-    # address = models.CharField(max_length=200)
-    # postal_code = models.CharField(max_length=6)
-    # city = models.CharField(max_length=200)
     address = models.ForeignKey(UserAddress, related_name='order_address',
                                 on_delete=models.CASCADE, null=False,
                                 blank=False)
+    coupon = models.ForeignKey(Coupon,
+                               related_name='order_coupon',
+                               null=True,
+                               blank=True,
+                               on_delete=models.SET_NULL)
+    discount = models.DecimalField(max_digits=10, decimal_places=2, default=0)
     created = models.DateTimeField(auto_now_add=True)
     updated = models.DateTimeField(auto_now=True)
     paid = models.BooleanField(default=False)
@@ -32,7 +34,8 @@ class Order(models.Model):
         return f"Order {self.id}"
 
     def get_total_cost(self):
-        return float(sum(item.get_cost() for item in self.items.all()))
+        total_cost = sum(item.get_cost() for item in self.items.all())
+        return float(total_cost)
 
     @property
     def name(self):
@@ -40,10 +43,22 @@ class Order(models.Model):
 
     @property
     def total(self):
-        total = 0
-        for item in self.items.all():
-            total = total + item.get_cost()
-        return float(total)
+        return float(self.get_total_cost())-float(self.discount)
+
+    def save(self, *args, **kwargs):
+        try:
+            if(self.coupon):
+                # print(self.coupon)
+                if(self.coupon.percentage):
+                    self.discount = self.get_total_cost()*(self.coupon.discount/100)
+                else:
+                    self.discount = self.coupon.discount
+            if self.discount > self.get_total_cost():
+                self.discount = self.get_total_cost()
+
+        except Exception as err:
+            raise err
+        super().save(*args, **kwargs)
 
 
 class OrderItem(models.Model):

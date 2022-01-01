@@ -14,6 +14,10 @@ from razor_pay.models import RazorPayOrder
 from razor_pay.razorpay_key import razorpay, razorpay_key
 
 
+# mail util
+from utils.mail import order_confirmation
+
+
 @login_required
 def verify_order(request, product_id=None):
     context = {}
@@ -98,10 +102,17 @@ def create_order(request):
     items = json.loads(request.body)['items']
     requesting_url = json.loads(request.body)['requestingUrl']
 
-    order = Order.objects.create(
-        user=request.user,
-        address_id=addr_id
-    )
+    if cart.coupon:
+        order = Order.objects.create(
+            user=request.user,
+            address_id=addr_id,
+            coupon=cart.coupon,
+        )
+    else:
+        order = Order.objects.create(
+            user=request.user,
+            address_id=addr_id,
+        )
 
     try:
         for item in items:
@@ -118,9 +129,13 @@ def create_order(request):
         return undo_create_order(order, 400, 'malformed data', str(e))
     # print(order)
 
+    # print('pre razorcall', order.coupon, order.discount, order.total)
+    order.save()
     try:
         order_data = {}
-        order_data['amount'] = math.floor(float(order.total)*100)
+        # print('razorcall', order.coupon, order.discount, order.total)
+        # print(order.total, order.total*100)
+        order_data['amount'] = ((order.total)*100)
         order_data['currency'] = 'INR'
 
         payment = razorpay.order.create(data=order_data)
@@ -140,7 +155,10 @@ def create_order(request):
         # print('razorpay exception :', e)
         # order.delete()
         return undo_create_order(order, 500, "razorpay api error", str(e))
-
+    try:
+        order_confirmation.send_order_confirmation_mail(request, order)
+    except Exception as err:
+        print("email error", err)
     return JsonResponse(context)
 
     # return render(request,
@@ -153,6 +171,7 @@ def create_order(request):
 def order_details(request, order_id):
     context = {}
     order = get_object_or_404(Order, id=order_id)
+    # print('details', order.coupon, order.discount, order.total)
     if request.method == 'POST':
         order_data = {}
         order_data['key'] = razorpay_key['id']

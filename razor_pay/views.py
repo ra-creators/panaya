@@ -8,6 +8,9 @@ from orders.models import Order
 # razor pay
 from .razorpay_key import razorpay
 
+# mail utils
+from utils.mail import payment_recieved
+
 
 @csrf_exempt
 def rp_callback(request):
@@ -29,7 +32,7 @@ def rp_callback(request):
     try:
         order = Order.objects.get(razorpay_order_id=data['razorpay_order_id'])
         rp_order = RazorPayOrder.objects.get(order=order)
-        Transaction.objects.create(
+        transaction = Transaction.objects.create(
             order=order,
             razorpay_order=rp_order,
             payment_id=data['razorpay_payment_id'],
@@ -37,6 +40,11 @@ def rp_callback(request):
         )
         order.paid = True
         order.save()
+        try:
+            payment_recieved.send_mail(
+                request=request, transaction=transaction)
+        except Exception as err:
+            print(err)
         return redirect('order_details', order.id)
     except:
         return HttpResponse('error occured')

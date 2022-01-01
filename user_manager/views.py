@@ -1,10 +1,12 @@
 import json
-from django.http.response import HttpResponsePermanentRedirect
+from datetime import datetime, timedelta
+from django.http.response import HttpResponseBadRequest, HttpResponseNotFound, HttpResponsePermanentRedirect
 from django.shortcuts import redirect, render
 from django.contrib.auth.decorators import login_required
 from django.views.decorators.csrf import csrf_exempt
 from django.http import HttpResponse
 from django.contrib.auth import authenticate, login, logout
+from django.contrib.auth.mixins import LoginRequiredMixin
 from django.views.generic import View
 from django.contrib.auth import get_user_model
 from django.contrib import messages
@@ -128,7 +130,10 @@ class OTPCheck(View):
         otp = request.POST.get('otp')
         if otp:
             otp_ = OTP.objects.get(user=User.objects.get(email=email))
-            if otp == otp_.otp :
+            if otp == otp_.otp:
+                if otp_.created + timedelta(minutes=15) > datetime.now():
+                    messages.error(request, 'OTP Expired')
+                    return redirect('reset_password')
                 request.session['password_change'] = True
                 return redirect('password_change')
             else:
@@ -161,13 +166,99 @@ class PasswordChangeView(View):
         messages.success(request, "Password changed successfully")
         return redirect('login')
 
+class ProfileAddAddress(LoginRequiredMixin, View):
+    def get(self, request):
+        return render(request, 'user_manager/profile_add_address.html')
+
+    def post(self, request):
+        fname = request.POST.get('fname')
+        lname = request.POST.get('lname')
+        address = request.POST.get('address')
+        city = request.POST.get('city')
+        postal_code = request.POST.get('postalcode')
+        if len(postal_code) != 6:
+            messages.error(request, "Postal Code Length should be 6")
+            return redirect('add_address')
+        if fname and lname and address and city and postal_code:
+            address_ = request.user.addresses.create(
+                user=request.user,
+                first_name=fname,
+                last_name=lname,
+                address=address,
+                city=city,
+                postal_code=postal_code
+            )
+            address_.save()
+            messages.success(request, "Address added successfully")
+            return redirect('address')
+        else:
+            messages.error(request, "Invalid")
+            return redirect('add_address')
+
+@login_required
+def profile_delete_address(request):
+    if request.method == 'POST':
+        address_id = request.POST.get('id')
+        if address_id:    
+            address = request.user.addresses.get(id=address_id)
+            if address:
+                address.delete()
+                return redirect('address')
+        else:
+            return HttpResponseNotFound()    
+    return HttpResponseBadRequest()
+
+@login_required
+def profile_edit_address(request):
+    if request.method == 'POST':
+        address_id = request.POST.get('id')
+        if address_id:    
+            address = request.user.addresses.get(id=address_id)
+            if address:
+                return render(request, 'user_manager/profile_edit_address.html', {"address": address})
+        else:
+            return HttpResponseNotFound()    
+    return HttpResponseBadRequest()
+
+@login_required
+def profile_edit_address_success(request):
+    if request.method == 'POST':
+        print("hello")
+        address_id = request.POST.get('id')
+        fname = request.POST.get('fname')
+        lname = request.POST.get('lname')
+        address = request.POST.get('address')
+        city = request.POST.get('city')
+        postal_code = request.POST.get('postalcode')
+        if address_id:
+            print("hi")    
+            address_ = request.user.addresses.get(id=address_id)
+            if address_:
+                address_.first_name = fname
+                address_.last_name = lname
+                address_.address = address
+                address_.city = city
+                address_.postal_code = postal_code
+                address_.save()
+                return redirect('address')
+        else:
+            return HttpResponseNotFound()    
+    return HttpResponseBadRequest()
+
+
+@login_required
+def orders_tracking(request):
+    return render(request, 'user_manager/orders.html')
+
 @login_required
 def profile(request):
     return render(request, 'user_manager/profile.html')
 
+
 @login_required
 def profile_address(request):
     return render(request, 'user_manager/profile_address.html')
+
 
 @login_required
 @csrf_exempt
@@ -179,4 +270,3 @@ def update_phone(request, user_id):
         user.save()
         return HttpResponse(200)
     return HttpResponse(400)
-
