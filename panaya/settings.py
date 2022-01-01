@@ -11,7 +11,8 @@ https://docs.djangoproject.com/en/3.0/ref/settings/
 """
 
 import os
-import django_on_heroku
+from settings_secrets import *
+#import django_on_heroku
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -26,7 +27,7 @@ SECRET_KEY = 'ro0jv0uf-^wymeildct2q0=!(er1u77xer(ar!@vgde+8!r=b8'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['184.168.125.149','panaya.in','www.panaya.in']
 
 
 # Application definition
@@ -94,6 +95,8 @@ DATABASES = {
     }
 }
 
+DATABASES['default'] = database_prod if database_prod else DATABASES['default']
+
 
 # Password validation
 # https://docs.djangoproject.com/en/3.0/ref/settings/#auth-password-validators
@@ -136,11 +139,12 @@ LOGOUT_URL = 'logout'
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/3.0/howto/static-files/
 
-STATIC_URL = '/static/'
+# STATIC_URL = '/static/'
+STATIC_URL = 'https://static.panaya.in/panaya_static_media/static/'
 STATIC_ROOT = 'staticfiles'
 
 # media
-MEDIA_URL = '/media/'
+MEDIA_URL = 'https://static.panaya.in/panaya_static_media/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
 # ckeditor
@@ -152,4 +156,4 @@ CKEDITOR_UPLOAD_SLUGIFY_FILENAME = False
 CART_SESSION_ID = 'cart'
 
 
-django_on_heroku.settings(locals())
+#django_on_heroku.settings(locals())
