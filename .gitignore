@@ -6,4 +6,6 @@ media
 **/*.css.map
 .vscode
 rzp.csv
+rzp_genuine.csv
 settings_secrets.py
+httpd/

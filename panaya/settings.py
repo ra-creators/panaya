@@ -26,9 +26,9 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SECRET_KEY = 'ro0jv0uf-^wymeildct2q0=!(er1u77xer(ar!@vgde+8!r=b8'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = os.environ['DEBUG'] if 'DEBUG' in os.environ else False
 
-ALLOWED_HOSTS = ['184.168.125.149','panaya.in','www.panaya.in']
+ALLOWED_HOSTS = ['184.168.125.149','panaya.in','www.panaya.in','dev.panaya.in']
 
 
 # Application definition
@@ -143,11 +143,11 @@ LOGOUT_URL = 'logout'
 # https://docs.djangoproject.com/en/3.0/howto/static-files/
 
 # STATIC_URL = '/static/'
-STATIC_URL = 'https://static.panaya.in/panaya_static_media/static/'
+STATIC_URL = 'https://static.panaya.in/static/'
 STATIC_ROOT = 'staticfiles'
 
 # media
-MEDIA_URL = 'https://static.panaya.in/panaya_static_media/media/'
+MEDIA_URL = 'https://static.panaya.in/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
 # ckeditor
