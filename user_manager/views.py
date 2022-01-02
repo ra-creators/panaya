@@ -176,6 +176,7 @@ class ProfileAddAddress(LoginRequiredMixin, View):
         address = request.POST.get('address')
         city = request.POST.get('city')
         postal_code = request.POST.get('postalcode')
+        country = request.POST.get('country')
         if len(postal_code) != 6:
             messages.error(request, "Postal Code Length should be 6")
             return redirect('add_address')
@@ -186,7 +187,8 @@ class ProfileAddAddress(LoginRequiredMixin, View):
                 last_name=lname,
                 address=address,
                 city=city,
-                postal_code=postal_code
+                postal_code=postal_code,
+                country=country,
             )
             address_.save()
             messages.success(request, "Address added successfully")
@@ -238,6 +240,7 @@ def profile_edit_address_success(request):
                 address_.last_name = lname
                 address_.address = address
                 address_.city = city
+                address_.country = country
                 address_.postal_code = postal_code
                 address_.save()
                 return redirect('address')
