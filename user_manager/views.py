@@ -10,9 +10,14 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 from django.views.generic import View
 from django.contrib.auth import get_user_model
 from django.contrib import messages
+from django.utils import timezone
 from .models import OTP
 from .helpers import *
 # Create your views here.
+
+# mail util
+from utils.mail import otp_mail
+
 
 User = get_user_model()
 
@@ -102,18 +107,19 @@ class ForgotPassword(View):
             messages.error(request, 'Email doesn\'t exists')
             return redirect('forgot_password')
         otp_ = generate_otp()
+        user = User.objects.get(email=email)
         # Check if OTP key already exists and override it if exists
-        if not OTP.objects.filter(user=User.objects.get(email=email)).exists():
+        if not OTP.objects.filter(user=user).exists():
             otp = OTP.objects.create(
-                user=User.objects.get(email=email),
+                user=user,
                 otp=otp_
             )
         else:
-            otp = OTP.objects.get(user=User.objects.get(email=email))
+            otp = OTP.objects.get(user=user)
             otp.otp = otp_
             otp.save()
         # Send OTP to user's email
-
+        otp_mail.send_mail(user, otp_)
         request.session['email'] = email
         return redirect('otp_check')
 
@@ -131,7 +137,7 @@ class OTPCheck(View):
         if otp:
             otp_ = OTP.objects.get(user=User.objects.get(email=email))
             if otp == otp_.otp:
-                if otp_.created + timedelta(minutes=15) > datetime.now():
+                if otp_.created + timedelta(minutes=15) > timezone.make_aware(datetime.now()):
                     messages.error(request, 'OTP Expired')
                     return redirect('reset_password')
                 request.session['password_change'] = True
