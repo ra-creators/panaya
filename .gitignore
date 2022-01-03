@@ -9,3 +9,5 @@ rzp.csv
 rzp_genuine.csv
 settings_secrets.py
 httpd/
+razor_pay/razorpay_key.py
+.ftpquota

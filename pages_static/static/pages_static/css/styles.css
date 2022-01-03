@@ -196,17 +196,15 @@ header #nav {
 header nav a {
   text-decoration: none;
   color: #ffe65c;
-  padding: 0 9%;
   margin-bottom: 1%;
   margin-top: 7%;
 }
 
 header nav div {
   width: 33%;
-  display: -webkit-box;
-  display: -ms-flexbox;
   display: flex;
   margin: 0 10px;
+  justify-content: space-evenly;
 }
 
 /* Footer */
@@ -291,7 +289,7 @@ footer a:hover {
   min-height: 50rem;
 }
 
-#explore-banaras {
+.explore-banaras {
   background-image: url("/static/pages_static/images/index/explore-banaras-bg.png");
   background-repeat: no-repeat;
   background-size: cover;
@@ -379,9 +377,69 @@ footer a:hover {
   background: #ffce76;
 }
 .nav_items{
-  color: #8d0020;
-  background: #ffe65c;
-  border-radius: 10px;
+    color: #8d0020 !important;
+    background: #ffe65c;
+    border-radius: 10px;
+    padding: 1.9%;
+}
+
+.e_name{
+  font-family: Analogue;
+  font-style: normal;
+  font-weight: normal;
+}
+.h_underline{
+  text-decoration: underline solid #000000;
+}
+.story{
+  font-family: Analogue;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 25.1437px;
+  line-height: 34px;
+  text-align: center;
+  color: #000000;
+}
+.story_img{
+  border-radius: 50%;
+  width: 140px;
+  height: 140px;
+  transform: translateX(-3px);
+}
+.story_btn{
+  border-radius: 50%;
+  width: 150px;
+  height: 150px;
+  background: linear-gradient(318.05deg, #DA8741 9.88%, #A83279 51.33%, #7723BE 82.94%);;
+}
+.story_div{
+  display: flex;
+  justify-content: space-evenly;
+  width: 50%;
+  margin: auto;
+}
+.hover_part1 , .hover_part2 , .hover_part3 ,.hover_part4 {
+  display: none;
+}
+.hov1:hover + .hover_part1 , .hov2:hover + .hover_part2 , .hov3:hover + .hover_part3 , .hov4:hover + .hover_part4 {
+  display: flex;
+  position: absolute;
+  background: url(/static/pages_static/images/index/instagram.svg);
+  width: 100%;
+  bottom: 0;
+  height: 100%;
+  background-repeat: no-repeat;
+  background-position: center;
+  background-color: #00000082;
+}
+a.nav-item {
+    font-family: Alegreya;
+    font-style: normal;
+    font-weight: bold;
+    font-size: 25px;
+    line-height: 30px;
+    text-align: center;
+    color: rgba(255, 206, 118, 0.86);
 }
 /*# sourceMappingURL=styles.css.map */
 
@@ -445,10 +503,26 @@ footer a:hover {
     margin-top: -4%;
     font-size: 25px;
   }
+  .story_div{
+    width: 100%;
+  }
+  .story_btn{
+    width: 100px;
+    height: 100px;
+  }
+  .story_img{
+    width: 90px;
+    height: 90px;
+  }
+  a.nav-item {
+    font-size: 20px;
+    line-height: 20px;
+  }
 }
+
 @media only screen and (min-width: 700px) and (max-width: 900px) {
   header nav a {
-    font-size: 15px;
+    font-size: 15px !important;
   }
   header nav div{
     width: 30%;

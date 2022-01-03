@@ -11,8 +11,12 @@ class UserProfileManager(BaseUserManager):
             raise ValueError('User must have an email address')
 
         email = self.normalize_email(email)
-        user = self.model(email=email, fname=fname, lname=lname,
+        if profile_pic:
+            user = self.model(email=email, fname=fname, lname=lname,
                           dob=dob, phone_number=phone_number, profile_pic=profile_pic)
+        else: 
+            user = self.model(email=email, fname=fname, lname=lname,
+                          dob=dob, phone_number=phone_number)                         
         user.set_password(password)
         user.save(using=self._db)
         return user
@@ -50,6 +54,12 @@ class User(AbstractBaseUser, PermissionsMixin):
 
     def get_dob(self):
         return self.dob
+
+    def get_profile_pic(self):
+        if profile_pic:
+            return profile_pic
+        else:
+            return 'default/images/profile_pic.png'
 
     def __str__(self):
         return self.email

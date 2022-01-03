@@ -26,7 +26,7 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SECRET_KEY = 'ro0jv0uf-^wymeildct2q0=!(er1u77xer(ar!@vgde+8!r=b8'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = os.environ['DEBUG'] if 'DEBUG' in os.environ else False
+DEBUG = os.environ['DEBUG'] if 'DEBUG' in os.environ else True
 
 ALLOWED_HOSTS = ['184.168.125.149','panaya.in','www.panaya.in','dev.panaya.in']
 

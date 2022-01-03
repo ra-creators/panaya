@@ -97,7 +97,7 @@ p{
     width: 90%;
 }
 
-.align-center{
+.align-center1{
     text-align: center;
     padding: 10px;
     margin: 10px;
@@ -138,37 +138,39 @@ p{
     padding: 2% 4%;
 }
 
-.vector{
+.vector {
     position: relative;
     font-size: 1.3rem;
+    display: flex;
+    justify-content: center;
 }
 
 .vector img{
     width: 100%;
 }
 
-#text-1{
+#text-1 {
     position: absolute;
-    top: 40%;
-    left: 14%;
     text-align: center;
     color: #FFCE76;
+    bottom: 0;
+    height: 60%;
 }
 
 #text-2{
     position: absolute;
-    top: 50%;
-    left: 47%;
     text-align: center;
     color: #BA002A;
+    bottom: 0;
+    height: 50%;
 }
 
 #text-3{
     position: absolute;
-    top: 50%;
-    left: 25%;
     text-align: center;
     color: #FFCE76;
+    bottom: 0;
+    height: 50%;
 }
 
 #section-4{

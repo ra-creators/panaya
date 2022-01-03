@@ -6,6 +6,11 @@
 Sign-up
 {% endblock title %}
 
+{% block css %}
+    <link rel="stylesheet" href="{% static 'user_manager/css/style.css' %}">
+{% endblock css %}
+
+
 {% block body %}
 
 <div class="sign-in-form">
@@ -18,41 +23,47 @@ Sign-up
     {% endif %}
     <form method='post' enctype="multipart/form-data">
         {% csrf_token %}
-        <h1>Sign in</h1>
+        <h1>Sign Up</h1>
         <p>Already a user? <a href="{% url 'login' %}">Log-in here</a></p>
         <div class="form-group">
-            <label for="email">Email</label>
-            <input type="text" class='entry' name="email" id="email" class="form-control" placeholder="Email">
+            <input type="text" class='entry' name="email" id="email" class="form-control" placeholder="Enter your Email Address" required>
         </div>
         <div class="form-group">
-            <label for="password">Password</label>
-            <input type="password" class='entry' name="password" id="password" class="form-control" placeholder="Password">
+           
+            <input type="password" class='entry' name="password" id="password" class="form-control" placeholder="Enter your Password" required>
         </div>
         <div class="form-group">
-            <label for="password2">Again Password</label>
-            <input type="password" class='entry' name="password2" id="password2" class="form-control" placeholder="Password">
+            
+            <input type="password" class='entry' name="password2" id="password2" class="form-control" placeholder="Re-Enter your Password" required>
         </div>
         <div class="form-group">
-            <label for="first_name">First Name</label>
-            <input type="text" class='entry' name="first_name" id="first_name" class="form-control" placeholder="First Name">    
+            
+            <input type="text" class='entry' name="first_name" id="first_name" class="form-control" placeholder="Enter your First Name" required>    
         </div>
         <div class="form-group">
-            <label for="last_name">Last Name</label>
-            <input type="text" class='entry' name="last_name" id="last_name" class="form-control" placeholder="Last Name">
+            
+            <input type="text" class='entry' name="last_name" id="last_name" class="form-control" placeholder="Enter your Last Name" required>
         </div>
         <div class="form-group">
-            <label for="phone">Phone</label>
-            <input type="text" class='entry' name="phone" id="phone" class="form-control" placeholder="Phone">
+           
+            <input type="text" class='entry' name="phone" id="phone" class="form-control" placeholder="Enter your Phone Number" required>
         </div>
         <div class='form-group'>
-            <label for="date_of_birth">Date of Birth</label>
-            <input type="date" class='entry' name="date_of_birth" id="date_of_birth" class="form-control" placeholder="Date of Birth">
+            <label for="date_of_birth" style="text-align: left;">Date of Birth</label>
+            <input type="date" class='entry' name="date_of_birth" id="date_of_birth" class="form-control" placeholder="Date of Birth" required>
         </div>
         <div class='form-group'>
-            <label for="date_of_birth">Profile Pic</label>
-            <input type="file" class='entry' accept="profile_pic/" name="profile_pic" id="profile_pic" class="form-control" >
+            <label for="date_of_birth" style="text-align: left;">Profile Pic</label>
+            <input type="file" class='entry' accept="profile_pic/" name="profile_pic" id="profile_pic" class="form-control" required>
         </div>
         <button type="submit" class="continue">Continue</button>
+        <hr>
+        <p class="or"> or </p>
+        <button type="button" id="signup-google" class="signup-google" ><i class="fab fa-google"></i>
+             Continue with Google</button>
+        <button type="button" id="signup-facebook" class="signup-facebook"><i class="fab fa-facebook-f"></i> Continue with Facebook</button>
+        <button type="button" id="signup-apple" class="signup-apple"> <i class="fab fa-apple"></i> Continue with Apple</button>
+
     </form>
 </div>
 {% endblock body %}
