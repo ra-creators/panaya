@@ -90,9 +90,9 @@ Cart
             },
             success: function (response) {
                 // console.log(response);
-                var data = JSON.parse(response);
+                let data = JSON.parse(response);
                 if (data.status == 'success') {
-                    $('#cart-total').html(data.total);
+                    $('#cart-total').html("Rs. "+String(data.total));
                     $('#promo-apply-button').html('Applied');
                     $('#promo-apply-button').attr('disabled', true);
                     alert("promo applied")

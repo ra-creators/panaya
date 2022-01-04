@@ -3,6 +3,7 @@ from django.conf import settings
 from product.models import Product
 from coupons.models import Coupon
 
+
 class Cart(object):
     """Class for Cart"""
 
@@ -87,9 +88,19 @@ class Cart(object):
         return None
 
     def get_discount(self):
-        if self.coupon:
-            return (self.coupon.discount / Decimal('100')) * self.get_total_price()
-        return Decimal('0')
+        # if self.coupon:
+        #     return (self.coupon.discount / Decimal('100')) * self.get_total_price()
+        # return Decimal('0')
+        if(self.coupon):
+            # print(self.coupon)
+            self.coupon.discount = Decimal(self.coupon.discount)
+            if(self.coupon.percentage):
+                discount = self.get_total_price()*self.coupon.discount/100
+            else:
+                discount = self.coupon.discount
+        if discount > self.get_total_price():
+            discount = self.get_total_price()
+        return discount
 
     def get_total_price_after_discount(self):
         return self.get_total_price() - self.get_discount()
