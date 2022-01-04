@@ -63,13 +63,18 @@
             <div class="col">
                 <div class="card mx-auto" style="max-width: 20rem;">
                     <div class="card-body">
+                        <img
+                            src="https://static.panaya.in/media/{{blog.image}}"
+                            class="card-img-top"
+                            alt=""
+                        />
                         <h5 class="card-title">{{blog.title}}</h5>
                         <div class="text-muted d-flex justify-content-between">
                             <p class="text-muted">{{blog.date | timesince}} ago</p>
                             <p> <i class="far fa-eye"></i> {{blog.views}}</p>
                         </div>
                         <div class="card-text" style="max-height:20rem; overflow:hidden">
-                            {{blog.content|safe}}
+                            {{blog.content|truncatewords:40|safe}}
                         </div>
                         <a href="{% url 'blog' blog.id %}">... Continue Reading</a>
 

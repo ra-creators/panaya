@@ -17,9 +17,14 @@
 </section>
 
 <section id='post' class='story container-md mx-auto'>
+
+    
     <div class='row'>
         <h1 class='col-12 align-center1'>{{blog.title}}</h1>
         <h5 class='col-12 text-muted align-center1'>{{blog.author|upper}} . {{blog.date|timesince}} ago</h5>
+        <div class='row text-center'>
+            <img src="https://static.panaya.in/media/{{blog.image}}" alt="blog thumbnail">
+        </div>
         <div class='text col-12' id='blog-text'>
             {{blog.content|safe}}
         </div>
