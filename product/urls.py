@@ -1,4 +1,4 @@
-from django.urls import path, re_path
+from django.urls import path
 from . import views
 
 urlpatterns = [
@@ -13,6 +13,11 @@ urlpatterns = [
     path('collections/', views.collections, name="collections"),
     path('collections/<slug:collection_slug>/', views.collections,
          name='product_list_by_collection'),
+
+    # types
+    path('types/', views.types, name="types"),
+    path('types/<slug:type_slug>/', views.types,
+         name='product_list_by_type'),
 
     # search
     path('search', views.product_search, name='product_search'),

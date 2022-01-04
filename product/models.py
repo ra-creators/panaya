@@ -27,6 +27,8 @@ class Tag(models.Model):
 class Category(models.Model):
     name = models.CharField(max_length=200, db_index=True)
     slug = models.SlugField(max_length=200, unique=True)
+    thumbnail = models.ImageField(
+        upload_to='products/categories/%Y/%m/%d', blank=True, default="/media/defaults/noimg.png")
 
     class Meta:
         ordering = ('name', )
@@ -36,6 +38,13 @@ class Category(models.Model):
     def __str__(self):
         return self.name
 
+    @property
+    def get_thumbnail(self):
+        if self.thumbnail:
+            return ("https://static.panaya.in/media/" + str(self.thumbnail))
+        else:
+            return "https://static.panaya.in/media/defaults/noimg.png"
+
     def get_absolute_url(self):
         return reverse('product_list_by_category',
                        args=[self.slug])
@@ -44,6 +53,8 @@ class Category(models.Model):
 class Collection(models.Model):
     name = models.CharField(max_length=200, db_index=True)
     slug = models.SlugField(max_length=200, unique=True)
+    thumbnail = models.ImageField(
+        upload_to='products/collections/%Y/%m/%d', blank=True, default="/media/defaults/noimg.png")
 
     class Meta:
         ordering = ('name', )
@@ -53,8 +64,41 @@ class Collection(models.Model):
     def __str__(self):
         return self.name
 
+    @property
+    def get_thumbnail(self):
+        if self.thumbnail:
+            return ("https://static.panaya.in/media/" + str(self.thumbnail))
+        else:
+            return "https://static.panaya.in/media/defaults/noimg.png"
+
     def get_absolute_url(self):
         return reverse('product_list_by_collection',
+                       args=[self.slug])
+
+
+class Type(models.Model):
+    name = models.CharField(max_length=200, db_index=True)
+    slug = models.SlugField(max_length=200, unique=True)
+    thumbnail = models.ImageField(
+        upload_to='products/types/%Y/%m/%d', blank=True, default="/media/defaults/noimg.png")
+
+    class Meta:
+        ordering = ('name', )
+        verbose_name = 'type'
+        verbose_name_plural = 'types'
+
+    def __str__(self):
+        return self.name
+
+    @property
+    def get_thumbnail(self):
+        if self.thumbnail:
+            return ("https://static.panaya.in/media/" + str(self.thumbnail))
+        else:
+            return "https://static.panaya.in/media/defaults/noimg.png"
+
+    def get_absolute_url(self):
+        return reverse('product_list_by_type',
                        args=[self.slug])
 
 
@@ -63,6 +107,8 @@ class Product(models.Model):
         Category, related_name='products', on_delete=models.SET_NULL, null=True, blank=True)
     collection = models.ForeignKey(
         Collection, related_name='products', on_delete=models.SET_NULL, null=True, blank=True)
+    type = models.ForeignKey(
+        Type, related_name='products', on_delete=models.SET_NULL, null=True, blank=True)
     name = models.CharField(max_length=200, db_index=True)
     slug = models.SlugField(max_length=200, db_index=True)
     description = models.TextField(blank=True)
@@ -87,7 +133,9 @@ class Product(models.Model):
         return reverse('product_detail', args=[self.id, self.slug])
 
     def get_primary_img(self):
-        return self.images.all()[0]
+        if self.images.all():
+            return self.images.all()[0]
+        return "https://static.panaya.in/media/defaults/noimg.png"
 
     def update_rating(self, new_rating):
         self.avg_rating = ((self.avg_rating*self.no_rating) +

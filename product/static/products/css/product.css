@@ -2,6 +2,9 @@ body {
   background: #ffefd1;
 }
 
+a{
+    text-decoration: none !important;
+}
 .page-link {
   color: black;
   cursor: pointer;
@@ -24,16 +27,17 @@ body {
   background-position-x: 0%;
   background-position-y: 100%;
   max-width: 100vw;
+  height: 100vh;
 }
 
 #pop .cart {
-  font-size: 60px;
-  margin-top: 100px;
-  font-family: Poppins;
-  font-style: normal;
-  color: #f49d37eb;
-  font-weight: bolder;
-  text-decoration: underline;
+    font-size: 50px;
+    margin-top: 50px;
+    font-family: Poppins;
+    font-style: normal;
+    color: #f49d37eb;
+    font-weight: bolder;
+    text-decoration: underline;
 }
 
 #pop .cross {
@@ -53,6 +57,7 @@ body {
   color: #8d0020;
   font-weight: 900;
   cursor: pointer;
+  align-self: center;
 }
 
 #pop .cart_img {
@@ -97,28 +102,28 @@ body {
 
 #pop .sub_title {
   font-family: Poppins;
-  font-style: normal;
-  font-weight: 600;
-  font-size: 34px;
-  line-height: 96px;
-  color: #f49d37;
+    font-style: normal;
+    font-weight: 600;
+    font-size: 25px;
+    line-height: 50px;
+    color: #f49d37;
 }
 
+
 #pop .view_c {
-  border: 5px solid #f49d37;
-  -webkit-box-sizing: border-box;
-          box-sizing: border-box;
-  border-radius: 10px;
-  width: 70%;
-  margin-left: 15%;
-  height: 60px;
-  font-family: Poppins;
-  font-style: normal;
-  font-weight: 600;
-  font-size: 35.7735px;
-  line-height: 55px;
-  text-align: center;
-  color: #f49d37;
+    border: 5px solid #f49d37;
+    -webkit-box-sizing: border-box;
+    box-sizing: border-box;
+    border-radius: 10px;
+    width: 70%;
+    margin-left: 15%;
+    font-family: Poppins;
+    font-style: normal;
+    font-weight: 600;
+    font-size: 25.7735px;
+    line-height: 45px;
+    text-align: center;
+    color: #f49d37;
 }
 
 #pop .checkout {
@@ -126,12 +131,11 @@ body {
   border-radius: 10px;
   width: 70%;
   margin-left: 15%;
-  height: 60px;
   font-family: Poppins;
   font-style: normal;
   font-weight: 600;
-  font-size: 35.7735px;
-  line-height: 55px;
+  font-size: 25.7735px;
+  line-height: 45px;
   text-align: center;
   color: #8d0020;
   margin-bottom: 50%;

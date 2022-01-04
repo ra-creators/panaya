@@ -1,6 +1,6 @@
 from typing import Collection
 from django.contrib import admin
-from .models import Category, Product, Tag, ProductImage, Review, FAQ, Collection
+from .models import Category, Product, Tag, ProductImage, Review, FAQ, Collection, Type
 
 # Register your models here.
 
@@ -13,6 +13,12 @@ class CategoryAdmin(admin.ModelAdmin):
 
 @admin.register(Collection)
 class CollectionAdmin(admin.ModelAdmin):
+    list_display = ['name', 'slug']
+    prepopulated_fields = {'slug': ('name',)}
+
+
+@admin.register(Type)
+class TypeAdmin(admin.ModelAdmin):
     list_display = ['name', 'slug']
     prepopulated_fields = {'slug': ('name',)}
 
@@ -35,7 +41,7 @@ class FaqInLine(admin.StackedInline):
 @admin.register(Product)
 class ProductAdmin(admin.ModelAdmin):
     list_display = ['name', 'slug', 'price',
-                    'stocks', 'available', 'created', 'updated']
+                    'stocks', 'available', 'created', 'updated', ]
     list_filter = ['available', 'created', 'updated']
     list_editable = ['price', 'available']
     prepopulated_fields = {'slug': ('name',)}

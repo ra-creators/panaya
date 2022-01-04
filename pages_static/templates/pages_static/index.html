@@ -66,99 +66,23 @@
         </div>
         <div class="container" style="text-align: -webkit-center;" class="explore-banaras">
           <div class="row">
+            {% for category in categories %}
             <div class="col-sm-4 mt-5 text-center">
               <div class="overlay-container">
-                <img
-                  class="img-fluid"
-                  src="{%static 'pages_static/images/index/Rectangle 55.png' %}"
-                  alt=""
-                />
-                <h4 class="overlay-text e_name m-4 text-white">Banarasi Silk Saree</h4>
+                <a href="{% url 'product_list_by_category' category.slug %}">
+                  <img
+                    class="img-fluid"
+                    src="{{category.get_thumbnail}}"
+                    alt=""
+                  />
+                </a>
+                <a href="{% url 'product_list_by_category' category.slug %}">
+                  <h4 class="overlay-text e_name m-4 text-white">{{category.name}}</h4>
+                </a>
               </div>
             </div>
-            <div class="col-sm-4 mt-5 text-center">
-              <div class="overlay-container">
-                <img
-                  class="img-fluid"
-                  src="{%static 'pages_static/images/index/Rectangle 56.png' %}"
-                  alt=""
-                />
-                <h4 class="overlay-text e_name m-4 text-white">Jangla Saree</h4>
-              </div>
-            </div>
-            <div class="col-sm-4 mt-5 text-center">
-              <div class="overlay-container">
-                <img
-                  class="img-fluid"
-                  src="{%static 'pages_static/images/index/Rectangle 60.png' %}"
-                  alt=""
-                />
-                <h4 class="overlay-text e_name m-4 text-white">Tanchoi Saree</h4>
-              </div>
-            </div>
+            {% endfor %}
             
-            <div class="col-sm-4 mt-5 text-center">
-              <div class="overlay-container">
-                <img
-                  class="img-fluid"
-                  src="{%static 'pages_static/images/index/Rectangle 61.png' %}"
-                  alt=""
-                />
-                <h4 class="overlay-text e_name m-4 text-white">Real Zari Saree</h4>
-              </div>
-            </div>
-            <div class="col-sm-4 mt-5 text-center">
-              <div class="overlay-container">
-                <img
-                  class="img-fluid"
-                  src="{%static 'pages_static/images/index/Rectangle 62.png' %}"
-                  alt=""
-                />
-                <h4 class="overlay-text e_name m-4 text-white">Jamdani Saree</h4>
-              </div>
-            </div>
-            <div class="col-sm-4 mt-5 text-center">
-              <div class="overlay-container">
-                <img
-                  class="img-fluid"
-                  src="{%static 'pages_static/images/index/Rectangle 63.png' %}"
-                  alt=""
-                />
-                <h4 class="overlay-text e_name m-4 text-white">Tissue Saree</h4>
-              </div>
-            </div>
-
-
-            <div class="col-sm-4 mt-5 text-center">
-              <div class="overlay-container">
-                <img
-                  class="img-fluid"
-                  src="{%static 'pages_static/images/index/Rectangle 61.png' %}"
-                  alt=""
-                />
-                <h4 class="overlay-text e_name m-4 text-white">Real Zari Saree</h4>
-              </div>
-            </div>
-            <div class="col-sm-4 mt-5 text-center">
-              <div class="overlay-container">
-                <img
-                  class="img-fluid"
-                  src="{%static 'pages_static/images/index/Rectangle 62.png' %}"
-                  alt=""
-                />
-                <h4 class="overlay-text e_name m-4 text-white">Jamdani Saree</h4>
-              </div>
-            </div>
-            <div class="col-sm-4 mt-5 text-center">
-              <div class="overlay-container">
-                <img
-                  class="img-fluid"
-                  src="{%static 'pages_static/images/index/Rectangle 63.png' %}"
-                  alt=""
-                />
-                <h4 class="overlay-text e_name m-4 text-white">Tissue Saree</h4>
-              </div>
-            </div>
           </div>
         </div>
       </section>
@@ -179,68 +103,53 @@
             20%
           </h1>
           <div class="row g-2 g-md-5 row-cols-1 row-cols-md-3">
-            <div class="col text-center">
-              <img
-                class="img-fluid"
-                src="{%static 'pages_static/images/index/Rectangle 68.png' %}"
-                alt=""
-              />
-              <h2 class="mt-5 text-sp-red">Banarasi Silk Saree</h2>
-              <p>view all</p>
-              <a class="btn styled-btn-filled" href="{% url 'product_list' %}">Shop Now</a>
+            <div class="owl-carousel owl-theme">
+            {% for product in new_products %}
+            <div class="item">
+              <div class="col text-center">
+                <img
+                  class="img-fluid"
+                  src="{{product.get_primary_img}}"
+                  alt=""
+                />
+                <h2 class="mt-5 text-sp-red">{{product.name}}</h2>
+                <a class="btn styled-btn-filled" href="{% url 'product_detail' product.id %}">Shop Now</a>
+              </div>
             </div>
-            <div class="col text-center">
-              <img
-                class="img-fluid"
-                src="{%static 'pages_static/images/index/Rectangle 69.png' %}"
-                alt=""
-              />
-              <h2 class="mt-5 text-sp-red">Jangla Saree</h2>
-              <p>view all</p>
-              <a class="btn styled-btn-filled" href="{% url 'product_list' %}">Shop Now</a>
-            </div>
-            <div class="col text-center">
-              <img
-                class="img-fluid"
-                src="{%static 'pages_static/images/index/Rectangle 70.png' %}"
-                alt=""
-              />
-              <h2 class="mt-5 text-sp-red">Jamdani Saree</h2>
-              <p>view all</p>
-              <a class="btn styled-btn-filled" href="{% url 'product_list' %}">Shop Now</a>
-            </div>
+            {% endfor %}
           </div>
-          <div class="row g-2 g-md-5 row-cols-1 row-cols-md-3 mt-5">
-            <div class="col text-center">
-              <img
-                class="img-fluid"
-                src="{%static 'pages_static/images/index/Rectangle 406.png' %}"
-                alt=""
-              />
-              <h2 class="mt-5 text-sp-red">Banarasi Silk Saree</h2>
-            </div>
-
-            <div class="col text-center">
-              <img
-                class="img-fluid"
-                src="{%static 'pages_static/images/index/Rectangle 407.png' %}"
-                alt=""
-              />
-              <h2 class="mt-5 text-sp-red">Dupattas</h2>
-            </div>
-
-            <div class="col text-center">
-              <img
-                class="img-fluid"
-                src="{%static 'pages_static/images/index/Rectangle 408.png' %}"
-                alt=""
-              />
-              <h2 class="mt-5 text-sp-red">Broked Saree</h2>
-            </div>
           </div>
         </div>
       </section>
 
+      <section class="mt-2" id="our-products">
+        <div class="section-heading">
+          <img src="{%static 'pages_static/images/section-heading-decor.png' %}" alt="" />
+          <h1>OUR PRODUCTS</h1>
+          <img
+            class="flip-horizontal"
+            src="{%static 'pages_static/images/section-heading-decor.png' %}"
+            alt=""
+          />
+        </div>
+        <div class="row g-2 g-md-3 row-cols-1 row-cols-md-3 mt-2 d-flex justify-content-around">
+          {% for type in types %}
+          <div class="col text-center">
+            <a href="{% url 'product_list_by_type' type.slug %}">
+              <img
+              class="img-fluid"
+              src="{{type.get_thumbnail}}"
+              alt=""
+              />
+            </a>
+            <a href="{% url 'product_list_by_type' type.slug %}">
+              <h2 class="mt-5 text-sp-red">{{type.name}}</h2>
+            </a>
+          </div>
+          {% endfor %}
+        </div>
+      </section>
+      
       <section id="heirlooms" class="my-5 mx-auto">
         <div class="container-md">
           <h1 class="text-center mb-5 text-sp-red">WOVEN HEIRLOOMS</h1>
@@ -310,8 +219,8 @@
           class="p-5 text-center"
         >
           <h1>Our Banaras Store</h1>
-          <h3>Book an Appoinment</h3>
-          <p>We are avaliable for online as well as in store appoinments</p>
+          <h3>Book a Video Appoinment</h3>
+          <p>We are available for online video appointments.</p>
           <button class="btn btn-light" onclick="OpenPopUp()">Book Now</button>
         </div>
       </section>
@@ -359,6 +268,7 @@
           </form>
         </div>
       </div>
+
       <section class="mt-2" id="blogs">
         <div class="section-heading">
           <img src="{%static 'pages_static/images/section-heading-decor.png' %}" alt="" />
@@ -371,58 +281,29 @@
         </div>
         <div class="container-lg py-2">
           <div class="owl-carousel owl-theme">
+            {% for blog in blogs %}
             <div class="item">
               <div class="card">
                 <img
-                  src="{%static 'pages_static/images/index/Rectangle 79.png' %}"
-                  class="card-img-top"
-                  alt="..."
+                src="https://static.panaya.in/media/{{blog.image}}"
+                class="card-img-top"
+                alt=""
                 />
                 <div class="card-body">
-                  <h5 class="card-title">Singhanias - Celebrity Blog</h5>
-                  <p>August 20, 2021</p>
-                  <p class="card-text">
-                    Sailesh Singhanias is an iconic part of the tinsel world as
-                    celebrities breathe style in every l...Continue Reading
-                  </p>
+                  <h5 class="card-title">{{blog.title}}</h5>
+                  <p class="mb-0">{{blog.author | upper}} . {{blog.date | timesince}}</p>
+                  <div class="card-text">
+                    {{blog.content|truncatewords:40|safe}}
+                  </div>
+                  <p>.... <a href="{% url 'blog' blog.id %}">read more</a> </p>
                 </div>
               </div>
             </div>
-            <div class="item">
-              <div class="card">
-                <img
-                  src="{%static 'pages_static/images/index/Rectangle 80.png' %}"
-                  class="card-img-top"
-                  alt="..."
-                />
-                <div class="card-body">
-                  <h5 class="card-title">7 bridal silk sarees to give you celebrity vibes!</h5>
-                  <p>July 1, 2021</p>
-                  <p class="card-text">
-                    The grandeur of Kanchipuram Silk Sarees are iconic! They captivate with graciousness, artistic pa...Continue Reading
-                  </p>
-                </div>
-              </div>
-            </div>
-            <div class="item">
-              <div class="card">
-                <img
-                  src="{%static 'pages_static/images/index/Rectangle 81.png' %}"
-                  class="card-img-top"
-                  alt="..."
-                />
-                <div class="card-body">
-                  <h5 class="card-title">Korvai Kanjivarams</h5>
-                  <p>May 21, 2021</p>
-                  <p class="card-text">
-                    Korvai Kanjivaram Sarees in brilliant colour Combinations and designs What is a Korvai Kanjivaram...Continue Reading
-                  </p>
-                </div>
-              </div>
-            </div>
+            {% endfor %}
           </div>
         </div>
       </section>
+
       <section>
         <div class="section-heading">
           <img src="{%static 'pages_static/images/section-heading-decor.png' %}" alt="" />
@@ -584,5 +465,12 @@
       function closePopUp(){
         popUp.classList.remove("active")
       }
+    </script>
+    <script>
+      {% if messages %}
+          {% for message in messages %}
+          alert(" {{ message }} ");
+          {% endfor %}
+      {% endif %}
     </script>
 {% endblock body%}
