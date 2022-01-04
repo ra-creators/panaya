@@ -87,6 +87,18 @@ class Cart(object):
                 pass
         return None
 
+    def check_discount(self, coupon):
+        if(coupon):
+            # print(coupon)
+            coupon.discount = Decimal(coupon.discount)
+            if(coupon.percentage):
+                discount = self.get_total_price()*coupon.discount/100
+            else:
+                discount = coupon.discount
+        if discount > self.get_total_price():
+            discount = self.get_total_price()
+        return discount
+
     def get_discount(self):
         # if self.coupon:
         #     return (self.coupon.discount / Decimal('100')) * self.get_total_price()

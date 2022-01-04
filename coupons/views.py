@@ -20,10 +20,17 @@ def coupon_apply(request):
                                         valid_to__gte=now, 
                                         active=True)
             request.session['coupon_id'] = coupon.id
+            cart = Cart(request)
+            
+            # check if after discount total is above threshold
+            if cart.get_total_price - cart.check_discount(coupon) < 1:
+                request.session['coupon_id'] = None
+                return HttpResponse(404)
+
             dic = {
                 'status': 'success',
                 'discount': coupon.discount,
-                'total': str(Cart(request).get_total_price_after_discount())
+                'total': str(cart.get_total_price_after_discount())
             }            
             return JsonResponse(json.dumps(dic), safe=False)
         except Coupon.DoesNotExist:

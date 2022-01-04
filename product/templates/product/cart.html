@@ -94,7 +94,7 @@ Cart
                 if (data.status == 'success') {
                     $('#cart-total').html("Rs. "+String(data.total));
                     $('#promo-apply-button').html('Applied');
-                    $('#promo-apply-button').attr('disabled', true);
+                    // $('#promo-apply-button').attr('disabled', true);
                     alert("promo applied")
                 } else {
                     alert("Invalid Code");
