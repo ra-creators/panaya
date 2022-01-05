@@ -50,7 +50,8 @@ class Order(models.Model):
             if(self.coupon):
                 # print(self.coupon)
                 if(self.coupon.percentage):
-                    self.discount = self.get_total_cost()*(self.coupon.discount/100)
+                    self.discount = (self.get_total_cost() *
+                                     (self.coupon.discount/100))
                 else:
                     self.discount = self.coupon.discount
             if self.discount > self.get_total_cost():

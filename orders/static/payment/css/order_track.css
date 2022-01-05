@@ -1,0 +1,142 @@
+.add_container{
+    width: 90%;
+    margin: auto;
+    padding: 2%;
+}
+.path{
+    font-family: Poppins;
+    font-style: normal;
+    font-weight: 500;
+    font-size: 25px;
+    line-height: 54px;
+    color: #828282;
+}
+.d_address{
+    font-family: Poppins;
+    font-style: normal;
+    font-weight: 600;
+    font-size: 30.0756px;
+    line-height: 31px;
+    letter-spacing: -0.572228px;
+    color: #333333;
+}
+.d_name{
+    font-family: Poppins;
+    font-style: normal;
+    font-weight: 500;
+    font-size: 25px;
+    line-height: 45px;
+    color: #000000;
+}
+.ph_details{
+    font-family: Poppins;
+    font-style: normal;
+    font-weight: normal;
+    font-size: 25px;
+    line-height: 45px;
+    color: #000000;
+}
+.p_img{
+    width: -webkit-fill-available;
+    aspect-ratio: 10/11;
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center;
+}
+.size{
+    font-family: Poppins;
+    font-style: normal;
+    font-weight: 600;
+    font-size: 25.0652px;
+    line-height: 39px;
+    letter-spacing: -0.726811px;
+    color: rgba(0, 0, 0, 0.51);
+}
+.price{
+    font-family: Poppins;
+    font-style: normal;
+    font-weight: 600;
+    font-size: 30.1043px;
+    line-height: 57px;
+    color: #0F0F0F;
+}
+.rate{
+    font-size: 10px;
+}
+.dot{
+    height: 20px;
+    width: 20px;
+    border-radius: 50%;
+    position: absolute;
+    margin-left: -8px;
+    background: #BDBDBD;
+}
+.dot.done1{
+    background: #6FCF97;
+}
+.tra_box{
+    padding-left: 5%;
+    padding-top: 2%;
+    border-left: solid #BDBDBD;
+}
+.tra_box.done3{
+    border-left: solid #6FCF97;;
+}
+.t_name{
+    font-family: Poppins;
+    font-style: normal;
+    font-weight: 500;
+    font-size: 22.25px;
+    line-height: 38px;
+    color: #BDBDBD;
+}
+.t_name.done{
+    color: #27AE60;
+}
+.t_summary{
+    font-family: Poppins;
+    font-style: normal;
+    font-weight: normal;
+    font-size: 12px;
+    line-height: 21px;
+    color: #828282;
+}
+/* Responsive */
+@media only screen and (max-width: 576px) {
+    .path{
+        font-size: 15px;
+    }
+    .d_details{
+        font-size: 12px;
+    }
+    .d_name , .ph_details{
+        font-size: 20px;
+    }
+    .d_address{
+        font-size: 25px;
+    }
+    .p_img{
+        aspect-ratio: 10/16;
+    }
+}
+
+@media only screen and (min-width: 576px) and (max-width: 996px) {
+    .path{
+        font-size: 20px;
+    }
+    .p_img{
+        aspect-ratio: 10/16;
+    }
+    .price{
+        font-size: 20px;
+        line-height: normal;
+    }
+    .d_name{
+        font-size: 20px;
+        line-height: normal;
+    }
+    .size{
+        font-size: 15px;
+        line-height: normal;
+    }
+}

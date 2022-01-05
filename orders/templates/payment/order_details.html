@@ -1,28 +1,22 @@
 {% extends 'base.html' %}
 {% load static %}
 {% block title %}
-Payment Gateway
+Order Details
 {% endblock title %}
 {% block css %}
 <link rel="stylesheet" href="{% static 'payment/css/gateway.css' %}">
+<link rel="stylesheet" href="{% static 'payment/css/order_track.css' %}">
 {% endblock css %}
 {% block body %}
 <div class="prod_sec_header">
     <div class="head_top"></div>
-    <div class="header">Customer Details, Order Summary and Payment Gateway</div>
+    <div class="header">Order Details</div>
     <div class="head_bottom"></div>
 </div>
+
 <div class="container mt-5">
     <img class="edit" src="/assets/img/edit.svg" alt="">
-    <div class="main">1. LOGIN <img class="check" src="/assets/img/check.svg" alt=""></div>
-    <div class="details pb-5">
-        <div><span class="ans ms-3">{{order.user.get_full_name}}</span><span class="ms-3">{{order.user.email}}</span>
-        </div>
-    </div>
-</div>
-<div class="container mt-5">
-    <img class="edit" src="/assets/img/edit.svg" alt="">
-    <div class="main">2. DELIVERY ADDRESS <img class="check" src="/assets/img/check.svg" alt=""></div>
+    <div class="main">DELIVERY ADDRESS <img class="check" src="/assets/img/check.svg" alt=""></div>
     <div class="details pb-5">
         <div class="addr_all" id="addr_{{order.address.id}}">
             <div class="row">
@@ -34,7 +28,7 @@ Payment Gateway
                 <div class="col-12">
                     <label for="inputAddress" class="form-label">Address</label>
                     <input disabled type="text" class="form-control" value="{{order.address.address}}" id="inputAddress"
-                        placeholder="1234 Main St">
+                    placeholder="1234 Main St">
                 </div>
             </div>
             <div class="row">
@@ -45,32 +39,39 @@ Payment Gateway
                 <div class="col-auto">
                     <label for="inputZip" class="form-label">Postal Code</label>
                     <input disabled type="text" class="form-control" value="{{order.address.postal_code}}"
-                        id="inputZip">
+                    id="inputZip">
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-12">
+                    <label for="inputPhoneNo" class="form-label">Full Name</label>
+                    <input disabled type="text" class="form-control" value="{{order.address.fname}}" id="inputPhoneNo"
+                    placeholder="Apartment, studio, or floor">
                 </div>
             </div>
         </div>
     </div>
 </div>
 <div class="container mt-5">
-    <div class="main">3. ORDER DETAILS </div>
+    <div class="main">ORDER ITEMS</div>
     <div class="details pb-5 text-center">
         {% for item in order.items.all %}
         <div class="row text-start mt-2" style="border-bottom: 1px solid">
-            <div class="col-sm-4 pb-2">
-                <img src="{{item.product.images.all.0}}" class="img-fluid" alt="">
+            <div class="col-sm-4 col-md-6 pb-2">
+                <img src="{{item.product.get_primary_img}}" class="img-fluid" alt="">
             </div>
-            <div class="col-sm-4 ">
-                <div class="ans">
-                    <p class="fs-2">{{ item.product.name }}</p>
+            <div class="col-sm-auto ">
+                <div class="">
+                    <p class="fs-3">{{ item.product.name }}</p>
                 </div>
                 <div>
-                    <p class="fs-5">Qty-{{ item.quantity }} X Rs. {{item.price}}</p>
+                    <p class="fs-5 text-muted">Qty-{{ item.quantity }} X Rs. {{item.price}}</p>
                 </div>
                 <div class="ans">
-                    <p class="fs-5">Price-{{ item.sub_total }}</p>
+                    <p class="fs-5">₹ {{ item.sub_total }}</p>
                 </div>
             </div>
-            <div class="col-sm-4">
+            <div class="col-sm-auto">
                 <div>
                     <p class="fw-bold">Delivery by Sun Jul 12</p>
                 </div>
@@ -79,8 +80,9 @@ Payment Gateway
         {% endfor %}
     </div>
 </div>
+
 <div class="container mt-5 mb-5">
-    <div class="main">4. PAYMENT DETAILS </div>
+    <div class="main">PAYMENT DETAILS </div>
     <div class="p-4">
         {% if order.paid %}
         <h3>already paid</h3>
@@ -96,6 +98,58 @@ Payment Gateway
         {% endif %}
     </div>
 </div>
+
+{% if order.paid %}
+<div class="container mt-5 mb-5">
+    <div class="main">Order Tracking</div>
+        <div>
+            <span class="dot done1"></span>
+            <div class="tra_box done3">
+                <div class="t_name done">Ordered</div>
+                <div class="t_summary">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Neque ultrices a,
+                    sed mauris duis vel tortor. Sit viverra porttitor lorem fermentum dui. Leo ultrices ullamcorper
+                    amet sit sodales. Pharetra vel mollis diam feugiat egestas scelerisque. At nisl est ornare non
+                    sit.
+                </div>
+            </div>
+        </div>
+        <div>
+            <span class="dot done1"></span>
+            <div class="tra_box done3">
+                <div class="t_name done">Shipped</div>
+                <div class="t_summary">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Neque ultrices a,
+                    sed mauris duis vel tortor. Sit viverra porttitor lorem fermentum dui. Leo ultrices ullamcorper
+                    amet sit sodales. Pharetra vel mollis diam feugiat egestas scelerisque. At nisl est ornare non
+                    sit.
+                </div>
+            </div>
+        </div>
+        <div>
+            <span class="dot done1"></span>
+            <div class="tra_box done3">
+                <div class="t_name done">Out for Delivery</div>
+                <div class="t_summary">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Neque ultrices a,
+                    sed mauris duis vel tortor. Sit viverra porttitor lorem fermentum dui. Leo ultrices ullamcorper
+                    amet sit sodales. Pharetra vel mollis diam feugiat egestas scelerisque. At nisl est ornare non
+                    sit.
+                </div>
+            </div>
+        </div>
+        <div>
+            <span class="dot"></span>
+            <div class="tra_box">
+                <div class="t_name">Delivered</div>
+                <div class="t_summary">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Neque ultrices a,
+                    sed mauris duis vel tortor. Sit viverra porttitor lorem fermentum dui. Leo ultrices ullamcorper
+                    amet sit sodales. Pharetra vel mollis diam feugiat egestas scelerisque. At nisl est ornare non
+                    sit.
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endif %}
+
 {% endblock body%}
 {% block js %}
 {% if order.paid %}
