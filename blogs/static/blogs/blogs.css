@@ -447,3 +447,9 @@ footer h2 {
   background: linear-gradient(0deg, transparent 50%, #8D0020 50%);
 }
 /*# sourceMappingURL=blogs.css.map */
+
+@media only screen and (max-width: 700px){
+    .m_blog_img{
+        margin-top: -5rem;
+    }
+}

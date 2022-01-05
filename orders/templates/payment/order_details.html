@@ -9,7 +9,7 @@ Payment Gateway
 {% block body %}
 <div class="prod_sec_header">
     <div class="head_top"></div>
-    <div class="header">Customert Details, Order Summery and Payment Getway</div>
+    <div class="header">Customer Details, Order Summary and Payment Gateway</div>
     <div class="head_bottom"></div>
 </div>
 <div class="container mt-5">
@@ -55,11 +55,11 @@ Payment Gateway
     <div class="main">3. ORDER DETAILS </div>
     <div class="details pb-5 text-center">
         {% for item in order.items.all %}
-        <div class="row text-start mt-2">
-            <div class="col-2">
+        <div class="row text-start mt-2" style="border-bottom: 1px solid">
+            <div class="col-sm-4 pb-2">
                 <img src="{{item.product.images.all.0}}" class="img-fluid" alt="">
             </div>
-            <div class="col-4 offset-1">
+            <div class="col-sm-4 ">
                 <div class="ans">
                     <p class="fs-2">{{ item.product.name }}</p>
                 </div>
@@ -70,7 +70,7 @@ Payment Gateway
                     <p class="fs-5">Price-{{ item.sub_total }}</p>
                 </div>
             </div>
-            <div class="col-4">
+            <div class="col-sm-4">
                 <div>
                     <p class="fw-bold">Delivery by Sun Jul 12</p>
                 </div>

@@ -114,7 +114,7 @@
   height: fit-content;
   width: -webkit-fit-content;
   width: -moz-fit-content;
-  width: fit-content;
+  width: 100%;
 }
 
 .overlay-container .overlay-text {
@@ -286,7 +286,6 @@ footer a:hover {
   background-image: url("/static/pages_static/images/index/Rectangle 66.png");
   background-repeat: no-repeat;
   background-size: cover;
-  min-height: 50rem;
 }
 
 .explore-banaras {
@@ -296,7 +295,7 @@ footer a:hover {
 }
 
 #heirlooms {
-  width: 100vw;
+  width: 100%;
   background-image: url("/static/pages_static/images/index/heirloom-bg.png");
   background-repeat: no-repeat;
   background-size: cover;
@@ -360,7 +359,6 @@ footer a:hover {
 }
 .cross{
   float: right;
-  transform: rotate(45deg);
   color: #ffce76;
   font-size: 30px;
   font-weight: bolder;
@@ -464,7 +462,7 @@ a.nav-item {
   }
   .panaya_d{
     font-family: "Corinthia", cursive;
-    font-size: 0.5rem;
+    font-size: 1.0rem;
     color: #ffce76;
   }
   header nav div{

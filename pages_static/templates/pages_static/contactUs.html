@@ -17,13 +17,47 @@ Contact Us
         <div class="header">Contact Us</div>
         <div class="head_bottom"></div>
     </div>
-    <div class="contact">
+    <div class="contact" style="position: relative;">
         <img class="c_img" src="{% static 'pages_static/images/productImages/Rectangle 366.png' %}" alt="">
         <div class="touch">Get In Touch With Us</div>
     </div>
     <div class="find mt-5" style="display:flex; justify-content: center;">Find Us</div>
     <div class="container">
-        <div id="map"></div>
+         <div class="row m-auto">
+            <div class="col-sm-6" style="border: 1px solid;">
+                <form action="submit" style="width: 85%; margin: auto;">
+                    <h3 class="text-center">Get in touch</h3>
+                        <div class="row mt-5">
+                          <div class="col-6">
+                            <label for="name">Name</label>
+                          </div>
+                          <div class="col-6">
+                            <input style="width: -webkit-fill-available;" type="text">
+                          </div>
+                        </div>
+                        <div class="row mt-5">
+                          <div class="col-6">
+                            <label for="mobile">Mobile No.</label>
+                          </div>
+                          <div class="col-6">
+                            <input style="width: -webkit-fill-available;" type="number">
+                          </div>
+                        </div>
+                        <div class="row mt-5">
+                          <div class="col-6">
+                            <label for="remark">Message</label>
+                          </div>
+                          <div class="col-6">
+                            <input style="width: -webkit-fill-available;" type="text">
+                          </div>
+                        </div>
+                        <div class="text-center mt-5 mb-5">
+                          <input class="sub_btn text-bold" type="submit" value="Get in touch">
+                        </div>
+                </form>
+            </div>
+            <div  id="map" class="col-sm-6"></div>
+        </div>
     </div>
     <div class="row mt-5">
         <div class="col-sm-4 text-center">

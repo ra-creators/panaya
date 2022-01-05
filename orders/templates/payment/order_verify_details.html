@@ -10,7 +10,7 @@ Payment Gateway
 {% comment %} page heading {% endcomment %}
 <div class="prod_sec_header">
     <div class="head_top"></div>
-    <div class="header">Customert Details, Order Summery and Payment Getway</div>
+    <div class="header">Customer Details, Order Summary and Payment Gateway</div>
     <div class="head_bottom"></div>
 </div>
 
@@ -91,11 +91,11 @@ Payment Gateway
     <div class="main">3. ORDER DETAILS </div>
     <div class="details pb-5 text-center">
         {% for item in cart %}
-        <div class="row text-start mt-2 item" data-id={{item.product.id}} data-quantity={{item.quantity}}>
-            <div class="col-2">
+        <div class="row text-start mt-2 item" data-id={{item.product.id}} data-quantity={{item.quantity}} style="border-bottom: 1px solid">
+            <div class="col-sm-4 pb-2">
                 <img src="{{item.product.images.all.0}}" class="img-fluid" alt="">
             </div>
-            <div class="col-4 offset-1">
+            <div class="col-sm-4">
                 <div class="ans">
                     <p class="fs-2">{{ item.product.name }}</p>
                 </div>
@@ -106,7 +106,7 @@ Payment Gateway
                     <p class="fs-5">Price-{{ item.total_price }}</p>
                 </div>
             </div>
-            <div class="col-4">
+            <div class="col-sm-4">
                 <div>
                     <p class="fw-bold">Delivery by Sun Jul 12</p>
                 </div>
@@ -122,7 +122,7 @@ Payment Gateway
 </div>
 
 {% comment %} payment {% endcomment %}
-<div class="container mt-5 mb-5">
+<div class="container mt-5">
     <div class="main">4. PAYMENT DETAILS </div>
 </div>
 {% endblock body%}
