@@ -93,7 +93,19 @@
         </nav>
     </header>
     <main id="main-container">
-        {% block body %}{% endblock body %}
+        <div id="say_thank" style=" display: none; position: fixed; z-index: 999; background: #ffce76; width: 80%; text-align: center; margin-left: 10%;; align-items: center; top: 5%;">
+            <div class="cross" onclick="closeThanks()" style="transform: rotate(45deg); margin-top : 0% !important ; color: #8d0020;">+</div>
+            <div class="container row mt-5 mb-5">
+                <div class="col-6">
+                    <img src="{% static 'pages_static/images/about/oct7753.svg' %}" alt="" class="img-fluid thanks_img">
+                </div>
+                <div class="col-6 d-flex align-items-center">  
+                    <h1 class="text-danger thanks_text">THANKS FOR SHOWING INTEREST IN US</h1>
+                </div>
+            </div>
+        </div>
+        {% block body %}
+        {% endblock body %}
     </main>
     <footer>
         <div class='container'>
@@ -131,9 +143,9 @@
                     <div class='align-center mt-5'>
                         <h3>Useful Information</h3>
                         <div style="display: grid;">
-                            <a href="#">Returns & Cancellation</a>
-                            <a href="{% url 'privacy_p1' %}">Privacy Policy</a>
-                            <a href="{% url 'privacy_p2' %}">Delivery & Shipping</a>
+                            <a href="{% url 'return_policy' %}">Returns & Cancellation</a>
+                            <a href="{% url 'privacy_policy' %}">Privacy Policy</a>
+                            <a href="{% url 'delivery_shipping' %}">Delivery & Shipping</a>
                             <a href="{% url 'tnc' %}">Terms & Conditions</a>
                         </div>
                     </div>
@@ -157,7 +169,7 @@
                     <p>Hear about our new woven treasures and more...</p>
                     <form class='align-center form-row'>
                         <input class='col-7' type="email" placeholder="Enter your E-mail" name='email' id='email'>
-                        <input class='btn btn-warning col-3' id='email-send-button' type="submit" value='Send'>
+                        <input class='btn btn-warning col-3' id='email-send-button' type="submit" value='Send' onclick="sayThanks()">
                     </form>
                 </div>
             </div>
@@ -210,6 +222,14 @@
     function mobileMenu() {
         hamburger.classList.toggle("active");
         navMenu.classList.toggle("active");
+    }
+    
+    const thanks = document.getElementById('say_thank')
+    function sayThanks() {
+        thanks.style.display = 'block';
+    }
+    function closeThanks(){
+        thanks.style.display = 'none';
     }
 </script>
 </html>

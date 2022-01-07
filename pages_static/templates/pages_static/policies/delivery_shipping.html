@@ -1,0 +1,76 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Delivery & Shopping{% endblock %}
+
+{% block css %}
+
+<link href="{% static 'pages_static/css/policies.css' %}" type="text/css" rel="stylesheet">
+{% endblock css %}
+
+{% block body %}
+<div class="section-heading">
+    <img src="{%static 'pages_static/images/section-heading-decor.png' %}" alt="" />
+    <h1>Delivery & Shopping</h1>
+    <img class="flip-horizontal" src="{%static 'pages_static/images/section-heading-decor.png' %}" alt="" />
+</div>
+<div class="container">
+    <section>
+        <p>To make your shopping experience with us pleasant, Panaya prioritises a quick delivery of
+        your product within the given time slot.    
+        </p>
+        <p>We take utmost care while handling and packaging the product to ensure it reaches you in
+        the best condition.</p>
+        <p>Barring Sundays and Public holidays, we ship all through the week.</p>
+        <p>We ship through reputed courier agencies only, this ensures your order reaches you well in
+        the promised time and in proper condition.
+        </p>     
+    </section>
+    <section>
+        <h4>Our Shipping Policy</h4>
+        <ol>
+            <li>We offer free shipping for domestic orders.For international orders, we offer free on orders above 50,000.</li>
+            <li>All sarees that you see on the Panaya website are stocked in our own warehouses and
+                are ready to ship.</li>
+            <li>All our products carry the official logo of Panaya, to ensure authenticity.</li>
+            <li>We dispatch our products within 2-3 working days.</li>
+            <li>Once the order is confirmed, we require at least 5-7 business days to deliver in India. As
+                for international orders, shipments may take 8-15 business days.</li>
+        </ol>
+    </section>
+
+    <section>
+        <h4>Special Note</h4>
+        <p>Night curfews and certain restrictions have been imposed in certain cities, and this may lead
+            to a slight delay in the delivery of the orders.</p>
+        <p>Our teams will try our best to send out all the orders as fast as possible</p>
+        <p>If there is a delay in dispatch due to any natural calamity, public holiday or any unforeseen
+            circumstance, we shall not be liable to return or exchange the goods.</p>
+        <p>If there is a delay in dispatch due to the product being out of stock, we may contact you
+            through e-mail: <a href="mailto:privacy@panaya.in">privacy@panaya.in</a> .</p>
+        <p>
+            Thereafter you can :
+        </p>
+        <ol>
+            <li>Wait for the original product.</li>
+            <li>Select an alternate product.</li>
+            <li>Opt for a store credit or refund.</li>
+        </ol>
+
+    </section>
+
+    <section>
+        <h4>Note</h4>
+        <p>For international shipments, the customer is responsible for any customs duties/taxes
+            applicable in their country.</p>
+        <p>Customs & import taxes – VAT/ Import Duties/ Local Taxes are borne directly by the
+            customer if such charges are applicable in the destination country on handloom products
+            sourced from India. These taxes will be chargeable over and above the product/order price
+            you pay.</p>
+        <p>As these charges differ from country to country according to local rules and regulations,
+            they are ungovernable.</p>
+    </section>
+
+</div>
+
+{% endblock body %}

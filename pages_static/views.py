@@ -41,12 +41,16 @@ def contact_view(request):
 
 
 def tnc(request):
-    return render(request, 'pages_static/tnc.html')
+    return render(request, 'pages_static/policies/tnc.html')
 
 
-def privacy_p1(request):
-    return render(request, 'pages_static/privacy_p1.html')
+def privacy_policy(request):
+    return render(request, 'pages_static/policies/privacy_policy.html')
 
 
-def privacy_p2(request):
-    return render(request, 'pages_static/privacy_p2.html')
+def delivery_shipping(request):
+    return render(request, 'pages_static/policies/delivery_shipping.html')
+
+
+def returns(request):
+    return render(request, 'pages_static/policies/returns.html')

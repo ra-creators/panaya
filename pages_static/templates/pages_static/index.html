@@ -65,20 +65,34 @@
           />
         </div>
         <div class="container" style="text-align: -webkit-center;" class="explore-banaras">
-          <div class="row">
+          <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-xl-4">
             {% for category in categories %}
-            <div class="col-sm-4 mt-5 text-center">
-              <div class="overlay-container">
-                <a href="{% url 'product_list_by_category' category.slug %}">
-                  <img
-                    class="img-fluid"
-                    src="{{category.get_thumbnail}}"
-                    alt=""
-                  />
-                </a>
-                <a href="{% url 'product_list_by_category' category.slug %}">
-                  <h4 class="overlay-text e_name m-4 text-white">{{category.name}}</h4>
-                </a>
+            <div class="col mt-5 text-center">
+              <div class="flip-card">
+                <div class="card">
+                  <div class="flip-card-inner">
+                    <div class="flip-card-front">
+                      <div class="overlay-container">
+                        <a href="{% url 'product_list_by_category' category.slug %}">
+                          <img
+                          class="img-fluid"
+                          src="{{category.get_thumbnail}}"
+                          alt=""
+                          />
+                        </a>
+                        <a href="{% url 'product_list_by_category' category.slug %}">
+                          <h4 class="overlay-text e_name m-4 text-white">{{category.name}}</h4>
+                        </a>
+                      </div>
+                    </div>
+                    <div class="flip-card-back">
+                      <p class="ps-2 p-4">
+                        {{category.description}}
+                      </p>
+                      <a class="btn styled-btn-filled" href="{% url 'product_list_by_category' category.slug %}">View More</a>
+                    </div>
+                  </div>
+                </div>
               </div>
             </div>
             {% endfor %}
@@ -253,7 +267,7 @@
                 <label for="mobile">Mobile No.</label>
               </div>
               <div class="col-6">
-                <input type="number" name="phone" id='contact-phone'>
+                <input type="number" name="phone" style="width: -webkit-fill-available;" id='contact-phone'>
               </div>
             </div>
             <div class="row mt-5">
@@ -261,7 +275,7 @@
                 <label for="remark">Remarks</label>
               </div>
               <div class="col-6">
-                <input type="text" name='remarks' id='contact-remarks'>
+                <input type="text" name='remarks' style="width: -webkit-fill-available;" id='contact-remarks'>
               </div>
             </div>
             <div class="text-center mt-5">

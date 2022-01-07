@@ -7,9 +7,10 @@ urlpatterns = [
     path('contact/', views.contact_view, name='contact'),
     # policies
     path('policies/terms&conditions', views.tnc, name='tnc'),
-    path('policies/privacy-policies-page-1',
-         views.privacy_p1, name='privacy_p1'),
-    path('policies/privacy-policies-page-2',
-         views.privacy_p2, name='privacy_p2'),
+    path('policies/returns', views.returns, name='return_policy'),
+    path('policies/privacy-policies',
+         views.privacy_policy, name='privacy_policy'),
+    path('policies/delivery&shipping',
+         views.delivery_shipping, name='delivery_shipping'),
 
 ]
