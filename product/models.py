@@ -29,6 +29,7 @@ class Category(models.Model):
     slug = models.SlugField(max_length=200, unique=True)
     thumbnail = models.ImageField(
         upload_to='products/categories/%Y/%m/%d', blank=True, default="/media/defaults/noimg.png")
+    description = models.TextField(default="View more")
 
     class Meta:
         ordering = ('name', )

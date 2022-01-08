@@ -12,41 +12,49 @@
 
 <section id="product" class="container-lg mt-5">
   <div class="row">
-    <div class="col-md-8">
-      <div class="container-fluid">
-        <div class="row g-1">
-          <div class="col-2" style="overflow-y: auto" id="select-img-container">
+    <div class="col-md-7">
+      <div class="container">
+        <div class="row">
+          <div class="col-4" style="overflow-y: auto" id="select-img-container">
             {% for img in product.images.all %}
             <img src="{{img}}" style="cursor: pointer" class="img-fluid mb-1" alt=""
               onclick="setActiveProductImg(event)" />
             {% endfor %}
           </div>
-          <div class="col-10">
-            <img style="max-height: 400px; cursor: pointer" src="{{product.images.all.0}}" alt="product"
+          <div class="col-7 offset-1">
+            <img style="cursor: pointer" src="{{product.images.all.0}}" alt="product"
               class="img-fluid" id="active-product-img" />
           </div>
         </div>
       </div>
     </div>
-    <div class="col-md-4">
+    <div class="col-md-5 text-center">
       <h1 class="text-sp-red">{{ product.name }}</h1>
       <h3 class="text-secondary">Rs. {{product.price}}</h3>
-      <div class="number-input">
-        <button onclick="this.parentNode.querySelector('input[type=number]').stepDown()"></button>
-        <input form="buynow-form" class="quantity" id="quantity" min="0" name="quantity" value="1" type="number" />
-        <button onclick="this.parentNode.querySelector('input[type=number]').stepUp()" class="plus"></button>
+      <div class="d-flex justify-content-center">
+          <div class="number-input ">
+            <button onclick="this.parentNode.querySelector('input[type=number]').stepDown()"></button>
+            <input form="buynow-form" class="quantity" id="quantity" min="0" name="quantity" value="1" type="number" />
+            <button onclick="this.parentNode.querySelector('input[type=number]').stepUp()" class="plus"></button>
+          </div>
       </div>
       <p class="fw-light mt-1">Only {{product.stocks}} piece in stock</p>
       <p>{{product.description}}</p>
-      <button class="btn st-btn-outline-red my-2" onClick="addToCart(event)" data-bs-toggle="modal"
-        data-bs-target="#cartModal" data-id="{{product.id}}" data-name="{{product.name}}" data-price="{{product.price}}"
-        dat-stock="{{product.stock}}" data-img="{{product.images.all.0}}">
-        Add to your trunk
-      </button>
-      <form action="{% url 'buy_now' product.id %}" method="POST" id="buynow-form">
-        {% csrf_token %}
-        <button type="submit" class="btn styled-btn-filled my-2">Buy Now</button>
-      </form>
+      <div class='row mt-3 mx-auto'>
+          <div class='col-sm-6'>
+              <button class="btn st-btn-outline-red my-2" onClick="addToCart(event)" data-bs-toggle="modal"
+                data-bs-target="#cartModal" data-id="{{product.id}}" data-name="{{product.name}}" data-price="{{product.price}}"
+                dat-stock="{{product.stock}}" data-img="{{product.images.all.0}}">
+                Add to your trunk
+              </button>
+          </div>
+          <div class='col-sm-6'>
+              <form action="{% url 'buy_now' product.id %}" method="POST" id="buynow-form">
+                {% csrf_token %}
+                <button type="submit" class="btn styled-btn-filled my-2">Buy Now</button>
+              </form>
+          </div>
+      </div>
     </div>
   </div>
 </section>
