@@ -1,11 +1,9 @@
-from typing import Collection
-from django.db import models
-from django.contrib.auth import get_user_model
-from ckeditor.fields import RichTextField
-from django.db.models.query import QuerySet
-from django.urls import reverse
-from django.core.validators import MaxValueValidator, MinValueValidator
 from itertools import chain
+from django.db import models
+from django.urls import reverse
+from ckeditor.fields import RichTextField
+from django.contrib.auth import get_user_model
+from django.core.validators import MaxValueValidator, MinValueValidator
 
 User = get_user_model()
 # Create your models here.
@@ -28,8 +26,8 @@ class Category(models.Model):
     name = models.CharField(max_length=200, db_index=True)
     slug = models.SlugField(max_length=200, unique=True)
     thumbnail = models.ImageField(
-        upload_to='products/categories/%Y/%m/%d', blank=True, default="/media/defaults/noimg.png")
-    description = models.TextField(default="View more")
+        upload_to='products/categories/%Y/%m/%d', blank=True,
+        default="/media/defaults/noimg.png")
 
     class Meta:
         ordering = ('name', )
@@ -55,7 +53,10 @@ class Collection(models.Model):
     name = models.CharField(max_length=200, db_index=True)
     slug = models.SlugField(max_length=200, unique=True)
     thumbnail = models.ImageField(
-        upload_to='products/collections/%Y/%m/%d', blank=True, default="/media/defaults/noimg.png")
+        blank=True,
+        default="/media/defaults/noimg.png",
+        upload_to='products/collections/%Y/%m/%d',
+    )
 
     class Meta:
         ordering = ('name', )
@@ -81,7 +82,10 @@ class Type(models.Model):
     name = models.CharField(max_length=200, db_index=True)
     slug = models.SlugField(max_length=200, unique=True)
     thumbnail = models.ImageField(
-        upload_to='products/types/%Y/%m/%d', blank=True, default="/media/defaults/noimg.png")
+        blank=True,
+        default="/media/defaults/noimg.png",
+        upload_to='products/types/%Y/%m/%d',
+    )
 
     class Meta:
         ordering = ('name', )
@@ -105,11 +109,16 @@ class Type(models.Model):
 
 class Product(models.Model):
     category = models.ForeignKey(
-        Category, related_name='products', on_delete=models.SET_NULL, null=True, blank=True)
+        Category, related_name='products', on_delete=models.SET_NULL,
+        null=True, blank=True)
     collection = models.ForeignKey(
-        Collection, related_name='products', on_delete=models.SET_NULL, null=True, blank=True)
+        Collection, related_name='products', on_delete=models.SET_NULL,
+        null=True, blank=True)
     type = models.ForeignKey(
-        Type, related_name='products', on_delete=models.SET_NULL, null=True, blank=True)
+        Type, related_name='products', on_delete=models.SET_NULL,
+        null=True, blank=True)
+    inventory_id = models.CharField(
+        max_length=10, db_index=True, unique=True,)
     name = models.CharField(max_length=200, db_index=True)
     slug = models.SlugField(max_length=200, db_index=True)
     description = models.TextField(blank=True)
@@ -119,9 +128,13 @@ class Product(models.Model):
     created = models.DateTimeField(auto_now_add=True)
     updated = models.DateTimeField(auto_now=True)
     tags = models.ManyToManyField(Tag, blank=True)
-    avg_rating = models.DecimalField(max_digits=10, decimal_places=2,
-                                     validators=[MaxValueValidator(5), MinValueValidator(0)])
-    no_rating = models.PositiveBigIntegerField()
+    avg_rating = models.DecimalField(
+        default=0,
+        max_digits=10,
+        decimal_places=2,
+        validators=[MaxValueValidator(5), MinValueValidator(0)]
+    )
+    no_rating = models.PositiveBigIntegerField(default=0)
 
     class Meta:
         ordering = ('name', )
@@ -158,14 +171,21 @@ class Product(models.Model):
         related_category = []
         related_collection = []
         if self.collection:
-            related_collection = Collection.objects.get(
-                id=self.collection.id).products.order_by('avg_rating')[:num_items]
+            related_collection = (
+                Collection.objects.get(
+                    id=self.collection.id
+                ).products.order_by('avg_rating')[:num_items]
+            )
         if self.category:
-            related_category = Category.objects.get(
-                id=self.category.id).products.order_by('avg_rating')[:num_items]
+            related_category = (
+                Category.objects.get(
+                    id=self.category.id
+                ).products.order_by('avg_rating')[:num_items]
+            )
         related_all = sorted(
-            chain(related_collection, related_collection), key=lambda obj: obj.avg_rating)
-        return related_category[:num_items]
+            chain(related_collection, related_category), key=lambda obj:
+            obj.avg_rating)
+        return related_all[:num_items]
 
 
 class ProductImage(models.Model):
