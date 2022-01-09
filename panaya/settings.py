@@ -40,10 +40,18 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'django.contrib.sites',
 
     # Third party apps
     'ckeditor',
     'ckeditor_uploader',
+
+    # LOGIN 
+    'allauth',
+    'allauth.account',
+    'allauth.socialaccount',
+    'allauth.socialaccount.providers.google',
+    'allauth.socialaccount.providers.facebook',
 
     # Custom apps
     'user_manager',
@@ -56,6 +64,13 @@ INSTALLED_APPS = [
     'coupons',
     'connectUs',
 ]
+
+AUTHENTICATION_BACKENDS = [
+    'django.contrib.auth.backends.ModelBackend',
+    'allauth.account.auth_backends.AuthenticationBackend',
+]
+
+SITE_ID = 1
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -135,7 +150,7 @@ USE_L10N = True
 USE_TZ = True
 
 # Login, Logout redirect urls
-LOGIN_REDIRECT_URL = 'index'
+LOGIN_REDIRECT_URL = '/'
 LOGIN_URL = 'login'
 LOGOUT_URL = 'logout'
 
@@ -158,5 +173,32 @@ CKEDITOR_UPLOAD_SLUGIFY_FILENAME = False
 # Setting the CART_SESSION_ID
 CART_SESSION_ID = 'cart'
 
+# Account Configuration
+ACCOUNT_AUTHENTICATION_METHOD = 'email'
+ACCOUNT_EMAIL_REQUIRED = True
+ACCOUNT_UNIQUE_EMAIL = True
+ACCOUNT_USER_MODEL_USERNAME_FIELD = None
+ACCOUNT_USERNAME_REQUIRED = False
+ACCOUNT_EMAIL_VERIFICATION = 'none'
+
+# SocailAccount Settings
+SOCIALACCOUNT_PROVIDERS = {
+    'facebook': {
+        'METHOD': 'oauth2',
+        # 'SDK_URL': '//connect.facebook.net/{locale}/sdk.js',
+        'SCOPE': ['email', 'public_profile'],
+        'AUTH_PARAMS': {'auth_type': 'reauthenticate'},
+        'INIT_PARAMS': {'cookie': True},
+        'FIELDS': [
+            'id',
+            'name',
+            'email',
+        ],
+        'EXCHANGE_TOKEN': True,
+        # 'LOCALE_FUNC': 'path.to.callable',
+        'VERIFIED_EMAIL': False,
+        'VERSION': 'v7.0',
+    }
+}
 
 #django_on_heroku.settings(locals())

@@ -10,6 +10,7 @@ urlpatterns = [
     path('proflie/edit_address', views.profile_edit_address, name='edit_address'),
     path('profile/profile_edit_address_success', views.profile_edit_address_success, name='profile_edit_address_success'),
     path('profile/orders_tracking', views.orders_tracking, name='orders_tracking'),
+    path('profile/order/<int:order_id>', views.single_order_detail, name='single_order'),
     path('logout/', views.user_logout, name='logout'),
     path('login/', views.UserLogin.as_view(), name='login'),
     path('signup/', views.SignUpView.as_view(), name='signup'),

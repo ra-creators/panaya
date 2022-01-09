@@ -3,6 +3,7 @@ venv
 staticfiles
 db.sqlite3
 media
+media_bak
 **/*.css.map
 .vscode
 rzp.csv

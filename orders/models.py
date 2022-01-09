@@ -8,7 +8,6 @@ User = get_user_model()
 
 # Create your models here.
 
-
 class Order(models.Model):
     user = models.ForeignKey(
         User, related_name='order_details', on_delete=models.CASCADE)

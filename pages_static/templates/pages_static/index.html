@@ -13,31 +13,42 @@
       <section id="welcome-carousel">
         <div class="owl-carousel owl-fw-carousel owl-theme">
           <div class="item overlay-container" style="width:auto">
-            <img src="{%static 'pages_static/images/index/Rectangle 52.png' %}" alt="" />
-            <div class="overlay-text text-white ms-5" style="top: 50%">
-              <h1 class="mb-3">Exclusive Banarasi Silk Saree</h1>
-              <a class="btn styled-btn-outline" href="{% url 'product_list' %}">Shop Now</a>
+            <div class="item">
+              <img class="img-fluid" loading="lazy" loading="lazy" src="{%static 'pages_static/images/index/carousel1.png' %}" alt="" />
             </div>
+            <!--<div class="overlay-text text-white ms-5" style="top: 50%">-->
+            <!--  <a class="btn styled-btn-outline" href="{% url 'product_list' %}">Shop Now</a>-->
+            <!--</div>-->
           </div>
           <div class="item overlay-container" style="width:auto">
-            <img src="{%static 'pages_static/images/index/Rectangle 52.png' %}" alt="" />
-            <div class="overlay-text text-white ms-5" style="top: 50%">
-              <h1 class="mb-3">02 Exclusive Banarasi Silk Saree</h1>
-              <a class="btn styled-btn-outline" href="{% url 'product_list' %}">Shop Now</a>
+            <div class="item">
+              <img class="img-fluid" loading="lazy" loading="lazy" src="{%static 'pages_static/images/index/carousel2.png' %}" alt="" />
             </div>
+            <!--<div class="overlay-text text-white ms-5" style="top: 50%">-->
+            <!--  <a class="btn styled-btn-outline" href="{% url 'product_list' %}">Shop Now</a>-->
+            <!--</div>-->
           </div>
           <div class="item overlay-container" style="width:auto">
-            <img src="{%static 'pages_static/images/index/Rectangle 52.png' %}" alt="" />
-            <div class="overlay-text text-white ms-5" style="top: 50%">
-              <h1 class="mb-3">03 Exclusive Banarasi Silk Saree</h1>
-              <a class="btn styled-btn-outline" href="{% url 'product_list' %}">Shop Now</a>
+            <div class="item">
+              <img class="img-fluid" loading="lazy" loading="lazy" src="{%static 'pages_static/images/index/carousel5.png' %}" alt="" />
             </div>
+            <!--<div class="overlay-text text-white ms-5" style="top: 50%">-->
+            <!--  <a class="btn styled-btn-outline" href="{% url 'product_list' %}">Shop Now</a>-->
+            <!--</div>-->
+          </div>
+          <div class="item overlay-container" style="width:auto">
+            <div class="item">
+              <img class="img-fluid" loading="lazy" src="{%static 'pages_static/images/index/carousel6.png' %}" alt="" />
+            </div>
+            <!--<div class="overlay-text text-white ms-5" style="top: 50%">-->
+            <!--  <a class="btn styled-btn-outline" href="{% url 'product_list' %}">Shop Now</a>-->
+            <!--</div>-->
           </div>
         </div>
       </section>
 
       <section class="mt-2 text-center" id="welcome-line">
-        <img
+        <img loading="lazy"
           class="img-fluid"
           src="{%static 'pages_static/images/index/imageedit_5_9031586909 1.png' %}"
           alt=""
@@ -47,7 +58,7 @@
           An immersion into the finest artisanal handwoven luxury from
           Banaras.Slow luxury.
         </p>
-        <img
+        <img loading="lazy"
           class="flip-horizontal img-fluid"
           src="{%static 'pages_static/images/index/imageedit_5_9031586909 1.png' %}"
           alt=""
@@ -56,9 +67,9 @@
 
       <section class="mt-2" id="explore-banaras">
         <div class="section-heading">
-          <img src="{%static 'pages_static/images/section-heading-decor.png' %}" alt="" />
+          <img loading="lazy" src="{%static 'pages_static/images/section-heading-decor.png' %}" alt="" />
           <h1>EXPLORE BANARAS</h1>
-          <img
+          <img loading="lazy"
             class="flip-horizontal"
             src="{%static 'pages_static/images/section-heading-decor.png' %}"
             alt=""
@@ -74,7 +85,7 @@
                     <div class="flip-card-front">
                       <div class="overlay-container">
                         <a href="{% url 'product_list_by_category' category.slug %}">
-                          <img
+                          <img loading="lazy"
                           class="img-fluid"
                           src="{{category.get_thumbnail}}"
                           alt=""
@@ -103,9 +114,9 @@
 
       <section class="mt-2" id="new-arrival">
         <div class="section-heading">
-          <img src="{%static 'pages_static/images/section-heading-decor.png' %}" alt="" />
+          <img loading="lazy" src="{%static 'pages_static/images/section-heading-decor.png' %}" alt="" />
           <h1>NEW ARRIVAL</h1>
-          <img
+          <img loading="lazy"
             class="flip-horizontal"
             src="{%static 'pages_static/images/section-heading-decor.png' %}"
             alt=""
@@ -116,12 +127,12 @@
             Exclusive New Collection for festival and bride look and off upto
             20%
           </h1>
-          <div class="row g-2 g-md-5 row-cols-1 row-cols-md-3">
-            <div class="owl-carousel owl-theme">
+          <div class="row g-2 g-md-5 row-cols-1 row-cols-md-3 w-100">
+            <div class="owl-carousel owl-item owl-theme">
             {% for product in new_products %}
             <div class="item">
               <div class="col text-center">
-                <img
+                <img loading="lazy"
                   class="img-fluid"
                   src="{{product.get_primary_img}}"
                   alt=""
@@ -138,19 +149,19 @@
 
       <section class="mt-2" id="our-products">
         <div class="section-heading">
-          <img src="{%static 'pages_static/images/section-heading-decor.png' %}" alt="" />
+          <img loading="lazy" src="{%static 'pages_static/images/section-heading-decor.png' %}" alt="" />
           <h1>OUR PRODUCTS</h1>
-          <img
+          <img loading="lazy"
             class="flip-horizontal"
             src="{%static 'pages_static/images/section-heading-decor.png' %}"
             alt=""
           />
         </div>
-        <div class="row g-2 g-md-3 row-cols-1 row-cols-md-3 mt-2 d-flex justify-content-around">
+        <div class="row g-2 g-md-3 row-cols-1 row-cols-md-3 mt-2 d-flex justify-content-around w-100" style="margin-left : 0;">
           {% for type in types %}
           <div class="col text-center">
             <a href="{% url 'product_list_by_type' type.slug %}">
-              <img
+              <img loading="lazy"
               class="img-fluid"
               src="{{type.get_thumbnail}}"
               alt=""
@@ -164,7 +175,7 @@
         </div>
       </section>
       
-      <section id="heirlooms" class="my-5 mx-auto">
+      <section id="heirlooms" class="my-5 mx-auto w-100">
         <div class="container-md">
           <h1 class="text-center mb-5 text-sp-red">WOVEN HEIRLOOMS</h1>
           <p class="mb-5">
@@ -181,7 +192,7 @@
           <div class="container-fluid">
             <div class="row container g-2 justify-content-center">
               <div class="col-sm-6">
-                <img
+                <img loading="lazy"
                   class="img-fluid"
                   src="{%static 'pages_static/images/index/Rectangle 72.png' %}"
                   alt=""
@@ -189,7 +200,7 @@
               </div>
               <div class="col-sm-6 align-self-center">
                 <!-- <div class="row"> -->
-                <img
+                <img loading="lazy"
                   style="display: block"
                   src="{%static 'pages_static/images/index/Rectangle 73.png' %}"
                   alt=""
@@ -197,7 +208,7 @@
                 />
                 <!-- </div> -->
                 <!-- <div class="row"> -->
-                <img
+                <img loading="lazy"
                   style="display: block"
                   src="{%static 'pages_static/images/index/Rectangle 74.png' %}"
                   alt=""
@@ -241,9 +252,7 @@
 
       <div id="pop_up">
         <div class="container p_cont">
-          <div class="cross" onclick="closePopUp()" style="
-    transform: rotate(45deg);
-">+</div>
+          <div class="cross" onclick="closePopUp()" style="transform: rotate(45deg);">+</div>
           <form>
             {% csrf_token %}
             <div class="row mt-5">
@@ -287,20 +296,20 @@
 
       <section class="mt-2" id="blogs">
         <div class="section-heading">
-          <img src="{%static 'pages_static/images/section-heading-decor.png' %}" alt="" />
+          <img loading="lazy" src="{%static 'pages_static/images/section-heading-decor.png' %}" alt="" />
           <h1>Blog Post</h1>
-          <img
+          <img loading="lazy"
             class="flip-horizontal"
             src="{%static 'pages_static/images/section-heading-decor.png' %}"
             alt=""
           />
         </div>
         <div class="container-lg py-2">
-          <div class="owl-carousel owl-theme">
+          <div class="owl-carousel owl-item owl-theme">
             {% for blog in blogs %}
             <div class="item">
               <div class="card">
-                <img
+                <img loading="lazy"
                 src="https://static.panaya.in/media/{{blog.image}}"
                 class="card-img-top"
                 alt=""
@@ -322,171 +331,77 @@
 
       <section>
         <div class="section-heading">
-          <img src="{%static 'pages_static/images/section-heading-decor.png' %}" alt="" />
+          <img loading="lazy" src="{%static 'pages_static/images/section-heading-decor.png' %}" alt="" />
           <h1>Instagram</h1>
-          <img
+          <img loading="lazy"
             class="flip-horizontal"
             src="{%static 'pages_static/images/section-heading-decor.png' %}"
             alt=""
           />
         </div>
-        <h3 class="text-center mt-3 text-sp-red" style="font-family: Analogue;font-style: normal;font-weight: normal;">Instagram @panaya</h3>
+        <h3 class="text-center mt-3 text-sp-red" style="font-family: Analogue;font-style: normal;font-weight: normal;">Instagram <a class="text-sp-red" href="https://instagram.com/panayasarees/">@apanayasarees</a></h3>
         <div class="container">
-          <div class="text-center story">Story</div>
-          <div class="mt-1 story_div">
-            <button class="story_btn"><img class="story_img" src="{%static 'pages_static/images/index/Rectangle 70.png' %}" alt=""></button>
-            <button class="story_btn"><img class="story_img" src="{%static 'pages_static/images/index/Rectangle 63.png' %}" alt=""></button>
-          </div>
           <div class="mt-5">
-            <div class="owl-carousel owl-theme">
-              <div class="item">
-                <div class="card">
-                  <img class="hov1"
-                    src="{%static 'pages_static/images/index/Rectangle 402.png' %}"
-                    class="card-img-top"
-                    alt="..."
-                  />
-                  <div class="hover_part1"></div>
-                </div>
-              </div>
-              <div class="item">
-                <div class="card">
-                  <img class="hov2"
-                    src="{%static 'pages_static/images/index/Rectangle 403.png' %}"
-                    class="card-img-top"
-                    alt="..."
-                  />
-                  <div class="hover_part2"></div>
-                </div>
-              </div>
-              <div class="item">
-                <div class="card">
-                  <img class="hov3"
-                    src="{%static 'pages_static/images/index/Rectangle 404.png' %}"
-                    class="card-img-top"
-                    alt="..."
-                  />
-                  <div class="hover_part3"></div>
-                </div>
-              </div>
-              <div class="item">
-                <div class="card">
-                  <img class="hov4"
-                    src="{%static 'pages_static/images/index/Rectangle 405.png' %}"
-                    class="card-img-top"
-                    alt="..."
-                  />
-                  <div class="hover_part4"></div>
-                </div>
-              </div>
+            <div class="owl-carousel owl-theme" id="instafeed">
             </div>
           </div>
         </div>
       </section>
+
+      <div class="modal fade" id="instaPostModal" tabindex="-1" aria-labelledby="instaPostModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+          <div class="modal-content">
+              <iframe id="instaIframe" src="" width="auto" class="vh-100" frameborder="0"></iframe>
+          </div>
+        </div>
+      </div>
+
     </main>
-
-
-    <!-- jquery -->
-    <script
-      src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"
-      integrity="sha512-894YE6QWD5I59HgZOGReFYm4dnWc1Qt5NtvYSaNcOP+u1T9qYdvdihz0PPSiiqn/+/3e7Jo4EaG7TubfWGUrMQ=="
-      crossorigin="anonymous"
-      referrerpolicy="no-referrer"
-    ></script>
-    <!-- Bootstrap JavaScript Bundle with Popper -->
-    <script
-      src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"
-      integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p"
-      crossorigin="anonymous"
-    ></script>
-
-    <!-- owl carousel -->
-    <script
-      src="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/owl.carousel.min.js"
-      integrity="sha512-bPs7Ae6pVvhOSiIcyUClR7/q2OAsRiovw4vAkX+zJbw3ShAeeqezq50RIIcIURq7Oa20rW2n2q+fyXBNcU9lrw=="
-      crossorigin="anonymous"
-      referrerpolicy="no-referrer"
-    ></script>
-    <link
-      rel="stylesheet"
-      href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.carousel.min.css"
-      integrity="sha512-tS3S5qG0BlhnQROyJXvNjeEM4UpMXHrQfTGmbQ1gKmelCxlSEBUaxhRBj/EFTzpbP4RVSrpEikbmdJobCvhE3g=="
-      crossorigin="anonymous"
-      referrerpolicy="no-referrer"
-    /><link
-      rel="stylesheet"
-      href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.theme.default.min.css"
-      integrity="sha512-sMXtMNL1zRzolHYKEujM2AqCLUR9F2C4/05cdbxjjLSRvMQIciEPCQZo++nk7go3BtSuK9kfa/s+a4f4i5pLkw=="
-      crossorigin="anonymous"
-      referrerpolicy="no-referrer"
-    />
-    <script>
-      $(".owl-fw-carousel").owlCarousel({
-        loop: true,
-        margin: 10,
-        nav: true,
-        responsive: {
-          0: {
-            items: 1,
-          },
-        },
-      });
-      $(".owl-carousel").owlCarousel({
-        // loop: true,
-        margin: 10,
-        nav: true,
-        responsive: {
-          0: {
-            items: 1,
-          },
-          800: {
-            items: 2,
-          },
-          1200: {
-            items: 3,
-          },
-        },
-      });
-
-      $('#contact-send-button').click(function(e) {
-        e.preventDefault();
-        $.ajax({
-            url: "{% url 'contact_us' %}",
-            type: "POST",
-            data: {
-                'email': $('#contact-email').val(),
-                'phone': $('#contact-phone').val(),
-                'remarks': $('#contact-remarks').val(),
-                "name": $('#contact-name').val(),
-            },
-            success: function(response) {
-                if (response == 200) {
-                    alert("Contact Information Sent!");
-                } else {
-                    alert('Error');
-                }
-            },
-            error: function(response) {
-                alert("Error");
-            }
-        });
-    });
-
-    </script>
-    <script>
-      const popUp = document.getElementById('pop_up')
-      function OpenPopUp() {
-        popUp.classList.add("active");
-      }
-      function closePopUp(){
-        popUp.classList.remove("active")
-      }
-    </script>
-    <script>
-      {% if messages %}
-          {% for message in messages %}
-          alert(" {{ message }} ");
-          {% endfor %}
-      {% endif %}
-    </script>
 {% endblock body%}
+{% block js %}
+<script src="{% static 'pages_static/js/instafeed.min.js' %}"></script>
+<!-- owl carousel -->
+<script
+  src="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/owl.carousel.min.js"
+  integrity="sha512-bPs7Ae6pVvhOSiIcyUClR7/q2OAsRiovw4vAkX+zJbw3ShAeeqezq50RIIcIURq7Oa20rW2n2q+fyXBNcU9lrw=="
+  crossorigin="anonymous"
+  referrerpolicy="no-referrer"
+></script>
+<link
+rel="stylesheet"
+  href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.carousel.min.css"
+  integrity="sha512-tS3S5qG0BlhnQROyJXvNjeEM4UpMXHrQfTGmbQ1gKmelCxlSEBUaxhRBj/EFTzpbP4RVSrpEikbmdJobCvhE3g=="
+  crossorigin="anonymous"
+  referrerpolicy="no-referrer"
+/><link
+rel="stylesheet"
+href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.theme.default.min.css"
+integrity="sha512-sMXtMNL1zRzolHYKEujM2AqCLUR9F2C4/05cdbxjjLSRvMQIciEPCQZo++nk7go3BtSuK9kfa/s+a4f4i5pLkw=="
+crossorigin="anonymous"
+  referrerpolicy="no-referrer"
+/>
+<script src="{% static 'pages_static/js/instafeed.js' %}"></script>
+<script>
+  $(".owl-fw-carousel").owlCarousel({
+    loop: true,
+    margin: 10,
+    autoplay: true,
+    nav: true,
+    items:  1,
+  });
+  const popUp = document.getElementById('pop_up')
+  function OpenPopUp() {
+    popUp.classList.add("active");
+  }
+  function closePopUp(){
+    popUp.classList.remove("active")
+  }
+</script>
+<script>
+  {% if messages %}
+      {% for message in messages %}
+      alert(" {{ message }} ");
+      {% endfor %}
+  {% endif %}
+</script>
+{% endblock js %}

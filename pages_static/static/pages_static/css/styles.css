@@ -242,7 +242,6 @@ header #nav {
 header nav a {
   text-decoration: none;
   color: #ffe65c;
-  padding: 0 9%;
   margin-bottom: 1%;
   margin-top: 7%;
 }
@@ -253,6 +252,7 @@ header nav div {
   display: -ms-flexbox;
   display: flex;
   margin: 0 10px;
+  justify-content: space-around;
 }
 
 /* Footer */
@@ -341,8 +341,6 @@ footer a:hover {
 
 #explore-banaras {
   background-image: url("/static/pages_static/images/index/explore-banaras-bg.png");
-  background-repeat: no-repeat;
-  background-size: cover;
 }
 
 #heirlooms {
@@ -538,6 +536,9 @@ a.nav-item {
 .thanks_img {
   padding: 5%;
 }
+a{
+   text-decoration: none;
+}
 @media only screen and (max-width: 700px) {
   header {
     background: none;
@@ -622,6 +623,13 @@ a.nav-item {
   .thanks_text {
     font-size: 15px !important;
   }
+  .say_thank{
+      top: 25%;
+      height : 50%;
+  }
+  .thanks_img{
+      height: 30vh;
+  }
 }
 
 @media only screen and (min-width: 700px) and (max-width: 900px) {
@@ -633,6 +641,9 @@ a.nav-item {
   }
   .mail_input {
     font-size: 8px;
+  }
+  .pro_cart{
+      margin-bottom: 10% !important;
   }
 }
 /*# sourceMappingURL=styles.css.map */

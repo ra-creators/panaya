@@ -38,6 +38,7 @@ def verify_order(request, product_id=None):
         context['cart'] = [cart]
 
     context['addresses'] = user.addresses.all()
+    # request.session['redirect_to'] = 'create_order'
     return render(request,
                   'payment/order_verify_details.html',
                   context=context)
@@ -47,7 +48,9 @@ def verify_order(request, product_id=None):
 def buy_now(request, product_id):
     context = {}
     quantity = 1
-
+    # request.session['product_id'] = product_id
+    request.session['rd_to'] = 'buy_now'
+    request.session['product_id'] = product_id
     if(request.method == 'POST' and 'quantity' in request.POST):
         quantity = int(request.POST['quantity'])
 
@@ -86,14 +89,16 @@ def undo_create_order(order, status, msg, err):
 def create_order(request):
 
     if request.method == 'GET':
+        # request.session['rd_to'] = 'create_order'
         return verify_order(request)
-
     cart = Cart(request)
     addr_id = ""
     context = {}
+    
     if request.method != 'POST':
         return HttpResponse("no allowed")
-
+    # quick fix for address redirect issue
+    
     post_data = json.loads(request.body)
     if('addrId' not in post_data or 'items' not in post_data):
         return JsonResponse({'status': 400, 'payload': 'malformed data'})

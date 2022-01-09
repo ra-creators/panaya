@@ -50,15 +50,17 @@
             {% if user.is_authenticated %}
                 {% for order in request.user.order_details.all %}
                     <div class='address-wrapper'>
-                        <div>
-                            <div class='user-name-in-address show-orders'>
-                                {% for item in order.items.all %}
-                                    {{ item.product.name }}{% if not forloop.last %}, {% endif %}
-                                {% endfor %}    
+                        <a href="{% url 'single_order' order.id %}">
+                            <div>
+                                <div class='user-name-in-address show-orders'>
+                                    {% for item in order.items.all %}
+                                        {{ item.product.name }}{% if not forloop.last %}, {% endif %}
+                                    {% endfor %}    
+                                </div>
+                                <p>Price: {{ order.get_total_cost }}</p>
+                                <p>Date and Time: {{ order.updated }}</p>
                             </div>
-                            <p>Price: {{ order.get_total_cost }}</p>
-                            <p>Date and Time: {{ order.updated }}</p>
-                        </div>
+                        </a>
                     </div>   
                 {% empty %}
                 {% endfor %}             

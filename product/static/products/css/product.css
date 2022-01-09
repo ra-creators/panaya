@@ -226,7 +226,7 @@ a{
     height : 520px;
 }
 
-@media (max-width: 575.98px) { 
+@media (max-width: 768px) { 
     #active-product-img , #select-img-container{
         height : 250px;
     }

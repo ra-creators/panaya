@@ -1,5 +1,8 @@
 from django.db import models
+from django.utils import timezone
 from django.contrib.auth.models import AbstractBaseUser, BaseUserManager, PermissionsMixin
+
+from datetime import timedelta, datetime
 
 
 class UserProfileManager(BaseUserManager):
@@ -13,10 +16,10 @@ class UserProfileManager(BaseUserManager):
         email = self.normalize_email(email)
         if profile_pic:
             user = self.model(email=email, fname=fname, lname=lname,
-                          dob=dob, phone_number=phone_number, profile_pic=profile_pic)
-        else: 
+                              dob=dob, phone_number=phone_number, profile_pic=profile_pic)
+        else:
             user = self.model(email=email, fname=fname, lname=lname,
-                          dob=dob, phone_number=phone_number)                         
+                              dob=dob, phone_number=phone_number)
         user.set_password(password)
         user.save(using=self._db)
         return user
@@ -24,7 +27,7 @@ class UserProfileManager(BaseUserManager):
     def create_superuser(self, email, fname, lname, dob, password, phone_number=None, profile_pic=None):
         """Create and save a new superuser with given details"""
         user = self.create_user(email, fname, lname,
-                                 dob,  phone_number, password, profile_pic)
+                                dob,  phone_number, password, profile_pic)
         user.is_staff = True
         user.is_superuser = True
         user.save(using=self._db)
@@ -71,10 +74,52 @@ class OTP(models.Model):
     This model is used to store the otp generated for the user.
     Otp should expire after 15 minutes of generation.
     """
-    user = models.OneToOneField(
-        User, related_name='otp', on_delete=models.CASCADE)
+    # user = models.OneToOneField(
+    #     User, related_name='otp', on_delete=models.CASCADE)
+    email = models.EmailField(max_length=255, unique=True)
     otp = models.CharField(max_length=6)
-    created = models.DateTimeField(auto_now_add=True)
+    created = models.DateTimeField(auto_now=True)
+    verified = models.BooleanField(default=False)
+
+    def verify(self, _otp,):
+        print(self, self.created)
+        if self.verified:
+            payload = "OTP already used"
+            self.delete()
+            return ({
+                    'status': False,
+                    'case': 3,
+                    'payload': payload
+                    })
+
+        if (self.created + timedelta(minutes=15) <=
+                timezone.make_aware(datetime.now())):
+            payload = "OTP expired"
+            self.delete()
+            return ({
+                    'status': False,
+                    'case': 2,
+                    'payload': payload
+                    })
+
+        if self.otp == _otp:
+            payload = "success"
+            self.verified = True
+            self.save()
+            return ({
+                    'status': True,
+                    'case': 0,
+                    'payload': payload
+                    })
+        else:
+            payload = "wrong OTP"
+            self.verified = False
+            self.save()
+            return ({
+                    'status': False,
+                    'case': 1,
+                    'payload': payload
+                    })
 
     def __str__(self):
         return self.otp
@@ -99,4 +144,3 @@ class UserAddress(models.Model):
 
     def fname(self):
         return (self.first_name + " " + self.last_name)
-

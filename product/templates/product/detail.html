@@ -38,8 +38,9 @@
             <button onclick="this.parentNode.querySelector('input[type=number]').stepUp()" class="plus"></button>
           </div>
       </div>
-      <p class="fw-light mt-1">Only {{product.stocks}} piece in stock</p>
-      <p>{{product.description}}</p>
+      <p class="fw-light mt-1 mb-0">Only {{product.stocks}} piece in stock</p>
+      <p class="fw-light mt-0 pt-0">Size : {{product.dimentions}}</p>
+      <p>{{product.short_description|safe}}</p>
       <div class='row mt-3 mx-auto'>
           <div class='col-sm-6'>
               <button class="btn st-btn-outline-red my-2" onClick="addToCart(event)" data-bs-toggle="modal"
@@ -76,6 +77,11 @@
         Question and Answer
       </h5>
     </li>
+    <li class="nav-item">
+      <h5 class="tab-parent" onclick="changeTab(event)" data-target="care" href="#">
+        Care
+      </h5>
+    </li>
   </ul>
   <div class="tab" id="qa" style="display: none">
     <div class="container-lg my-2">
@@ -91,7 +97,7 @@
       {% endfor %}
     </div>
   </div>
-  <div class="tab" id="description">{{product.description}}</div>
+  <div class="tab" id="description">{{product.description|safe}}</div>
   <div class="tab" id="reviews" style="display: none">
     <div class="conainer-lg my-2" style="width: 100%">
       <div class="owl-carousel owl-theme">
@@ -135,6 +141,9 @@
         {% endfor %}
       </div>
     </div>
+  </div>
+  <div class="tab" id="care" style="display: none">
+    {{product.care|safe}}
   </div>
 </section>
 

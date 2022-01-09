@@ -12,6 +12,7 @@ from django.contrib.auth import get_user_model
 from django.contrib import messages
 from django.utils import timezone
 from .models import OTP
+from orders.models import Order
 from .helpers import *
 # Create your views here.
 
@@ -20,6 +21,7 @@ from utils.mail import otp_mail
 
 
 User = get_user_model()
+
 
 class UserLogin(View):
     def get(self, request):
@@ -44,12 +46,15 @@ class UserLogin(View):
             messages.error(request, 'Invalid Credentials')
             return redirect('login')
 
+
 def user_logout(request):
     logout(request)
     return redirect('login')
 
+
 class SignUpView(View):
     """Using dummy signup class for now"""
+
     def get(self, request):
         if request.user.is_authenticated:
             return redirect('index')
@@ -59,7 +64,7 @@ class SignUpView(View):
         email = request.POST.get("email")
         if User.objects.filter(email=email).exists():
             messages.error(request, 'Email already exists')
-            return redirect('signup')           
+            return redirect('signup')
         password = request.POST.get("password")
         password2 = request.POST.get('password2')
         if password != password2:
@@ -78,7 +83,7 @@ class SignUpView(View):
                                                     lname=lname,
                                                     dob=dob,
                                                     phone_number=phone,
-                                                    password=password, 
+                                                    password=password,
                                                     profile_pic=profile_pic)
                 else:
                     user = User.objects.create_user(email=email,
@@ -89,13 +94,14 @@ class SignUpView(View):
                                                     password=password)
                 user.save()
                 return redirect('index')
-            except Exception as e: 
+            except Exception as e:
                 print(e)
                 messages.error(request, 'Invalid signup')
                 return redirect('signup')
         else:
             messages.error(request, 'Invalid signup')
             return redirect('signup')
+
 
 class ForgotPassword(View):
     def get(self, request):
@@ -109,19 +115,20 @@ class ForgotPassword(View):
         otp_ = generate_otp()
         user = User.objects.get(email=email)
         # Check if OTP key already exists and override it if exists
-        if not OTP.objects.filter(user=user).exists():
+        if not OTP.objects.filter(email=email).exists():
             otp = OTP.objects.create(
-                user=user,
+                email=email,
                 otp=otp_
             )
         else:
-            otp = OTP.objects.get(user=user)
+            otp = OTP.objects.get(email=email)
             otp.otp = otp_
             otp.save()
         # Send OTP to user's email
         otp_mail.send_mail(user, otp_)
         request.session['email'] = email
         return redirect('otp_check')
+
 
 class OTPCheck(View):
     def get(self, request):
@@ -135,19 +142,33 @@ class OTPCheck(View):
         email = request.session.get("email")
         otp = request.POST.get('otp')
         if otp:
-            otp_ = OTP.objects.get(user=User.objects.get(email=email))
-            if otp == otp_.otp:
-                if otp_.created + timedelta(minutes=15) > timezone.make_aware(datetime.now()):
-                    messages.error(request, 'OTP Expired')
-                    return redirect('reset_password')
+            otp_ = OTP.objects.get(email=email)
+            # print(otp_.verify(otp))
+            otp_res = otp_.verify(otp)
+            print(otp_res)
+            if otp_res['status']:
                 request.session['password_change'] = True
                 return redirect('password_change')
-            else:
+            elif otp_res['case'] == 1:
                 messages.error(request, 'Invalid OTP')
                 return redirect('otp_check')
+            else:
+                messages.error(request, otp_res['payload'])
+                return redirect('forgot_password')
+
+            # if otp == otp_.otp:
+            #     if otp_.created + timedelta(minutes=15) > timezone.make_aware(datetime.now()):
+            #         messages.error(request, 'OTP Expired')
+            #         return redirect('forgot_password')
+            #     request.session['password_change'] = True
+            #     return redirect('password_change')
+            # else:
+            #     messages.error(request, 'Invalid OTP')
+            #     return redirect('otp_check')
         else:
             messages.error(request, 'Invalid OTP')
             return redirect('otp_check')
+
 
 class PasswordChangeView(View):
     def get(self, request):
@@ -171,6 +192,7 @@ class PasswordChangeView(View):
         del request.session['email']
         messages.success(request, "Password changed successfully")
         return redirect('login')
+
 
 class ProfileAddAddress(LoginRequiredMixin, View):
     def get(self, request):
@@ -198,35 +220,61 @@ class ProfileAddAddress(LoginRequiredMixin, View):
             )
             address_.save()
             messages.success(request, "Address added successfully")
-            return redirect('address')
+            # if request.session.get('create'):
+            #     del request.session['create']
+            #     return redirect('create_order')
+            # elif request.session.get('product_id'):
+            #     product_id = request.session.get('product_id')
+            #     del request.session['product_id']
+            #     return redirect('buy_now', product_id)
+            redirect_to = request.session.get('rd_to')
+            print(redirect_to)
+            if redirect_to == 'address':
+                try:
+                    del request.session['rd_to']
+                except:
+                    pass
+                return redirect('address')
+            elif redirect_to == 'buy_now':
+                product_id = request.session.get('product_id')
+                try:
+                    del request.session['rd_to']
+                    del request.session['product_id']
+                except:
+                    pass
+                return redirect('buy_now', product_id)
+            return redirect('create_order')
         else:
             messages.error(request, "Invalid")
             return redirect('add_address')
+
 
 @login_required
 def profile_delete_address(request):
     if request.method == 'POST':
         address_id = request.POST.get('id')
-        if address_id:    
+        if address_id:
             address = request.user.addresses.get(id=address_id)
             if address:
                 address.delete()
                 return redirect('address')
         else:
-            return HttpResponseNotFound()    
+            return HttpResponseNotFound()
     return HttpResponseBadRequest()
+
 
 @login_required
 def profile_edit_address(request):
     if request.method == 'POST':
         address_id = request.POST.get('id')
-        if address_id:    
+        if address_id:
             address = request.user.addresses.get(id=address_id)
             if address:
                 return render(request, 'user_manager/profile_edit_address.html', {"address": address})
         else:
-            return HttpResponseNotFound()    
+            return HttpResponseNotFound()
     return HttpResponseBadRequest()
+
 
 @login_required
 def profile_edit_address_success(request):
@@ -239,7 +287,7 @@ def profile_edit_address_success(request):
         city = request.POST.get('city')
         postal_code = request.POST.get('postalcode')
         if address_id:
-            print("hi")    
+            print("hi")
             address_ = request.user.addresses.get(id=address_id)
             if address_:
                 address_.first_name = fname
@@ -251,13 +299,14 @@ def profile_edit_address_success(request):
                 address_.save()
                 return redirect('address')
         else:
-            return HttpResponseNotFound()    
+            return HttpResponseNotFound()
     return HttpResponseBadRequest()
 
 
 @login_required
 def orders_tracking(request):
     return render(request, 'user_manager/orders.html')
+
 
 @login_required
 def profile(request):
@@ -266,6 +315,11 @@ def profile(request):
 
 @login_required
 def profile_address(request):
+    for k, v in request.session.items():
+        print(k, v)
+    # del request.session['rd_to']
+    print(request.session.get('rd_to'))
+    request.session['rd_to'] = 'address'
     return render(request, 'user_manager/profile_address.html')
 
 
@@ -279,3 +333,12 @@ def update_phone(request, user_id):
         user.save()
         return HttpResponse(200)
     return HttpResponse(400)
+
+@login_required
+def single_order_detail(request, order_id):
+    order = Order.objects.filter(id=order_id)[0]
+    if request.user != order.user:
+        return HttpResponseBadRequest
+    return render(request, 'user_manager/order_details.html', {
+        'order': order
+    })

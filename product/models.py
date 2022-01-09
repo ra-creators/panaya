@@ -28,6 +28,7 @@ class Category(models.Model):
     thumbnail = models.ImageField(
         upload_to='products/categories/%Y/%m/%d', blank=True,
         default="/media/defaults/noimg.png")
+    description = models.TextField()
 
     class Meta:
         ordering = ('name', )
@@ -121,7 +122,10 @@ class Product(models.Model):
         max_length=10, db_index=True, unique=True,)
     name = models.CharField(max_length=200, db_index=True)
     slug = models.SlugField(max_length=200, db_index=True)
-    description = models.TextField(blank=True)
+    dimentions = models.CharField(max_length=100, default='100*100')
+    short_description = RichTextField(blank=True, default="description")
+    description = RichTextField(blank=True, default="description")
+    care = RichTextField(blank=True, default="take care")
     price = models.DecimalField(max_digits=10, decimal_places=2)
     available = models.BooleanField(default=True)
     stocks = models.PositiveIntegerField(default=0)

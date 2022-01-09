@@ -1,0 +1,148 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}
+My Order Details
+{% endblock title %}
+
+{% block css %}
+<link href="{% static 'user_manager/css/order_details.css' %}" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet"
+            integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+{% endblock css %}
+
+{% block body %}
+
+<body style="background: #FFEFD1;">
+    <div id="feedback" style="display : none ;position: fixed; z-index: 999; background: #ffce76; width: 80%; text-align: center; margin-left: 10%;; align-items: center; top: 5%; height: 90%;">
+        <div class="cross" onclick="closeFeedback()" style="transform: rotate(45deg); margin-top : 0% !important ; color: #8d0020;">+</div>
+        <div class="container row mt-5 mb-5">
+            <form action="submit">
+                <h3 class="text-center text-danger mb-5 mt-5">Submit Your Feedback</h3>
+                <input type="text" style="width: 80%; margin-left: 10%; height: 200px;">
+                
+                <div class="text-center mt-5">
+              <input class="sub_btn" style="border: none; background: #8d0020; color: white; font-weight: bold; padding-left: 2%; padding-right: 2%; padding-top: 1%; padding-bottom: 1%;" type="submit" id='contact-send-button'>
+            </div>
+            </form>
+        </div>
+    </div>
+    <div class="path mx-2">
+        <a href="{% url 'index' %}">Home</a>
+         > <a href="{% url 'profile' %}">My Account</a>
+         > <a href="{% url 'orders_tracking' %}">My Orders</a>
+         > {{ order.id }} </div>
+
+    <div class="add_container bg-light">
+        <div class="d_address pt-3">Delivery Address</div>
+        <div class="d_name mt-3">{{ order.address.fname }} {{ order.address.lname }}</div>
+        <div class="d_details mt-3">
+            <p>{{ order.address }}</p>
+            <p>{{ order.city }}, {{ order.postal_code }}</p>
+            <p>{{ order.country }}</p>
+        </div>
+        <div class="mt-3"><span class="d_name">Phone No </span>
+            <span class="ph_details mx-2">{{ order.user.phone_number }}</span></div>
+    </div>
+    <div class="add_container bg-light mt-5 mb-5">
+        <div class="row">
+            <div class="col-sm-6">
+                <div class="row mt-5 align-items-center">
+                    {% for order_item in order.items.all %}
+                            <div class="col-4">
+                                {% for img in order_item.product.images.all|slice:":1" %}
+                                    <div class="p_img" style="background-image: url('{{img}}');"></div>
+                                {% endfor %}
+                            </div>
+                            <div class="col-8">
+                                <div class="d_name"><strong>{{ order_item.product.name }}</strong></div>
+                                <div class="size">Size - 2 L</div>
+                                <div class="size">Seller- Courier</div>
+                                <div class="size">Quantity: {{ order_item.quantity }}</div>
+                                <div class="price">	&#8377; {{ order_item.price }}</div>
+                                <div class='size'>Rate Us</div>
+                            </div>
+                    {% endfor %}
+                </div>
+                <div class="mt-3 policy">
+                    <span class="rate"><img src="/assets/img/productImages/Star 3.svg" width="12px" alt="">Rate , Review
+                        Product</span>
+                    <span class="rate" style="margin-left: 5%;">Return policy ended on Jul 2021</span>
+                </div>
+            </div>
+            <div class="col-sm-6">
+                <div class="text-center d_name mt-1 mb-2">Order Tracking</div>
+                <div>
+                    <span class="dot done1"></span>
+                    <div class="tra_box done3">
+                        <div class="t_name done">Ordered</div>
+                        <div class="t_summary">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Neque ultrices a,
+                            sed mauris duis vel tortor. Sit viverra porttitor lorem fermentum dui. Leo ultrices ullamcorper
+                            amet sit sodales. Pharetra vel mollis diam feugiat egestas scelerisque. At nisl est ornare non
+                            sit.</div>
+                    </div>
+                </div>
+                <div>
+                    <span class="dot done1"></span>
+                    <div class="tra_box done3">
+                        <div class="t_name done">Shipped</div>
+                        <div class="t_summary">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Neque ultrices a,
+                            sed mauris duis vel tortor. Sit viverra porttitor lorem fermentum dui. Leo ultrices ullamcorper
+                            amet sit sodales. Pharetra vel mollis diam feugiat egestas scelerisque. At nisl est ornare non
+                            sit.</div>
+                    </div>
+                </div>
+                <div>
+                    <span class="dot done1"></span>
+                    <div class="tra_box done3">
+                        <div class="t_name done">Out for Delivery</div>
+                        <div class="t_summary">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Neque ultrices a,
+                            sed mauris duis vel tortor. Sit viverra porttitor lorem fermentum dui. Leo ultrices ullamcorper
+                            amet sit sodales. Pharetra vel mollis diam feugiat egestas scelerisque. At nisl est ornare non
+                            sit.</div>
+                    </div>
+                </div>
+                <div>
+                    <span class="dot"></span>
+                    <div class="tra_box">
+                        <div class="t_name">Delivered</div>
+                        <div class="t_summary">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Neque ultrices a,
+                            sed mauris duis vel tortor. Sit viverra porttitor lorem fermentum dui. Leo ultrices ullamcorper
+                            amet sit sodales. Pharetra vel mollis diam feugiat egestas scelerisque. At nisl est ornare non
+                            sit.</div>
+                    </div>
+                </div>
+                <button class="mt-5" onclick="giveFeedback()">Give feedback</button>
+            </div>
+        </div>
+    </div>
+    <div class="add_container bg-light">
+        <div class="d_address pt-3">Payment Details</div>
+        {% if order.paid %}
+        Paid
+        {% else %}
+        Not Paid
+        {% endif %}
+    </div>
+    
+</body>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"
+    integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p"
+    crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.10.2/dist/umd/popper.min.js"
+    integrity="sha384-7+zCNj/IqJ95wo16oMtfsKbZ9ccEh31eOz1HGyDuCQ6wgnyJNSYdrPa03rtR1zdB"
+    crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.min.js"
+    integrity="sha384-QJHtvGhmr9XOIpI6YVutG+2QOK9T+ZnN4kzFN1RtK3zEFEIsxhlmWl5/YESvpZ13"
+    crossorigin="anonymous"></script>
+<script>
+    const feedback = document.getElementById('feedback')
+    function giveFeedback() {
+        feedback.style.display = 'block';
+    }
+    function closeFeedback(){
+        feedback.style.display = 'none';
+    }
+</script>
+{% endblock body %}

@@ -44,8 +44,8 @@ class FaqInLine(admin.StackedInline):
 
 @admin.register(Product)
 class ProductAdmin(admin.ModelAdmin):
-    list_display = ['name', 'slug', 'price',
-                    'stocks', 'available', 'created', 'updated', ]
+    list_display = ['inventory_id', 'name', 'price',
+                    'stocks', 'available', 'updated', ]
     list_filter = ['available', 'created', 'updated']
     list_editable = ['price', 'available']
     prepopulated_fields = {'slug': ('name',)}
@@ -130,8 +130,8 @@ class ProductAdmin(admin.ModelAdmin):
             msg = (
                 "Succesfully added {no_created} products, update {no_update}"
                 .format(
-                    no_created=len(objs_update),
-                    no_update=len(objs_create)
+                    no_created=len(objs_create),
+                    no_update=len(objs_update)
                 )
             )
             self.message_user(

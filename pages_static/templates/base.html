@@ -26,7 +26,7 @@
             </div>
             <div class='middle'>
                 <img src="{%static 'pages_static/images/index/crown.png' %}" alt="" style="width: 200px;">
-                <h2><a href="/">PANAYA</a></h2>
+                <h2 style="font-size:1.5rem; line-height: normal;"><a href="/">PANAYA</a></h2>
                 <p>The Heritage Collection</p>
             </div>
             <div id='nav-right container'>
@@ -34,7 +34,7 @@
                 <a class="nav-item" href="{% url 'blogs' %}">Blogs</a>
                 <a class="nav-item" href="{% url 'contact' %}">Contact Us</a>
             </div>
-            <div style="    position: absolute; margin-bottom: 5%; margin-left: 67%;">
+            <div style="position: absolute; margin-bottom: 5%; margin-left: 67%;" class="pro_cart">
                  <a href="{% if request.user.is_authenticated %}{% url 'profile' %}{% else %}{% url 'login' %}{% endif %}"
                     class='row'>
                     <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor"
@@ -93,11 +93,11 @@
         </nav>
     </header>
     <main id="main-container">
-        <div id="say_thank" style=" display: none; position: fixed; z-index: 999; background: #ffce76; width: 80%; text-align: center; margin-left: 10%;; align-items: center; top: 5%;">
+        <div id="say_thank" style="display : none ;position: fixed; z-index: 999; background: #ffce76; width: 80%; text-align: center; margin-left: 10%;; align-items: center; top: 5%; height: 90%;">
             <div class="cross" onclick="closeThanks()" style="transform: rotate(45deg); margin-top : 0% !important ; color: #8d0020;">+</div>
             <div class="container row mt-5 mb-5">
                 <div class="col-6">
-                    <img src="{% static 'pages_static/images/about/oct7753.svg' %}" alt="" class="img-fluid thanks_img">
+                    <img src="{% static 'pages_static/images/about/oct7753.svg' %}" alt="" class="img-fluid thanks_img" style="height : 80vh">
                 </div>
                 <div class="col-6 d-flex align-items-center">  
                     <h1 class="text-danger thanks_text">THANKS FOR SHOWING INTEREST IN US</h1>
