@@ -7,7 +7,6 @@ from django.contrib.auth import get_user_model
 User = get_user_model()
 
 # Create your models here.
-
 class Order(models.Model):
     user = models.ForeignKey(
         User, related_name='order_details', on_delete=models.CASCADE)
@@ -87,3 +86,17 @@ class OrderItem(models.Model):
         except Exception as err:
             raise err
         super().save(*args, **kwargs)
+
+class OrderTracking(models.Model):
+    """
+    Order Tracking Model by storing JSON response
+    """
+    order = models.OneToOneField(Order,
+                              related_name='order_tracking',
+                              on_delete=models.CASCADE)
+    response = models.TextField()
+    created = models.DateTimeField(auto_now_add=True)
+    updated = models.DateTimeField(auto_now=True)
+
+    def __str__(self):
+        return f"Order Tracking {self.id}"

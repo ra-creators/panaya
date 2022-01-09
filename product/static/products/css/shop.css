@@ -9,7 +9,5 @@ body {
 #products {
   width: 100vw;
   background-image: url("/static/products/img/floral-background-hand-drawn-style_52683-60347 2.svg");
-  background-repeat: repeat-y;
-  background-size: cover;
 }
 /*# sourceMappingURL=shop.css.map */

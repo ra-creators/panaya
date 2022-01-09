@@ -61,7 +61,7 @@ My Order Details
                                 <div class="size">Seller- Courier</div>
                                 <div class="size">Quantity: {{ order_item.quantity }}</div>
                                 <div class="price">	&#8377; {{ order_item.price }}</div>
-                                <div class='size'>Rate Us</div>
+                                {% comment %} <div class='size'>Rate Us</div> {% endcomment %}
                             </div>
                     {% endfor %}
                 </div>
@@ -77,40 +77,28 @@ My Order Details
                     <span class="dot done1"></span>
                     <div class="tra_box done3">
                         <div class="t_name done">Ordered</div>
-                        <div class="t_summary">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Neque ultrices a,
-                            sed mauris duis vel tortor. Sit viverra porttitor lorem fermentum dui. Leo ultrices ullamcorper
-                            amet sit sodales. Pharetra vel mollis diam feugiat egestas scelerisque. At nisl est ornare non
-                            sit.</div>
+                        <div class="t_summary">{{ order.created }}</div>
                     </div>
                 </div>
                 <div>
                     <span class="dot done1"></span>
                     <div class="tra_box done3">
                         <div class="t_name done">Shipped</div>
-                        <div class="t_summary">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Neque ultrices a,
-                            sed mauris duis vel tortor. Sit viverra porttitor lorem fermentum dui. Leo ultrices ullamcorper
-                            amet sit sodales. Pharetra vel mollis diam feugiat egestas scelerisque. At nisl est ornare non
-                            sit.</div>
+                        <div class="t_summary"></div>
                     </div>
                 </div>
                 <div>
                     <span class="dot done1"></span>
                     <div class="tra_box done3">
                         <div class="t_name done">Out for Delivery</div>
-                        <div class="t_summary">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Neque ultrices a,
-                            sed mauris duis vel tortor. Sit viverra porttitor lorem fermentum dui. Leo ultrices ullamcorper
-                            amet sit sodales. Pharetra vel mollis diam feugiat egestas scelerisque. At nisl est ornare non
-                            sit.</div>
+                        <div class="t_summary"></div>
                     </div>
                 </div>
                 <div>
                     <span class="dot"></span>
                     <div class="tra_box">
                         <div class="t_name">Delivered</div>
-                        <div class="t_summary">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Neque ultrices a,
-                            sed mauris duis vel tortor. Sit viverra porttitor lorem fermentum dui. Leo ultrices ullamcorper
-                            amet sit sodales. Pharetra vel mollis diam feugiat egestas scelerisque. At nisl est ornare non
-                            sit.</div>
+                        <div class="t_summary"></div>
                     </div>
                 </div>
                 <button class="mt-5" onclick="giveFeedback()">Give feedback</button>
@@ -120,7 +108,20 @@ My Order Details
     <div class="add_container bg-light">
         <div class="d_address pt-3">Payment Details</div>
         {% if order.paid %}
-        Paid
+            <div class="d_name mt-3">Order ID: {{ order.razorpay_order_id }}</div>
+            <div class="d_details mt-3">
+                <p>Payment Date and Time: {{ order.transactions.timestamp }}</p>
+                <p>Coupon: 
+                    {% if order.coupon %}
+                        {{ order.coupon }}
+                    {% else %}
+                        Coupon Not Applied.
+                    {% endif %}
+                </p>
+                {% if order.coupon %}
+                <p>Discount: &#8377; {{ order.discount }}</p>
+                {% endif %}
+            </div>
         {% else %}
         Not Paid
         {% endif %}
@@ -144,5 +145,7 @@ My Order Details
     function closeFeedback(){
         feedback.style.display = 'none';
     }
+
+    
 </script>
 {% endblock body %}
