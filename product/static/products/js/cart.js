@@ -50,6 +50,10 @@ class Cart {
   }
   addToDom(item) {
     // console.log(item);
+    if (item == null) {
+      this.container.innerHTML = `<h4 style="color:white">Cart Empty</h4>`;
+      return;
+    }
     if (this.cardDetails) {
       this.container.innerHTML += `
         <div class="row align-items-center" id="item-${item.id}">
@@ -81,7 +85,7 @@ class Cart {
       `;
       return;
     } else {
-      this.container.innerHTML += `
+      this.container.innerHTML = `
       <div class="row" id="item-${item.id}">
         <div class="col-4"><img class="img-fluid" src=${item.img}></img></div>
         <div class="col-6 align-self-center text-white">
@@ -130,7 +134,7 @@ class Cart {
     if (item instanceof Item) {
       this.items[item.id] = item;
       this.save();
-      this.removeFromDom(item.id);
+      // this.removeFromDom(item.id);
       this.addToDom(item);
     }
   }
@@ -161,6 +165,12 @@ class Cart {
 
     delete this.items[id];
     this.removeFromDom(id);
+    let keys = Object.keys(this.items);
+    let lastItem = keys.length != 0 ? keys[keys.length - 1] : null;
+    if (lastItem) {
+      lastItem = this.items[lastItem];
+      this.addToDom(lastItem);
+    } else this.addToDom(null);
     this.save();
   }
   get total() {
