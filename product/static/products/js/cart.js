@@ -4,13 +4,13 @@ class Item {
       this.id = id.id;
       this.name = id.name;
       this.price = id.price;
-      this.quantity = id.quantity;
+      this.quantity = parseInt(id.quantity, 10);
       this.img = id.img;
     } else {
       this.id = id;
       this.name = name;
       this.price = price;
-      this.quantity = quantity;
+      this.quantity = parseInt(quantity, 10);
       this.img = img;
     }
   }
@@ -25,9 +25,13 @@ class Cart {
     if (raw_data) return JSON.parse(raw_data);
     return {};
   }
+  get noItems() {
+    return Object.keys(this.items).length;
+  }
   constructor(cardDetails = false) {
     this.container = document.getElementById("cart-container");
     this.summaryContainer = document.getElementById("cart-summary-container");
+    this.plusItems = document.getElementById("plus-items");
     this.items = {};
     this.savedItems = this.getFromLS();
     this.cardDetails = cardDetails;
@@ -52,6 +56,7 @@ class Cart {
     // console.log(item);
     if (item == null) {
       this.container.innerHTML = `<h4 style="color:white">Cart Empty</h4>`;
+      this.plusItems.innerHTML = "";
       return;
     }
     if (this.cardDetails) {
@@ -88,14 +93,21 @@ class Cart {
       this.container.innerHTML = `
       <div class="row" id="item-${item.id}">
         <div class="col-4"><img class="img-fluid" src=${item.img}></img></div>
-        <div class="col-6 align-self-center text-white">
-          <h1>${item.name}</h1>
-          <h3>Price-${item.price}</h3>
-          <h3>Qty-${item.quantity}</h3>
+        <div class="col-auto align-self-center text-white">
+          <h3>${item.name}</h3>
+          <h4>Price-${item.price}</h4>
+          <h4>Qty-${item.quantity}</h4>
         </div>
-        <div data-targetid=${item.id} onClick="removeFromCart(event)" class="col-2 cross">X</div>
+        <div data-targetid=${item.id} onClick="removeFromCart(${item.id})" class="col-auto">
+          <i onClick="removeFromCart(${item.id})" class="cross fas fa-times-circle"></i>
+        </div>
       </div>
       `;
+      if (this.noItems > 1) {
+        this.plusItems.innerHTML = "+" + String(this.noItems - 1) + " items.";
+      } else {
+        this.plusItems.innerHTML = "";
+      }
     }
   }
   removeFromDom(item_id) {
@@ -132,6 +144,9 @@ class Cart {
       .catch((err) => console.error("cart add error", err));
 
     if (item instanceof Item) {
+      if (this.items[item.id]) {
+        item.quantity += this.items[item.id].quantity;
+      }
       this.items[item.id] = item;
       this.save();
       // this.removeFromDom(item.id);
@@ -189,6 +204,7 @@ let addToCart = (e) => {
   dataset = e.target.dataset;
   stock = dataset.stock;
   quantity = document.getElementById("quantity").value;
+  quantity = parseInt(quantity, 10);
   if (stock < quantity) {
     alert("stock limited");
     return;
@@ -200,16 +216,11 @@ let addToCart = (e) => {
     quantity,
     dataset.img
   );
-  if (quantity == 0) {
-    cart.removeItem(newItem.id);
-    return;
-  }
   //   console.log(newItem);
   cart.addItem(newItem);
 };
 
-let removeFromCart = (event) => {
-  let itemId = event.target.dataset.targetid;
+let removeFromCart = (itemId) => {
   //   console.log(itemId);
   if (itemId) cart.removeItem(itemId);
 };
