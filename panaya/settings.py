@@ -28,7 +28,8 @@ SECRET_KEY = 'ro0jv0uf-^wymeildct2q0=!(er1u77xer(ar!@vgde+8!r=b8'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = os.environ['DEBUG'] if 'DEBUG' in os.environ else True
 
-ALLOWED_HOSTS = ['184.168.125.149','panaya.in','www.panaya.in','dev.panaya.in']
+ALLOWED_HOSTS = ['184.168.125.149', 'panaya.in',
+                 'www.panaya.in', 'dev.panaya.in']
 
 
 # Application definition
@@ -45,8 +46,9 @@ INSTALLED_APPS = [
     # Third party apps
     'ckeditor',
     'ckeditor_uploader',
+    'django_inlinecss',
 
-    # LOGIN 
+    # LOGIN
     'allauth',
     'allauth.account',
     'allauth.socialaccount',
@@ -63,6 +65,7 @@ INSTALLED_APPS = [
     'razor_pay',
     'coupons',
     'connectUs',
+    'util_mail',
 ]
 
 AUTHENTICATION_BACKENDS = [
@@ -201,4 +204,11 @@ SOCIALACCOUNT_PROVIDERS = {
     }
 }
 
-#django_on_heroku.settings(locals())
+# django_on_heroku.settings(locals())
+TIME_ZONE =  'Asia/Calcutta'
+
+USE_I18N = True
+
+USE_L10N = True
+
+USE_TZ = False

@@ -10,23 +10,98 @@ My Order Details
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet"
             integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <style>
+        .name{
+            font-size: 1.5rem;
+            color: #ffce76;
+            font-family: "Playfair Display", serif;
+            line-height: normal;
+        }
+        .share{
+            font-family: Poppins;
+            font-style: normal;
+            font-weight: 600;
+            font-size: 25px;
+            line-height: 54px;
+            color: #8D0020;
+        }
+        .satisfied{
+            font-family: Poppins;
+            font-style: normal;
+            font-weight: 600;
+            font-size: 22px;
+            line-height: 45px;
+            color: rgba(0, 0, 0, 0.71);
+        }
+        .emoji{
+            border: none;
+            background: transparent;
+            font-size: 35px;
+        }
+
+        .feedback_input{
+            height: 200px;
+            width: 80%;
+            margin: auto;
+            border: none;
+        }
+        .feedback_btn{
+            background: #8D0020;
+            color: #F49D37;
+            border: none;
+            border-radius: 10px;
+            padding-top: 10px;
+            padding-bottom: 10px;
+            padding-left: 15px;
+            padding-right: 15px;
+            font-size: 20px;
+        }
+        .cross {
+            float: right;
+            color: #ffce76;
+            font-size: 30px;
+            font-weight: bolder;
+            margin-top: -10%;
+            cursor: pointer;
+        }
+    </style>
 {% endblock css %}
 
 {% block body %}
 
 <body style="background: #FFEFD1;">
-    <div id="feedback" style="display : none ;position: fixed; z-index: 999; background: #ffce76; width: 80%; text-align: center; margin-left: 10%;; align-items: center; top: 5%; height: 90%;">
+    <div id="feedback" style="display: none;
+    position: fixed;
+    z-index: 999;
+    width: 80%;
+    text-align: center;
+    margin-left: 10%;
+    align-items: center;">
+         <div class="container text-center" style="background: #FFEFD1;">
         <div class="cross" onclick="closeFeedback()" style="transform: rotate(45deg); margin-top : 0% !important ; color: #8d0020;">+</div>
-        <div class="container row mt-5 mb-5">
-            <form action="submit">
-                <h3 class="text-center text-danger mb-5 mt-5">Submit Your Feedback</h3>
-                <input type="text" style="width: 80%; margin-left: 10%; height: 200px;">
-                
-                <div class="text-center mt-5">
-              <input class="sub_btn" style="border: none; background: #8d0020; color: white; font-weight: bold; padding-left: 2%; padding-right: 2%; padding-top: 1%; padding-bottom: 1%;" type="submit" id='contact-send-button'>
-            </div>
-            </form>
+        <div class='text-center'>
+            <img src="/assets/img/crown.png" alt="" style="width: 200px;">
+            <h2 class="name">PANAYA</h2>
+            <p style="font-family: 'Corinthia' , cursive; font-size: 1.5rem; color: #ffce76;">The Heritage Collection</p>
         </div>
+        <div class="container">
+            <div class="share mt-5">SHARE YOUR FEEDBACK</div>
+            <div class="satisfied mt-3">How Satisfied are you with panaya</div>
+            <div class="mt-5">
+                <button class="emoji">😞</button>
+                <button class="emoji">🙁</button>
+                <button class="emoji">😐</button>
+                <button class="emoji">🙂</button>
+                <button class="emoji">😀</button>
+            </div>
+            <div class="mt-5 mb-5">
+                <input class="feedback_input" type="text" value="write a feedback">
+            </div>
+            <div class="mt-5 pb-5">
+                <button class="feedback_btn">Send Feedback</button>
+            </div>
+        </div>
+    </div>
     </div>
     <div class="path mx-2">
         <a href="{% url 'index' %}">Home</a>
@@ -81,27 +156,28 @@ My Order Details
                     </div>
                 </div>
                 <div>
-                    <span class="dot done1"></span>
-                    <div class="tra_box done3">
-                        <div class="t_name done">Shipped</div>
-                        <div class="t_summary"></div>
+                    <span class="dot" id='ship-dot'></span>
+                    <div class="tra_box done3" id='ship-line'>
+                        <div class="t_name" id='ship-name'>Shipped</div>
+                        <div class="t_summary" id='shipped'>
+                        </div>
                     </div>
                 </div>
                 <div>
-                    <span class="dot done1"></span>
-                    <div class="tra_box done3">
-                        <div class="t_name done">Out for Delivery</div>
-                        <div class="t_summary"></div>
+                    <span class="dot" id='out-dot'></span>
+                    <div class="tra_box" id='out-line'>
+                        <div class="t_name" id='out-name'>Out for Delivery</div>
+                        <div class="t_summary" id="out-for-delivery"></div>
                     </div>
                 </div>
                 <div>
-                    <span class="dot"></span>
-                    <div class="tra_box">
-                        <div class="t_name">Delivered</div>
-                        <div class="t_summary"></div>
+                    <span class="dot" id='delivery-dot'></span>
+                    <div class="tra_box" id='delivery-line'>
+                        <div class="t_name" id='delivery-name'>Delivered</div>
+                        <div class="t_summary" id='delivered'></div>
                     </div>
                 </div>
-                <button class="mt-5" onclick="giveFeedback()">Give feedback</button>
+                <button class="mt-5 feedback_btn" onclick="giveFeedback()">Give feedback</button>
             </div>
         </div>
     </div>
@@ -137,6 +213,7 @@ My Order Details
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.min.js"
     integrity="sha384-QJHtvGhmr9XOIpI6YVutG+2QOK9T+ZnN4kzFN1RtK3zEFEIsxhlmWl5/YESvpZ13"
     crossorigin="anonymous"></script>
+<script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
 <script>
     const feedback = document.getElementById('feedback')
     function giveFeedback() {
@@ -145,7 +222,39 @@ My Order Details
     function closeFeedback(){
         feedback.style.display = 'none';
     }
-
-    
+    $(document).ready(function(){
+        var response = JSON.parse(`{{ order.order_tracking.response }}`.replace(/&quot;/g, '"'));
+        // console.log(response);
+        var scans = response.scans;
+        if(scans.length == 0){
+            console.log('No Shipment Found');
+        }
+        else{
+            $('#ship-dot').addClass('done1');
+            $('#ship-line').addClass('done3');
+            $('#ship-name').addClass('done');
+            for (var i = scans.length - 1; i >= 0; i--) {
+                var scan = scans[i];
+                var activity = scan.activity;
+                var date = scan.date;
+                if(activity == "SHIPMENT OUT FOR DELIVERY"){
+                    $('#out-dot').addClass('done1');
+                    $('#out-line').addClass('done3');
+                    $('#out-name').addClass('done');
+                    $('#out-for-delivery').append(date + " - OUT FOR DELIVERY");
+                    break;
+                }
+                var location = scan.location;
+                var html = `<div>${date} - ${activity} AT ${location}</div>`;
+                $('#shipped').append(html);
+            }
+        }
+        if(response.shipment_status_id === 7){
+            $('#delivery-dot').addClass('done1');
+            $('#delivery-line').addClass('done3');
+            $('#delivery-name').addClass('done');
+            $('#delivered').append(response.current_timestamp + ' - DELIVERED');
+        }
+    })
 </script>
 {% endblock body %}

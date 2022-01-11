@@ -4,7 +4,6 @@ from allauth.socialaccount.models import SocialAccount
 from blogs.models import Blog
 from product.models import Product, Type, Category, Collection
 
-
 def index_view(request):
     blogs = Blog.objects.all()
     types = Type.objects.all()

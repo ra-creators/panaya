@@ -94,9 +94,15 @@ class OrderTracking(models.Model):
     order = models.OneToOneField(Order,
                               related_name='order_tracking',
                               on_delete=models.CASCADE)
+    shiprocket_order_id = models.CharField(max_length=20)
     response = models.TextField()
     created = models.DateTimeField(auto_now_add=True)
     updated = models.DateTimeField(auto_now=True)
 
     def __str__(self):
         return f"Order Tracking {self.id}"
+
+
+class ShipRocketToken(models.Model):
+    token = models.CharField(max_length=300)
+    created_at = models.DateTimeField()

@@ -9,13 +9,13 @@ from cart.cart import Cart
 from .forms import OrderCreateForm
 import math
 from razor_pay.models import RazorPayOrder
-
+from .helpers import *
 # razor pay
 from razor_pay.razorpay_key import razorpay, razorpay_key
 
 
 # mail util
-from utils.mail import order_confirmation
+from util_mail.views import order_confirmation
 
 
 @login_required
@@ -84,21 +84,19 @@ def undo_create_order(order, status, msg, err):
     context['status'] = status
     return JsonResponse(context)
 
-
 @login_required
 def create_order(request):
-
     if request.method == 'GET':
         # request.session['rd_to'] = 'create_order'
         return verify_order(request)
     cart = Cart(request)
     addr_id = ""
     context = {}
-    
+
     if request.method != 'POST':
         return HttpResponse("no allowed")
     # quick fix for address redirect issue
-    
+
     post_data = json.loads(request.body)
     if('addrId' not in post_data or 'items' not in post_data):
         return JsonResponse({'status': 400, 'payload': 'malformed data'})
@@ -136,6 +134,14 @@ def create_order(request):
 
     # print('pre razorcall', order.coupon, order.discount, order.total)
     order.save()
+
+    # try:
+    #     order_tracking = createNewOrder(order)
+    #     if not order_tracking:
+    #         raise Exception('Order is not created')
+    # except Exception as e:
+    #     print(e)
+
     try:
         order_data = {}
         # print('razorcall', order.coupon, order.discount, order.total)
@@ -161,9 +167,17 @@ def create_order(request):
         # order.delete()
         return undo_create_order(order, 500, "razorpay api error", str(e))
     try:
-        order_confirmation.send_order_confirmation_mail(request, order)
+        order_confirmation(request, order)
     except Exception as err:
         print("email error", err)
+
+    try:
+        order_tracking = createNewOrder(order)
+        if not order_tracking:
+            raise Exception('Order is not created')
+    except Exception as e:
+        print(e)
+        
     return JsonResponse(context)
 
     # return render(request,
@@ -194,3 +208,4 @@ def order_details(request, order_id):
     context = {'order': order, 'paid': order.paid,
                'transactions': order.transactions}
     return render(request, 'payment/order_details.html', context=context)
+

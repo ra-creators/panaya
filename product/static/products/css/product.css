@@ -218,30 +218,4 @@ a {
   font-weight: bold;
   text-align: center;
 }
-
-#active-product-img,
-#select-img-container {
-  height: 520px;
-}
-
-@media (max-width: 768px) {
-  #active-product-img,
-  #select-img-container {
-    height: 250px;
-  }
-}
-
-@media (min-width: 768px) and (max-width: 991.98px) {
-  #active-product-img,
-  #select-img-container {
-    height: 320px;
-  }
-}
-
-@media (min-width: 768px) and (max-width: 1199.98px) {
-  #active-product-img,
-  #select-img-container {
-    height: 450px;
-  }
-}
 /*# sourceMappingURL=product.css.map */

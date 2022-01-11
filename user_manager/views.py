@@ -1,6 +1,5 @@
 import json
-from datetime import datetime, timedelta
-from django.http.response import HttpResponseBadRequest, HttpResponseNotFound, HttpResponsePermanentRedirect
+from django.http.response import HttpResponseBadRequest, HttpResponseNotFound
 from django.shortcuts import redirect, render
 from django.contrib.auth.decorators import login_required
 from django.views.decorators.csrf import csrf_exempt
@@ -10,14 +9,14 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 from django.views.generic import View
 from django.contrib.auth import get_user_model
 from django.contrib import messages
-from django.utils import timezone
+
+# models
 from .models import OTP
 from orders.models import Order
-from .helpers import *
-# Create your views here.
-
+# helper
+from .helpers import generate_otp
 # mail util
-from utils.mail import otp_mail
+from util_mail.views import send_otp
 
 
 User = get_user_model()
@@ -125,7 +124,7 @@ class ForgotPassword(View):
             otp.otp = otp_
             otp.save()
         # Send OTP to user's email
-        otp_mail.send_mail(user, otp_)
+        send_otp(user, otp_)
         request.session['email'] = email
         return redirect('otp_check')
 
@@ -201,10 +200,11 @@ class ProfileAddAddress(LoginRequiredMixin, View):
     def post(self, request):
         fname = request.POST.get('fname')
         lname = request.POST.get('lname')
-        address = request.POST.get('address')
-        city = request.POST.get('city')
+        address = request.POST.get('address').title()
+        city = request.POST.get('city').title()
         postal_code = request.POST.get('postalcode')
-        country = request.POST.get('country')
+        state = request.POST.get('state').title()
+        country = request.POST.get('country').title()
         if len(postal_code) != 6:
             messages.error(request, "Postal Code Length should be 6")
             return redirect('add_address')
@@ -216,6 +216,7 @@ class ProfileAddAddress(LoginRequiredMixin, View):
                 address=address,
                 city=city,
                 postal_code=postal_code,
+                state=state,
                 country=country,
             )
             address_.save()
@@ -285,6 +286,7 @@ def profile_edit_address_success(request):
         lname = request.POST.get('lname')
         address = request.POST.get('address')
         city = request.POST.get('city')
+        country = request.POST.get('country')
         postal_code = request.POST.get('postalcode')
         if address_id:
             print("hi")
@@ -333,6 +335,7 @@ def update_phone(request, user_id):
         user.save()
         return HttpResponse(200)
     return HttpResponse(400)
+
 
 @login_required
 def single_order_detail(request, order_id):

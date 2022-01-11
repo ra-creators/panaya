@@ -1,5 +1,6 @@
 from itertools import chain
 from django.db import models
+from django.db.models.fields import related
 from django.urls import reverse
 from ckeditor.fields import RichTextField
 from django.contrib.auth import get_user_model
@@ -131,7 +132,7 @@ class Product(models.Model):
     stocks = models.PositiveIntegerField(default=0)
     created = models.DateTimeField(auto_now_add=True)
     updated = models.DateTimeField(auto_now=True)
-    tags = models.ManyToManyField(Tag, blank=True)
+    tags = models.ManyToManyField(Tag, related_name="products", blank=True)
     avg_rating = models.DecimalField(
         default=0,
         max_digits=10,
@@ -172,24 +173,17 @@ class Product(models.Model):
         self.save()
 
     def realted(self, num_items=3):
-        related_category = []
-        related_collection = []
-        if self.collection:
-            related_collection = (
-                Collection.objects.get(
-                    id=self.collection.id
-                ).products.order_by('avg_rating')[:num_items]
-            )
-        if self.category:
-            related_category = (
-                Category.objects.get(
-                    id=self.category.id
-                ).products.order_by('avg_rating')[:num_items]
-            )
-        related_all = sorted(
-            chain(related_collection, related_category), key=lambda obj:
-            obj.avg_rating)
-        return related_all[:num_items]
+        if not self.tags.exists():
+            return []
+        related_all = []
+        for tag in self.tags.all():
+            related_all = list(chain(tag.products.all(), related_all))
+        related_all = set(related_all)
+        for related in related_all:
+            if related.id == self.id:
+                related_all.remove(related)
+                break
+        return related_all
 
 
 class ProductImage(models.Model):

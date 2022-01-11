@@ -345,7 +345,7 @@ footer a:hover {
 
 #heirlooms {
   width: 100vw;
-  background-image: url("/static/pages_static/images/index/heirloom-bg1.png");
+  background-image: url("/static/pages_static/images/index/heirloom-bg1.jpg");
   background-repeat: no-repeat;
   background-size: cover;
   background-position: 0%;
@@ -629,6 +629,11 @@ a{
   }
   .thanks_img{
       height: 30vh;
+  }
+  #say_thank{
+      top: 30% !important;
+      width: 90% !important;
+      margin-left:5% !important;
   }
 }
 

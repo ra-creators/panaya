@@ -15,13 +15,13 @@
     <div class="col-md-7">
       <div class="container">
         <div class="row">
-          <div class="col-4" style="overflow-y: auto" id="select-img-container">
+          <div class="col-md-4 display-md-block display-flex" style="overflow-y: auto" id="select-img-container">
             {% for img in product.images.all %}
-            <img src="{{img}}" style="cursor: pointer" class="img-fluid mb-1" alt=""
+            <img src="{{img}}" style="cursor: pointer" class="img-fluid m-1" alt=""
               onclick="setActiveProductImg(event)" />
             {% endfor %}
           </div>
-          <div class="col-7 offset-1">
+          <div class="col-md-7 offset-1">
             <img style="cursor: pointer" src="{{product.images.all.0}}" alt="product"
               class="img-fluid" id="active-product-img" />
           </div>
