@@ -1,8 +1,11 @@
-from django.shortcuts import render
-from django.http import HttpResponse, HttpResponseBadRequest
-from django.views.decorators.csrf import csrf_exempt
 from .models import ConnectEmails, ConnectUs
+from django.views.decorators.csrf import csrf_exempt
+from django.http import HttpResponse, HttpResponseBadRequest
 # Create your views here.
+
+# mail
+from util_mail.views import subscribed
+
 
 @csrf_exempt
 def contactUsEmailSend(request):
@@ -12,6 +15,7 @@ def contactUsEmailSend(request):
             return HttpResponse(400)
         email_ = ConnectEmails.objects.create(email=email)
         email_.save()
+        subscribed(email)
         return HttpResponse(200)
     return HttpResponseBadRequest()
 

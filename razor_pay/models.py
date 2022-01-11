@@ -1,5 +1,5 @@
+# import razorpay
 from django.db import models
-import razorpay
 from orders.models import Order
 
 

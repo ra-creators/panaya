@@ -9,7 +9,7 @@ from orders.models import Order
 from .razorpay_key import razorpay
 
 # mail utils
-from utils.mail import payment_recieved
+from util_mail.views import payment_recieved
 
 
 @csrf_exempt
@@ -20,13 +20,18 @@ def rp_callback(request):
     data = request.POST
     # 'razorpay_payment_id': ['pay_IaT9NuYNMv0KPu'],
     # 'razorpay_order_id': ['order_IaT8u5a6oG3blH'],
-    # 'razorpay_signature': ['e199055fa86a73800b9d0605d1578255838438b110c691c55fd643830d046c1d'],
-    # 'org_logo': [''], # 'org_name': ['Razorpay Software Private Ltd'],
-    # 'checkout_logo': ['https://cdn.razorpay.com/logo.png'], 'custom_branding': ['false']
+    # 'razorpay_signature':
+    # ['e199055fa86a73800b9d0605d1578255838438b110c691c55fd643830d046c1d'],
+    # 'org_logo': [''],
+    # # 'org_name': ['Razorpay Software Private Ltd'],
+    # 'checkout_logo': ['https://cdn.razorpay.com/logo.png'],
+    # 'custom_branding': ['false']
     # print(data)
     try:
         res = razorpay.utility.verify_payment_signature(data)
-    except:
+        print(res)
+    except Exception as err:
+        print(err)
         return HttpResponse('payment failure')
 
     try:
@@ -46,5 +51,6 @@ def rp_callback(request):
         except Exception as err:
             print(err)
         return redirect('order_details', order.id)
-    except:
+    except Exception as err:
+        print(err)
         return HttpResponse('error occured')

@@ -1,3 +1,4 @@
+from orders.models import Order
 from django.conf import settings
 from django.shortcuts import render
 from django.utils.html import strip_tags
@@ -5,7 +6,6 @@ from django.template.loader import render_to_string
 
 # python modules
 import threading
-from threading import Thread
 # from mail import send_mail
 from django.core.mail import send_mail as django_send_mail
 
@@ -77,8 +77,6 @@ def order_confirmation(request, order):
     order_html = render_to_string(
         'mail/order-confirmation.html', context=context)
     order_text = strip_tags(order_html)
-    with open('rendered.html','w') as file:
-        file.write(order_html)
     # print(order_text)
     EmailThread(
         subject=subject,
@@ -89,15 +87,16 @@ def order_confirmation(request, order):
     ).start()
 
 
-def send_otp(user, otp,):
+def send_otp(user, otp, create_ac=False):
     # print("mail send attempt")
     from_email = settings.EMAIL_HOST_USER
     recipient = [user.email]
     subject = "Password change requested"
-    order_html = (
-        "Hei,<br/> {user_name}, Here is the otp <h2>{otp}</h2> to reset password"
-        .format(
-            user_name=user.get_full_name(), otp=str(otp)))
+    order_html = render_to_string('mail/otp.html',
+                                  context={
+                                      'otp': otp,
+                                      'create_ac': create_ac
+                                  })
     order_text = strip_tags(order_html)
     # print(order_text)
     EmailThread(
@@ -110,7 +109,7 @@ def send_otp(user, otp,):
     # print("mail send done")
 
 
-def payment_recieved(request, transaction):
+def payment_recieved(transaction):
     # print("mail send attempt")
     order = transaction.order
     from_email = settings.EMAIL_HOST_USER
@@ -119,15 +118,10 @@ def payment_recieved(request, transaction):
     context = {
         'order': order,
         'paid': order.paid,
-        'transactions': order.transactions,
-        'order_url': request.build_absolute_uri(
-            '/orders/order/'+str(order.id)
-        ),
+        'transaction': transaction,
     }
-    # order_html = render_to_string(
-    #     "payment/order_details.html", context=context)
     order_html = render_to_string(
-        'payment/order_confirmation.html', context=context)
+        'mail/payment-confirmation.html', context=context)
     order_text = strip_tags(order_html)
     # print(order_text)
     EmailThread(
@@ -139,8 +133,27 @@ def payment_recieved(request, transaction):
     ).start()
     # print("mail send done")
 
-from orders.models import Order
+
+def subscribed(mail):
+    from_email = settings.EMAIL_HOST_USER
+    recipient = [mail, ]
+    subject = "Subscribed to Panaya news letter"
+    order_html = render_to_string('mail/subscribe.html',)
+    order_text = strip_tags(order_html)
+    # print(order_text)
+    EmailThread(
+        subject=subject,
+        text_content=order_text,
+        from_email=from_email,
+        html_content=order_html,
+        recipient=recipient,
+    ).start()
+
+
 def test(request):
     order = Order.objects.get(id=62)
     # order_confirmation(request,order)
-    return render(request, 'mail/order-confirmation.html', context={'order':order})
+    return render(request,
+                  'mail/order-confirmation.html',
+                  context={'order': order}
+                  )

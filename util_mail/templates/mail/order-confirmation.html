@@ -3,20 +3,22 @@
 {% block body %}
 <h3>Order Confirmation</h3>
 <div class="mail-text">
-    Hello {{order.user.get_full_name}},<br><br>
-    We are happy to tell you your order has been confirmed!
-    <br><br>
-    Your order details are <br>
-    Order number:{{order.id}} <br>
-    Order date:{{order.updated}} <br>
-    <br>
-    Once it ships, you will receive a confirmation email with your tracking number so you can track your
-    order.
-    <br><br>
-    If you need help with anything please do not hesitate to drop us an email at ___
-    <br>
-    <br>
-    <hr>
+    <p>
+        Hello {{order.user.get_full_name}},<br><br>
+        We are happy to tell you your order has been confirmed!
+        <br><br>
+        Your order details are <br>
+        Order number:{{order.id}} <br>
+        Order date:{{order.updated}} <br>
+        <br>
+        Once it ships, you will receive a confirmation email with your tracking number so you can track your
+        order.
+        <br><br>
+        If you need help with anything please do not hesitate to drop us an email at ___
+        <br>
+        <br>
+        <hr>
+    </p>
 </div>
 {% for item in order.items.all %}
 <div class="ordered-item">

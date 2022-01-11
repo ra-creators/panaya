@@ -37,7 +37,6 @@ body {
   /* position: relative; */
   background-image: url("https://static.panaya.in/static/mail/images/bg.png");
   background-size: contain;
-  background-repeat: repeat-y;
 }
 
 .order-confirmation h3 {
