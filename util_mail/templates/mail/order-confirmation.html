@@ -1,0 +1,52 @@
+{% extends 'mail/base.html' %}
+
+{% block body %}
+<h3>Order Confirmation</h3>
+<div class="mail-text">
+    Hello {{order.user.get_full_name}},<br><br>
+    We are happy to tell you your order has been confirmed!
+    <br><br>
+    Your order details are <br>
+    Order number:{{order.id}} <br>
+    Order date:{{order.updated}} <br>
+    <br>
+    Once it ships, you will receive a confirmation email with your tracking number so you can track your
+    order.
+    <br><br>
+    If you need help with anything please do not hesitate to drop us an email at ___
+    <br>
+    <br>
+    <hr>
+</div>
+{% for item in order.items.all %}
+<div class="ordered-item">
+    <img src="{{item.product.get_primary_img}}" alt="">
+    <div class="item-detail">
+        <h4>{{item.product.name}}</h4>
+        <p>Qty-{{item.quantity}}</p>
+        <h5>price-{{item.sub_total}}</h5>
+        {% comment %} <p>Delivery bu Sun Jul 12</p> {% endcomment %}
+    </div>
+</div>
+{% endfor %}
+<hr>
+<div class="thank-you-text">
+    <h2>
+        Thank You for Shopping with Panaya
+    </h2>
+    <p>Got Questions ? Please get in touch with us <a href="">24 x 7 Customer Care</a></p>
+</div>
+
+<a class="track-your-order" href="{{order_url}}">
+    <nobr>Track your Order</nobr>
+</a>
+
+<footer class="footer">
+    {% comment %} <div class="logo"><img src={% static 'mail/images/Screenshot from 2022-01-09 18-58-54.png' %} alt=""></div> {% endcomment %}
+    <div class="links">
+        <a href="{{order_url}}">Your Order</a>
+        <a href="https://panaya.in/users/profile/home">Your Account</a>
+        <a href="https://panaya.in/">Panaya.in</a>
+    </div>
+</footer>
+{% endblock body %}

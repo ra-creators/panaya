@@ -1,0 +1,29 @@
+{% extends 'mail/base.html' %}
+
+{% block body %}
+            <h3>Payment Confirmation</h3>
+            <div class="mail-text">
+                Hello ___,<br><br>
+                This email is to confirm and acknowledge the payment for (details) __ of __(order).
+                <br><br>
+                The total amount of ₹ ____ was received on _(date) __ 
+                <br><br>
+                Please do not hesitate to write to us in case you need any help.
+                <br><br>
+
+
+            </div>
+            <div class="thank-you-text">
+                <h2>
+                    Thank You for Shopping with Panaya
+                </h2>
+                <p>Got Questions ? Please get in touch with us <a href="">24 x 7 Customer Care</a></p>
+            </div>
+            <div class="footer">
+                <div class="logo"><img src="./images/Screenshot from 2022-01-09 18-58-54.png" alt=""></div>
+                <div class="links">
+                    <div class="space"></div>
+                    <div class="a-links"><a href="#"><nobr>Your Order</nobr></a><a href="#"><nobr>Your Account</nobr></a><a href="#"><nobr>Panaya.in</nobr></a></div>
+                </div>
+            </div>
+{% endblock %}

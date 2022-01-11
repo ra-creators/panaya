@@ -1,0 +1,37 @@
+{% load static %}
+{% load inlinecss %}
+
+<!DOCTYPE html>
+<html lang="en">
+    
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>authentication for creating Account</title>
+    {% comment %} <link rel="stylesheet" href="{% static 'mail/css/style.css' %}"> {% endcomment %}
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@500&display=swap" rel="stylesheet">
+    {% block css %}{% endblock css %}
+</head>
+    
+{% inlinecss "mail/css/style.css" %}
+<body>
+    <div class="email">
+        <div class="logo">
+            <img src={% static 'pages_static/images/logo with name.png' %} alt="">
+        </div>
+        <div class="order-confirmation">
+            <div class="green-tick">
+                <img src="{% static 'mail/images/check.svg' %}" alt="">
+            </div>
+            {% block body %}{% endblock body %}
+            <div class="footer-subscribe">
+                <div class="logo subscribe"><img src={% static 'pages_static/images/logo with name.png' %} alt=""></div>
+            </div>
+        </div>
+    </div>
+    <script src="https://kit.fontawesome.com/9dddb02c5f.js" crossorigin="anonymous"></script>
+</body>
+{% endinlinecss %}

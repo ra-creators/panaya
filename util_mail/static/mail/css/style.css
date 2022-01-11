@@ -1,0 +1,181 @@
+* {
+  margin: 0;
+  padding: 0;
+  -webkit-box-sizing: border-box;
+          box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  font-family: "Georgia", sans-serif;
+}
+
+.email {
+  min-height: 97vh;
+  background: #8d0020;
+  padding-bottom: 50px;
+}
+
+.logo {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  margin-bottom: 30px;
+}
+
+.logo img {
+  height: 90px;
+  margin: auto;
+}
+
+.order-confirmation {
+  max-width: 650px;
+  margin: 20px auto 0 auto;
+  padding: 1rem;
+  border-radius: 10px;
+  /* position: relative; */
+  background-image: url("https://static.panaya.in/static/mail/images/bg.png");
+  background-size: contain;
+  background-repeat: repeat-y;
+}
+
+.order-confirmation h3 {
+  width: -webkit-fit-content;
+  width: -moz-fit-content;
+  width: fit-content;
+  color: #8d0020;
+  margin: auto;
+}
+
+.order-confirmation hr {
+  background: rgba(0, 0, 0, 0.26);
+  width: 90%;
+}
+
+.green-tick {
+  margin: 20px 0 20px 0;
+  width: 100%;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+}
+
+.green-tick img {
+  width: 2rem;
+  height: auto;
+  margin: auto;
+}
+
+.mail-text {
+  width: 90%;
+  margin: 50px 0 50px 0;
+  text-align: left;
+}
+
+.ordered-item {
+  width: 90%;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+      -ms-flex-flow: row wrap;
+          flex-flow: row wrap;
+  margin: 0 0 30px 0;
+}
+
+.ordered-item img {
+  width: 90px;
+  height: auto;
+}
+
+.ordered-item .item-detail {
+  margin-left: 20px;
+  font-family: Georgia;
+  font-size: 20px;
+  font-style: normal;
+  font-weight: 400;
+  letter-spacing: 0em;
+  text-align: left;
+}
+
+.thank-you-text {
+  margin-bottom: 50px;
+  text-align: left;
+  width: 90%;
+  font-family: Georgia;
+  font-size: 20px;
+  font-style: normal;
+  font-weight: 600;
+  text-align: left;
+}
+
+a {
+  text-decoration: none;
+}
+
+.thank-you-text a {
+  color: #8D0020;
+}
+
+.track-your-order {
+  margin-bottom: 50px;
+  margin-left: auto;
+  margin-right: auto;
+  display: block;
+  width: -webkit-fit-content;
+  width: -moz-fit-content;
+  width: fit-content;
+  color: #fff;
+  background: #8d0020;
+  padding: 20px 80px;
+  border-radius: 20px;
+}
+
+.footer {
+  width: 100%;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+      -ms-flex-flow: row wrap;
+          flex-flow: row wrap;
+  /* margin-bottom: 200px; */
+  position: relative;
+}
+
+.footer .links {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  margin: auto;
+}
+
+.footer .links a {
+  margin: 10px 10px 10px 10px;
+  color: #8d0020;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  /* flex-flow: column wrap; */
+  gap: 1;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+}
+
+.footer-subscribe {
+  height: 200px;
+}
+
+/* .logo.subscribe{ */
+/* position: absolute; */
+/* bottom: 20px; */
+/* left: 40px; */
+/* } */
+/*# sourceMappingURL=style.css.map */
