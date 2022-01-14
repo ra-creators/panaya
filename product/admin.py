@@ -2,7 +2,7 @@ from django.contrib import admin, messages
 from django.shortcuts import render, redirect
 from django.template.defaultfilters import slugify
 from .models import (Category, Product, Tag, ProductImage, Review, FAQ,
-                     Collection, Type)
+                     Collection, Type, Color)
 
 import io
 import csv
@@ -171,3 +171,6 @@ class FAQAdmin(admin.ModelAdmin):
 class ReviewAdmin(admin.ModelAdmin):
     list_display = ['stars']
     # list_filter = ['product', 'created']
+
+
+admin.site.register(Color, admin.ModelAdmin)

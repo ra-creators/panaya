@@ -56,7 +56,7 @@ class Cart {
     // console.log(item);
     if (item == null) {
       this.container.innerHTML = `<h4 style="color:white">Cart Empty</h4>`;
-      this.plusItems.innerHTML = "";
+      if (this.plusItems) this.plusItems.innerHTML = "";
       return;
     }
     if (this.cardDetails) {
@@ -94,53 +94,22 @@ class Cart {
       <div class="row" id="item-${item.id}">
         <div class="col-4"><img class="img-fluid" src=${item.img}></img></div>
         <div class="col-auto align-self-center text-white">
+          <p class="cross"> <i onClick="removeFromCart(${item.id})" class="fas fa-times-circle"></i></p>
           <h3>${item.name}</h3>
           <h4>Price-${item.price}</h4>
           <h4>Qty-${item.quantity}</h4>
         </div>
-        <div data-targetid=${item.id} onClick="removeFromCart(${item.id})" class="col-auto">
-          <i onClick="removeFromCart(${item.id})" class="cross fas fa-times-circle"></i>
         </div>
-      </div>
-      `;
+        `;
+      // <div data-targetid=${item.id} onClick="removeFromCart(${item.id})" class="col-auto">
+      //   <i onClick="removeFromCart(${item.id})" class="cross fas fa-times-circle"></i>
+      // </div>
       if (this.noItems > 1) {
         this.plusItems.innerHTML = "+" + String(this.noItems - 1) + " items.";
       } else {
         this.plusItems.innerHTML = "";
       }
     }
-  }
-  updateDom(item) {
-    let elm = document.getElementById(`item-${item.id}`);
-    if (elm)
-      elm.innerHTML = `
-    <div class="row align-items-center" id="item-${item.id}">
-      <div class="col-6">
-        <div class="row mt-3 desc_box">
-          <div class="col-sm-4">
-              <img class="img-fluid" src="${item.img}" alt="product">
-          </div>
-          <div class="col-sm-8 align-self-center">
-            <div class="name">${item.name}</div>
-            <div class="price">Price ₹ ${item.price}</div>
-            <div>Size - 2 L</div>
-          </div>
-        </div>
-      </div>
-      <div class="col-2 text-center p_m">
-        <span data-id="${item.id}" data-quantity="${item.quantity}" class="minus" onClick="decreaseQuantity(event)">-</span>
-        <span class="num">${item.quantity}</span>
-        <span data-id="${item.id}" data-quantity="${item.quantity}" class="plus" onClick="increaseQuantity(event)">+</span>
-      </div>
-      <div class="col-2 text-center c_price">₹ ${item.total}</div>
-      <div class="col-2 text-center"><i onClick="cart.removeItem(${item.id})" class="fa fa-trash" aria-hidden="true"></i></i></div>
-    </div>`;
-    let elm1 = document.getElementById(`item-summary-${item.id}`);
-    if (elm1)
-      elm1.innerHTML = `
-        <div class="col-sm-6 i_name"> ${item.name}</div>
-        <div class="col-sm-6 i_price">₹ ${item.total}</div>
-    `;
   }
   removeFromDom(item_id) {
     let elm = document.getElementById(`item-${item_id}`);
@@ -176,42 +145,13 @@ class Cart {
       .catch((err) => console.error("cart add error", err));
 
     if (item instanceof Item) {
+      if (this.items[item.id]) {
+        item.quantity += this.items[item.id].quantity;
+      }
       this.items[item.id] = item;
       this.save();
       // this.removeFromDom(item.id);
       this.addToDom(item);
-    }
-  }
-  udpateItem(item) {
-    fetch(this.addCartUrl, {
-      method: "POST",
-      cache: "no-cache", // *default, no-cache, reload, force-cache, only-if-cached
-      credentials: "same-origin", // include, *same-origin, omit
-      mode: "same-origin",
-      headers: {
-        "Content-Type": "application/json",
-        "X-CSRFToken": csrftoken,
-        // 'Content-Type': 'application/x-www-form-urlencoded',
-      },
-      redirect: "follow", // manual, *follow, error
-      referrerPolicy: "origin", // no-referrer, *no-referrer-when-downgrade, origin, origin-when-cross-origin, same-origin, strict-origin, strict-origin-when-cross-origin, unsafe-url
-      body: JSON.stringify(item),
-    })
-      .then((res) => res.json())
-      .then((res) => {
-        if (res == 400) {
-          console.error("malformed data");
-          return;
-        }
-        if (res != 200) return;
-      })
-      .catch((err) => console.error("cart add error", err));
-
-    if (item instanceof Item) {
-      this.items[item.id] = item;
-      this.save();
-      // this.removeFromDom(item.id);
-      this.updateDom(item);
     }
   }
   removeItem(id) {
@@ -241,6 +181,13 @@ class Cart {
 
     delete this.items[id];
     this.removeFromDom(id);
+    let keys = Object.keys(this.items);
+    let lastItem = keys.length != 0 ? keys[keys.length - 1] : null;
+    if (lastItem) {
+      lastItem = this.items[lastItem];
+      this.addToDom(lastItem);
+    } else this.addToDom(null);
+    this.save();
   }
   get total() {
     let total = 0;
@@ -253,23 +200,45 @@ class Cart {
 }
 let cart;
 
+let addToCart = (e) => {
+  //   console.log(e.target.dataset);
+  dataset = e.target.dataset;
+  stock = dataset.stock;
+  quantity = document.getElementById("quantity").value;
+  quantity = parseInt(quantity, 10);
+  if (stock < quantity) {
+    alert("stock limited");
+    return;
+  }
+  newItem = new Item(
+    dataset.id,
+    dataset.name,
+    dataset.price,
+    quantity,
+    dataset.img
+  );
+  //   console.log(newItem);
+  cart.addItem(newItem);
+};
+
+let removeFromCart = (itemId) => {
+  //   console.log(itemId);
+  if (itemId) cart.removeItem(itemId);
+};
+
 const increaseQuantity = (e) => {
   // console.log("clicked");
   id = e.target.dataset.id;
   oldItem = cart.items[id];
   oldItem.quantity++;
-  cart.udpateItem(oldItem);
-  cart.save();
+  cart.removeItem(oldItem.id);
+  cart.addItem(oldItem);
 };
 const decreaseQuantity = (e) => {
   // console.log("clicked");
   id = e.target.dataset.id;
   oldItem = cart.items[id];
   oldItem.quantity--;
-  if (oldItem.quantity == 0) {
-    cart.removeItem(oldItem.id);
-    return;
-  }
-  cart.udpateItem(oldItem);
-  cart.save();
+  cart.removeItem(oldItem.id);
+  cart.addItem(oldItem);
 };

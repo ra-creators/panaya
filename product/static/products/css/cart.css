@@ -243,6 +243,8 @@
         width: 50% !important;
     }
 }
+
+
 @media only screen and (min-width: 700px) and (max-width: 996px) {
     .header {
         font-size: 28.7452px;
@@ -273,5 +275,20 @@
     }
     .tab , .c_price{
         font-size: 15px;
+    }
+    .minus{
+        border-bottom-left-radius: 0px;
+        border-top-left-radius: 10px;
+        border-top-right-radius: 10px;
+    }
+    .plus{
+        border-bottom-right-radius: 10px;
+        border-bottom-left-radius: 10px;
+        border-top-right-radius: 0px;
+    }
+}
+@media only screen and (min-width: 700px) and (max-width: 1098px) {
+    .p_m{
+        display: grid;
     }
 }

@@ -1,25 +1,37 @@
-from django.shortcuts import render, get_object_or_404
+from django.shortcuts import render, get_object_or_404, redirect
+from django.views.decorators.csrf import csrf_exempt
+from django.contrib.auth.decorators import login_required
 from django.core.paginator import Paginator
-from .models import Category, Product, Collection, Type
+from .models import Category, Product, Collection, Type, Review, Color
+from pages_static.models import ShopSlider
 from cart.forms import CartAddProductForm
 # Create your views here.
+# from django.contrib import messages
 
 
-def product_list(request, category_slug=None):
-    category = None
+def product_list(request, page=1):
     categories = Category.objects.all()
+    types = Type.objects.all()
+    colors = Color.objects.all()
     products = Product.objects.filter(available=True)
-    # print(category_slug)
-    if category_slug:
-        category = get_object_or_404(Category, slug=category_slug)
-        products = products.filter(category=category)
+
+    context = {
+        'page': 'list',
+        'categories': categories,
+        'types': types,
+        'colors': colors,
+        'products': products.all(),
+        'ShopSlider': ShopSlider.objects.all()[:5]
+    }
+    pages = Paginator(products, 24)
+    context['current_page_number'] = page
+    context['products'] = pages.page(page)
+    context['number_pages'] = pages.num_pages
+
     return render(request,
                   'product/list.html',
-                  {
-                      'category': category,
-                      'categories': categories,
-                      'products': products.all()
-                  })
+                  context=context
+                  )
 
 
 def categories(request, category_slug=None):
@@ -128,21 +140,20 @@ def product_search(request, page=1):
             pass
 
         try:
-            context['formdata']['collection'] = post_data['collection']
-            if(post_data['collection'] != '0'):
-                # print('cat')
-                searched_products = searched_products.filter(
-                    collection=post_data['collection'])
-        except Exception as err:
-            context['err'] = err
-            pass
-
-        try:
             context['formdata']['type'] = post_data['type']
             if(post_data['type'] != '0'):
                 # print('cat')
                 searched_products = searched_products.filter(
                     type=post_data['type'])
+        except Exception as err:
+            context['err'] = err
+            pass
+
+        try:
+            context['formdata']['color'] = post_data['color']
+            if(post_data['color'] != '0'):
+                searched_products = searched_products.filter(
+                    colors__id=post_data['color'])
         except Exception as err:
             context['err'] = err
             pass
@@ -170,6 +181,9 @@ def product_search(request, page=1):
     else:
         context['formdata']['name'] = ''
         context['formdata']['category'] = ''
+        context['formdata']['type'] = ''
+        context['formdata']['color'] = ''
+        context['formdata']['product'] = ''
         context['formdata']['maxPrice'] = ''
         context['formdata']['minPrice'] = ''
         searched_products = searched_products.all()
@@ -183,8 +197,33 @@ def product_search(request, page=1):
     context['current_page_number'] = (page)
     context['products'] = pages.page(1)
     context['categories'] = Category.objects.all()
+    context['types'] = Type.objects.all()
+    context['colors'] = Color.objects.all()
+    context['ShopSlider'] = ShopSlider.objects.all()[:5]
     return render(request, 'product/list.html', context=context)
 
 
 def cart(request):
     return render(request, 'product/cart.html')
+
+
+@csrf_exempt
+@login_required
+def feedback_product(request):
+    if request.method == 'POST':
+        rating = request.POST.get('feedback')
+        text = request.POST.get('text')
+        product_id = request.POST.get('product_id')
+        order_id = request.POST.get('order_id')
+        print(rating, text, product_id, order_id)
+        p = Product.objects.get(id=product_id)
+        p.update_rating(int(rating))
+        p.save()
+        Review.objects.create(
+            product=p,
+            user=request.user,
+            stars=int(rating),
+            body=text
+        )
+        return redirect('single_order', order_id)
+    return redirect('index')

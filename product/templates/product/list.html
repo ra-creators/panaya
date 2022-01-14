@@ -9,11 +9,25 @@ Products
 {% endblock title %}
 
 {% block css %}
+
 <link rel="stylesheet" href="{% static 'products/css/shop.css' %}">
+<style>
+    .row{
+        width : 100%;
+    }
+    @media only screen and (min-width: 992px) {
+        .overlay-shopnow {
+            display: none;
+        }
+        .shopNowImg:hover + .overlay-shopnow{
+            display : block;
+        }
+    }
+</style>
 {% endblock css %}
 
 {% block body %}
-<section id="carousel">
+{% comment %} <section id="carousel">
     <div id="carouselShopIndicators" class="carousel slide" data-bs-ride="carousel">
         <div class="carousel-indicators">
             <button type="button" data-bs-target="#carouselShopIndicators" data-bs-slide-to="0" class="active"
@@ -23,35 +37,25 @@ Products
             <button type="button" data-bs-target="#carouselShopIndicators" data-bs-slide-to="2"
                 aria-label="Slide 3"></button>
         </div>
-        <div class="carousel-inner" style="text-align: -webkit-center;">
-            <div class="carousel-item active">
-                <div class="overlay-container">
-                    <img src="{% static 'products/img/Rectangle 120.png' %}" class="d-block w-100"
-                        alt="product image" />
-                    <p class="overlay-text text-white fs-1 overlay-center" style="height: fit-content">
-                        Banarasi Silk Saree
-                    </p>
+            <div class="owl-carousel owl-fw-carousel owl-theme carousel-inner" style="text-align: -webkit-center;">
+            {% for img in ShopSlider %}
+                 <div class="carousel-item active">
+                    <div class="overlay-container">
+                        <img src="{{ img.image.url }}" class="d-block w-100"
+                            alt="product image" />
+                        <p class="overlay-text text-white fs-1 overlay-center" style="height: fit-content">
+                            
+                        </p>
+                    </div>
+                </div> 
+                <div class="item overlay-container" style="width:auto">
+                    <div class="item">
+                      <img class="img-fluid" loading="lazy" loading="lazy" src="{{ img.image.url }}" alt="" />
+                    </div>
                 </div>
-            </div>
-            <div class="carousel-item">
-                <div class="overlay-container">
-                    <img src="{% static 'products/img/Rectangle 120.png' %}" class="d-block w-100"
-                        alt="product image" />
-                    <p class="overlay-text text-white fs-1 overlay-center" style="height: fit-content">
-                        Banarasi Silk Saree
-                    </p>
-                </div>
-            </div>
-            <div class="carousel-item">
-                <div class="overlay-container">
-                    <img src="{% static 'products/img/Rectangle 120.png' %}" class="d-block w-100"
-                        alt="product image" />
-                    <p class="overlay-text text-white fs-1 overlay-center" style="height: fit-content">
-                        Banarasi Silk Saree
-                    </p>
-                </div>
-            </div>
+            {% endfor %}            
         </div>
+        
         <button class="carousel-control-prev" type="button" data-bs-target="#carouselShopIndicators"
             data-bs-slide="prev">
             <span class="carousel-control-prev-icon" aria-hidden="true"></span>
@@ -63,7 +67,19 @@ Products
             <span class="visually-hidden">Next</span>
         </button>
     </div>
-</section>
+</section> {% endcomment %}
+
+<section id="welcome-carousel">
+    <div class="owl-carousel owl-fw-carousel owl-theme">
+      {% for img in ShopSlider %}
+      <div class="item overlay-container" style="width:auto">
+        <div class="item">
+          <img class="img-fluid" loading="lazy" loading="lazy" src="{{ img.image.url }}" alt="" />
+        </div>
+      </div>
+      {% endfor %}
+    </div>
+  </section>
 
 <section id="heading" class="section-heading">
     <img src="{% static 'pages_static/images/section-heading-decor.png' %}" alt="" />
@@ -74,15 +90,15 @@ Products
 <section id="search-filter">
     <div class="container-lg mt-5">
         <div class="row">
-            <div class="col-md-auto">
+            <div>
                 <form action="/shop/search" method="POST" id="search-form">
                     {% csrf_token %}
                     <div class="row justify-content-center">
-                        <div class="col-auto d-flex align-items-center">
+                        <div class="col-sm-3 d-flex align-items-center mb-3">
                             <input size="20" class="form-control" value="{{formdata.name}}" type="text" name="name"
                                 id="name" placeholder="search">
                         </div>
-                        <div class="col-auto d-flex align-items-center">
+                        <div class="col-sm-3 d-flex align-items-center mb-3">
                             <select name="category" value="{{formdata.category}}" class="form-select"
                                 aria-label="Category select">
                                 <option value="0" {% if '' == formdata.category %}selected="selected" {% endif %}>
@@ -102,38 +118,68 @@ Products
                                 {% endfor %}
                             </select>
                         </div>
-                        <div class="col-auto">
-                            <div class="row">
-                                <div class="col-auto d-flex align-items-center">
-                                    <label for="maxPrice">Min Price</label>
-                                </div>
-                                <div class="col-auto d-flex align-items-center">
-                                    <input value="{{formdata.maxPrice}}" size="4" type="number" min="1"
-                                        class="form-control" name="maxPrice" id="maxPrice">
-                                </div>
-                                <div class="col-auto d-flex align-items-center">
-                                    <label for="minPrice">Max Price</label>
-                                </div>
-                                <div class="col-auto d-flex align-items-center">
-                                    <input value="{{formdata.minPrice}}" size="4" type="number" max=""
-                                        class="form-control" name="minPrice" id="minPrice">
-                                </div>
-                            </div>
+                        <div class="col-sm-3 d-flex align-items-center mb-3">
+                            <select name="type" value="{{formdata.type}}" class="form-select"
+                                aria-label="type select">
+                                <option value="0" {% if '' == formdata.type %}selected="selected" {% endif %}>
+                                    type all</option>
+                                {% for type in types %}
+                                {% if type.id|stringformat:"i" == formdata.type %}
+                                <option value="{{type.id}}" data-bool="yes" data-cat={{type.id}}
+                                    data-form={{formdata.type}} selected="selected">
+                                    {{type}}
+                                </option>
+                                {% else %}
+                                <option value="{{type.id}}" data-bool="no" data-cat={{type.id}}
+                                    data-form={{formdata.type}}>
+                                    {{type}}
+                                </option>
+                                {% endif %}
+                                {% endfor %}
+                            </select>
                         </div>
-                        <div class="col-auto">
-                            <button type="submit" style="padding: .375rem .75rem;"
-                                class="btn styled-btn-filled">Search</button>
+                        <div class="col-sm-3 d-flex align-items-center mb-3">
+                            <select name="color" value="{{formdata.color}}" class="form-select"
+                                aria-label="color select">
+                                <option value="0" {% if '' == formdata.color %}selected="selected" {% endif %}>
+                                    color all</option>
+                                {% for color in colors %}
+                                {% if color.id|stringformat:"i" == formdata.color %}
+                                <option value="{{color.id}}" data-bool="yes" data-cat={{color.id}}
+                                    data-form={{formdata.color}} selected="selected">
+                                    {{color}}
+                                </option>
+                                {% else %}
+                                <option value="{{color.id}}" data-bool="no" data-cat={{color.id}}
+                                    data-form={{formdata.color}}>
+                                    {{color}}
+                                </option>
+                                {% endif %}
+                                {% endfor %}
+                            </select>
                         </div>
+                        <div class="col-sm-3 d-flex align-items-center mb-3">   
+                            <input value="{{formdata.maxPrice}}" placeholder ="Min Price" size="4" type="number" min="1"
+                                class="form-control" name="maxPrice" id="maxPrice">
+                        </div>
+                        <div class="col-sm-3 d-flex align-items-center mb-3">
+                            <input value="{{formdata.minPrice}}" placeholder ="Max Price" size="4" type="number" max=""
+                                class="form-control" name="minPrice" id="minPrice">
+                        </div>
+                    </div>
+                    <div class="text-center">
+                        <button type="submit" style="padding: .375rem .75rem;"
+                            class="btn styled-btn-filled">Search</button>
                     </div>
                 </form>
             </div>
-            <div class="col-md"></div>
-            {% comment %} <div class="col-md-auto fs-4">
-                <i class="fa fa-filter cursor-pointer me-2"></i>
-                <i class="fa fa-th cursor-pointer me-2"></i>
-                <i class="fa fa-list cursor-pointer text-muted"></i>
-            </div> {% endcomment %}
         </div>
+        <div class="col-md"></div>
+        {% comment %} <div class="col-md-auto fs-4">
+            <i class="fa fa-filter cursor-pointer me-2"></i>
+            <i class="fa fa-th cursor-pointer me-2"></i>
+            <i class="fa fa-list cursor-pointer text-muted"></i>
+        </div> {% endcomment %}
     </div>
 </section>
 
@@ -145,7 +191,7 @@ Products
         <div class="mt-2 row g-2 g-md-5 row-cols-1 row-cols-md-2 row-cols-lg-3">
             {% comment %} <div class="col mt-0">
                 <div class="overlay-container">
-                    <img loading="lazy" class="" style="width: 100%" src="/assets/img/index/Rectangle 68.png" alt="" />
+                    <img loading="lazy" class="shopNowImg" style="width: 100%" src="/assets/img/index/Rectangle 68.png" alt="" />
                     <div class="overlay-shopnow">
                         <button class="btn overlay-bottom overlay-shopnow-btn">
                             Shop Now
@@ -158,9 +204,10 @@ Products
             {% for product in products %}
             <div class="col mt-0">
                 <div class="overlay-container">
-                    <img loading="lazy" class="" style="width: 100%" src="{{product.get_primary_img }}" alt="" />
+                    <img loading="lazy" class="shopNowImg" style="width: 100%" src="{{product.get_primary_img }}" alt="" />
                     <div class="overlay-shopnow">
                         <a href="{{ product.get_absolute_url }}">
+                        {% comment %} <a href="{% url 'product_detail' product.id %}"> {% endcomment %}                            
                             <button class="btn overlay-bottom overlay-shopnow-btn">
                                 Shop Now
                             </button>
@@ -177,27 +224,77 @@ Products
         </div>
         {% if number_pages %}
         <div class="rom mt-2 text-center">
+            {% if page == 'list' %}
             <nav aria-label="Page navigation">
                 <ul class="pagination">
                     {% for _ in ''|center:number_pages %}
                     {% if current_page_number == forloop.counter %}
-                    <li class="page-item"><a class="page-link active" onClick="pagination(event)"
-                            data-href={{forloop.counter}}>{{forloop.counter}}</a></li>
+                    <li class="page-item">
+                        <a class="page-link active" href={{forloop.counter}}>{{forloop.counter}}</a>
+                    </li>
                     {% else %}
-                    <li class="page-item"><a class="page-link" onClick="pagination(event)"
-                            data-href={{forloop.counter}}>{{forloop.counter}}</a></li>
+                    <li class="page-item">
+                        <a class="page-link" href={{forloop.counter}}>{{forloop.counter}}</a>
+                    </li>
                     {% endif %}
                     {% endfor %}
                     {% comment %} <li class="page-item"><a class="page-link" href="#">3</a></li> {% endcomment %}
                 </ul>
             </nav>
+            {% else %}
+            <nav aria-label="Page navigation">
+                <ul class="pagination">
+                    {% for _ in ''|center:number_pages %}
+                    {% if current_page_number == forloop.counter %}
+                    <li class="page-item"><a class="page-link active" onClick="pagination(event)"
+                        data-href={{forloop.counter}}>{{forloop.counter}}</a>
+                    </li>
+                    {% else %}
+                    <li class="page-item"><a class="page-link" onClick="pagination(event)"
+                        data-href={{forloop.counter}}>{{forloop.counter}}</a>
+                    </li>
+                    {% endif %}
+                    {% endfor %}
+                    {% comment %} <li class="page-item"><a class="page-link" href="#">3</a></li> {% endcomment %}
+                </ul>
+            </nav>
+            {% endif %}
         </div>
         {% endif %}
     </div>
 </section>
 {% endblock %}
 {% block js %}
+<!-- owl carousel -->
+<script
+  src="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/owl.carousel.min.js"
+  integrity="sha512-bPs7Ae6pVvhOSiIcyUClR7/q2OAsRiovw4vAkX+zJbw3ShAeeqezq50RIIcIURq7Oa20rW2n2q+fyXBNcU9lrw=="
+  crossorigin="anonymous"
+  referrerpolicy="no-referrer"
+></script>
+<link
+rel="stylesheet"
+  href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.carousel.min.css"
+  integrity="sha512-tS3S5qG0BlhnQROyJXvNjeEM4UpMXHrQfTGmbQ1gKmelCxlSEBUaxhRBj/EFTzpbP4RVSrpEikbmdJobCvhE3g=="
+  crossorigin="anonymous"
+  referrerpolicy="no-referrer"
+/><link
+rel="stylesheet"
+href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.theme.default.min.css"
+integrity="sha512-sMXtMNL1zRzolHYKEujM2AqCLUR9F2C4/05cdbxjjLSRvMQIciEPCQZo++nk7go3BtSuK9kfa/s+a4f4i5pLkw=="
+crossorigin="anonymous"
+  referrerpolicy="no-referrer"
+/>
+
 <script>
+    $(".owl-fw-carousel").owlCarousel({
+        loop: true,
+        margin: 10,
+        autoplay: true,
+        nav: true,
+        items:  1,
+    });
+
     let pagination = (e) => {
         e.preventDefault();
         let pageN = e.target.dataset.href;

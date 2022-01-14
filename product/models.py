@@ -1,6 +1,5 @@
 from itertools import chain
 from django.db import models
-from django.db.models.fields import related
 from django.urls import reverse
 from ckeditor.fields import RichTextField
 from django.contrib.auth import get_user_model
@@ -109,9 +108,19 @@ class Type(models.Model):
                        args=[self.slug])
 
 
+class Color(models.Model):
+    name = models.CharField(max_length=10)
+    value = models.CharField(
+        default="#8d0020",
+        max_length=10, verbose_name='color value eg. #FFF')
+
+    def __str__(self):
+        return self.name
+
+
 class Product(models.Model):
-    category = models.ForeignKey(
-        Category, related_name='products', on_delete=models.SET_NULL,
+    category = models.ManyToManyField(
+        Category, related_name='products',
         null=True, blank=True)
     collection = models.ForeignKey(
         Collection, related_name='products', on_delete=models.SET_NULL,
@@ -119,6 +128,7 @@ class Product(models.Model):
     type = models.ForeignKey(
         Type, related_name='products', on_delete=models.SET_NULL,
         null=True, blank=True)
+    colors = models.ManyToManyField(Color, related_name='products', blank=True)
     inventory_id = models.CharField(
         max_length=10, db_index=True, unique=True,)
     name = models.CharField(max_length=200, db_index=True)
