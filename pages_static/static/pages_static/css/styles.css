@@ -587,7 +587,7 @@ a{
     width: auto;
   }
   .logos {
-    width: 30%;
+    width: 50%;
   }
   .p_cont {
     width: 90%;
@@ -638,17 +638,20 @@ a{
 }
 
 @media only screen and (min-width: 700px) and (max-width: 900px) {
-  header nav a {
-    font-size: 15px !important;
-  }
-  header nav div {
-    width: 30%;
-  }
   .mail_input {
     font-size: 8px;
   }
   .pro_cart{
       margin-bottom: 10% !important;
+  }
+}
+
+@media only screen and (min-width: 700px) and (max-width: 992px) {
+    header nav div {
+    width: 30%;
+  }
+  header nav a {
+    font-size: 15px !important;
   }
 }
 /*# sourceMappingURL=styles.css.map */

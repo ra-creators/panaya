@@ -72,27 +72,3 @@ $(".owl-item").owlCarousel({
     },
   },
 });
-
-  $('#contact-send-button').click(function(e) {
-    e.preventDefault();
-    $.ajax({
-        url: "{% url 'contact_us' %}",
-        type: "POST",
-        data: {
-            'email': $('#contact-email').val(),
-            'phone': $('#contact-phone').val(),
-            'remarks': $('#contact-remarks').val(),
-            "name": $('#contact-name').val(),
-        },
-        success: function(response) {
-            if (response == 200) {
-                alert("Contact Information Sent!");
-            } else {
-                alert('Error');
-            }
-        },
-        error: function(response) {
-            alert("Error");
-        }
-    });
-});

@@ -79,9 +79,7 @@
 .row{
     width: 100%;
 }
-#map {
-    background-color: #685f5f;
-  }
+
 /* Responsive */
 @media only screen and (max-width: 700px) {
     .header {
@@ -102,9 +100,6 @@
     .find{
         font-size: 30px;
     }
-    #map{
-        height: 200px;
-    }
 }
 
 @media only screen and (min-width: 700px) and (max-width: 996px) {
@@ -124,6 +119,7 @@
 }
 @media only screen and (max-width: 578px) {
     #map{
-        height: 200px;
+        height: 300px;
+        margin-top : 5%;
     }
 }

@@ -13,3 +13,9 @@ class ShopCarousel:
 
     def __str__(self) -> str:
         return self.image
+
+class IndexSlider(models.Model):
+    image = models.ImageField(upload_to='index/sliders/')
+
+class ShopSlider(models.Model):
+    image = models.ImageField(upload_to='shop/sliders/')

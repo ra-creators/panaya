@@ -12,38 +12,13 @@
     <main>
       <section id="welcome-carousel">
         <div class="owl-carousel owl-fw-carousel owl-theme">
+          {% for img in IndexSlider %}
           <div class="item overlay-container" style="width:auto">
             <div class="item">
-              <img class="img-fluid" loading="lazy" loading="lazy" src="{%static 'pages_static/images/index/carousel1.png' %}" alt="" />
+              <img class="img-fluid" loading="lazy" loading="lazy" src="{{ img.image.url }}" alt="" />
             </div>
-            <!--<div class="overlay-text text-white ms-5" style="top: 50%">-->
-            <!--  <a class="btn styled-btn-outline" href="{% url 'product_list' %}">Shop Now</a>-->
-            <!--</div>-->
           </div>
-          <div class="item overlay-container" style="width:auto">
-            <div class="item">
-              <img class="img-fluid" loading="lazy" loading="lazy" src="{%static 'pages_static/images/index/carousel2.png' %}" alt="" />
-            </div>
-            <!--<div class="overlay-text text-white ms-5" style="top: 50%">-->
-            <!--  <a class="btn styled-btn-outline" href="{% url 'product_list' %}">Shop Now</a>-->
-            <!--</div>-->
-          </div>
-          <div class="item overlay-container" style="width:auto">
-            <div class="item">
-              <img class="img-fluid" loading="lazy" loading="lazy" src="{%static 'pages_static/images/index/carousel5.png' %}" alt="" />
-            </div>
-            <!--<div class="overlay-text text-white ms-5" style="top: 50%">-->
-            <!--  <a class="btn styled-btn-outline" href="{% url 'product_list' %}">Shop Now</a>-->
-            <!--</div>-->
-          </div>
-          <div class="item overlay-container" style="width:auto">
-            <div class="item">
-              <img class="img-fluid" loading="lazy" src="{%static 'pages_static/images/index/carousel6.png' %}" alt="" />
-            </div>
-            <!--<div class="overlay-text text-white ms-5" style="top: 50%">-->
-            <!--  <a class="btn styled-btn-outline" href="{% url 'product_list' %}">Shop Now</a>-->
-            <!--</div>-->
-          </div>
+          {% endfor %}
         </div>
       </section>
 
@@ -78,7 +53,7 @@
         <div class="container" style="text-align: -webkit-center;" class="explore-banaras">
           <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-xl-4">
             {% for category in categories %}
-            <div class="col mt-5 text-center">
+            <div class="col mt-5 text-center d-flex justify-content-center">
               <div class="flip-card">
                 <div class="card">
                   <div class="flip-card-inner">
@@ -124,8 +99,7 @@
         </div>
         <div class="container-lg">
           <h1 style="color: rgba(141, 0, 32, 1)" class="text-center mt-3 mb-5">
-            Exclusive New Collection for festival and bride look and off upto
-            20%
+            Shop the exclusive new collection for festive and bridal looks and get upto 20% off
           </h1>
           <div class="row g-2 g-md-5 row-cols-1 row-cols-md-3 w-100">
             <div class="owl-carousel owl-item owl-theme">
@@ -174,9 +148,7 @@
           {% endfor %}
         </div>
       </section>
-      
-      <section id="heirlooms" class="my-5 mx-auto w-100">
-        <div class="container-md">
+      <div class="container-md">
           <h1 class="text-center mb-5 text-sp-red">WOVEN HEIRLOOMS</h1>
           <p class="mb-5">
             Panaya GOLD is a luxury handmade textile brand, started in 2015.
@@ -189,6 +161,9 @@
             attempt to match historical masterpieces, ensuring
             simultaneously, comfort for today’s wearer.
           </p>
+      </div>
+      <section id="heirlooms" class="my-5 mx-auto w-100">
+        <div class="container-md">
           <div class="container-fluid">
             <div class="row container g-2 justify-content-center">
               <div class="col-sm-6">
@@ -256,39 +231,39 @@
           <form>
             {% csrf_token %}
             <div class="row mt-5">
-              <div class="col-6">
-                <label for="name">Name</label>
+              <div class="col-auto">
+                <label class="form-label" for="name">Name</label>
               </div>
-              <div class="col-6">
-                <input type="text" style="width: -webkit-fill-available;" id='contact-name' name="name">
-              </div>
-            </div>
-            <div class="row mt-5">
-              <div class="col-6">
-                <label for="name">Email</label>
-              </div>
-              <div class="col-6">
-                <input type="text" style="width: -webkit-fill-available;" id='contact-email' name="email">
+              <div class="col">
+                <input type="text" class="form-control" id='contact-name' name="name">
               </div>
             </div>
             <div class="row mt-5">
-              <div class="col-6">
-                <label for="mobile">Mobile No.</label>
+              <div class="col-auto">
+                <label class="form-label" for="name">Email</label>
               </div>
-              <div class="col-6">
-                <input type="number" name="phone" style="width: -webkit-fill-available;" id='contact-phone'>
+              <div class="col">
+                <input type="text" class="form-control" id='contact-email' name="email">
               </div>
             </div>
             <div class="row mt-5">
-              <div class="col-6">
-                <label for="remark">Remarks</label>
+              <div class="col-auto">
+                <label class="form-label" for="mobile">Mobile No.</label>
               </div>
-              <div class="col-6">
-                <input type="text" name='remarks' style="width: -webkit-fill-available;" id='contact-remarks'>
+              <div class="col">
+                <input type="number" name="phone" pattern="[1-9]{1}[0-9]{9}" class="form-control" id='contact-phone'>
+              </div>
+            </div>
+            <div class="row mt-5">
+              <div class="col-auto">
+                <label class="form-label" for="remark">Remarks</label>
+              </div>
+              <div class="col">
+                <input type="text" name='remarks' class="form-control" id='contact-remarks'>
               </div>
             </div>
             <div class="text-center mt-5">
-              <input class="sub_btn" type="submit" id='contact-send-button'>
+              <input class="st-btn-fill-yellow" style="padding: .5rem;" type="submit" id='contact-send-button'>
             </div>
           </form>
         </div>
@@ -357,6 +332,15 @@
       </div>
 
     </main>
+    <script>
+      const popUp = document.getElementById('pop_up')
+    function OpenPopUp () {
+      popUp.classList.add("active");
+    }
+    function closePopUp(){
+      popUp.classList.remove("active")
+    }
+    </script>
 {% endblock body%}
 {% block js %}
 <script src="{% static 'pages_static/js/instafeed.min.js' %}"></script>
@@ -389,13 +373,32 @@ crossorigin="anonymous"
     nav: true,
     items:  1,
   });
-  const popUp = document.getElementById('pop_up')
-  function OpenPopUp() {
-    popUp.classList.add("active");
-  }
-  function closePopUp(){
-    popUp.classList.remove("active")
-  }
+  
+  $('#contact-send-button').click(function(e) {
+    e.preventDefault();
+    $.ajax({
+        url: "{% url 'contact_us' %}",
+        type: "POST",
+        data: {
+            'email': $('#contact-email').val(),
+            'phone': $('#contact-phone').val(),
+            'remarks': $('#contact-remarks').val(),
+            "name": $('#contact-name').val(),
+        },
+        success: function(response) {
+            console.log(response);
+            if (response == 200) {
+                alert("Contact Information Sent!");
+            } else {
+                alert('Error');
+            }
+        },
+        error: function(response) {
+            console.log(response);
+            alert("Error");
+        }
+    });
+  });
 </script>
 <script>
   {% if messages %}

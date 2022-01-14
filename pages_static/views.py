@@ -1,6 +1,7 @@
 from django.shortcuts import render
 from allauth.socialaccount.models import SocialAccount
 # models
+from .models import IndexSlider
 from blogs.models import Blog
 from product.models import Product, Type, Category, Collection
 
@@ -13,12 +14,15 @@ def index_view(request):
     new_products = Product.objects.order_by('-id')[:10]
     new_products = reversed(new_products)
 
+    slider_images = IndexSlider.objects.all()[:5]
+    # print(slider_images)
     context = {
         'blogs': blogs,
         'types': types,
         'categories': categories,
         'collection': collection,
         'new_products': new_products,
+        'IndexSlider': slider_images
     }
 
     if request.user.is_authenticated and request.user.fname == "":
