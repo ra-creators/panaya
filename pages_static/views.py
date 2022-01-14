@@ -4,6 +4,8 @@ from allauth.socialaccount.models import SocialAccount
 from .models import IndexSlider
 from blogs.models import Blog
 from product.models import Product, Type, Category, Collection
+from connectUs.models import ConnectUs
+
 
 def index_view(request):
     blogs = Blog.objects.all()
@@ -40,6 +42,17 @@ def about_view(request):
 
 
 def contact_view(request):
+    if request.method == 'POST':
+        email = request.POST.get('email')
+        phone = request.POST.get('phone')
+        name = request.POST.get('name')
+        query = request.POST.get('remarks')
+        if email and phone and name and query:
+            obj = ConnectUs.objects.create(
+                email=email, phone=phone, name=name, query=query)
+            obj.save()
+            print(obj)
+
     return render(request, 'pages_static/contactUs.html')
 
 

@@ -15,6 +15,15 @@
         .section-heading img {
             width: 200px;
         }
+        .call_us{
+             margin-right: 2%;   
+        }
+            
+        @media screen and (min-width: 700px) {
+            .call_us{
+                display: none;
+            }
+        }
     </style>
     {% block css %}{% endblock css %}
 </head>
@@ -204,6 +213,14 @@
                     </form>
                 </div>
             </div>
+            <div class="text-center mt-5">
+                <div class="d-flex justify-content-center">© 2022 &nbsp; <a href="/">Panaya.in</a> &nbsp; All Rights Reserved</div>
+                <div class="d-flex justify-content-center"> DESIGNED BY &nbsp;<a href="https://www.racreators.com/" target="blank"> R A Creators</a></div>
+            </div>
+        </div>
+        <div class="d-flex justify-content-end">
+            <a class="call_us" href="tel:9336940122"><img style="width:50px;" src="{%static 'pages_static/images/index/call.jpg' %}" alt=""></a>
+            <a target="blank" href="https://api.whatsapp.com/send/?phone=+919336940122"><img style="width:50px;" src="{%static 'pages_static/images/index/whatsAppLogo.png' %}" alt=""></a>
         </div>
     </footer>
     

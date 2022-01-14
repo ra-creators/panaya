@@ -3,8 +3,6 @@
 
 {% block css %}
     <link rel="stylesheet" href="{% static 'pages_static/css/contactUs.css' %}">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet"
-    integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
 {% endblock css %}
 
 {% block title %}
@@ -23,40 +21,49 @@ Contact Us
     </div>
     <div class="find mt-5" style="display:flex; justify-content: center;">Find Us</div>
     <div class="container">
-         <div class="row m-auto">
-            <div class="col-sm-6" style="border: 1px solid;">
-                <form action="submit" style="width: 85%; margin: auto;">
-                    <h3 class="text-center">Get in touch</h3>
-                        <div class="row mt-5">
-                          <div class="col-6">
-                            <label for="name">Name</label>
+         <div class="row g-3 m-auto">
+            <div class="col-md-6" style="border: 1px solid;">
+                <form method="POST" id="contact-us-form" style="width: 85%; margin: auto;">
+                    {% csrf_token %}
+                    <h3 class="text-center mt-4">Get in touch</h3>
+                        <div class="row mt-3">
+                          <div class="col-auto">
+                            <label class="form-label" for="name">Name</label>
                           </div>
-                          <div class="col-6">
-                            <input style="width: -webkit-fill-available;" type="text">
-                          </div>
-                        </div>
-                        <div class="row mt-5">
-                          <div class="col-6">
-                            <label for="mobile">Mobile No.</label>
-                          </div>
-                          <div class="col-6">
-                            <input style="width: -webkit-fill-available;" type="number">
+                          <div class="col">
+                            <input class="form-control" name="name" style="width: -webkit-fill-available;" type="text">
                           </div>
                         </div>
-                        <div class="row mt-5">
-                          <div class="col-6">
-                            <label for="remark">Message</label>
+                        <div class="row mt-3">
+                          <div class="col-auto">
+                            <label class="form-label" pattern="[1-9]{1}[0-9]{9}" for="phone">Mobile No.</label>
                           </div>
-                          <div class="col-6">
-                            <input style="width: -webkit-fill-available;" type="text">
+                          <div class="col">
+                            <input class="form-control" name="phone" style="width: -webkit-fill-available;" type="number">
                           </div>
                         </div>
-                        <div class="text-center mt-5 mb-5">
-                          <input class="sub_btn text-bold" type="submit" value="Get in touch">
+                        <div class="row mt-3">
+                          <div class="col-auto">
+                            <label class="form-label" for="email">Email</label>
+                          </div>
+                          <div class="col">
+                            <input class="form-control" name="email" style="width: -webkit-fill-available;" type="email">
+                          </div>
+                        </div>
+                        <div class="row mt-3">
+                          <div class="col-auto">
+                            <label class="form-label" for="remarks">Message</label>
+                          </div>
+                          <div class="col">
+                            <input class="form-control" name="remarks" style="width: -webkit-fill-available;" type="text">
+                          </div>
+                        </div>
+                        <div class="text-center mt-3 mb-5">
+                          <button class="st-btn-fill-yellow text-bold" id="submit-btn" type="submit">Get in touch</button>
                         </div>
                 </form>
             </div>
-            <div  id="map" class="col-sm-6"><iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d14423.482610620262!2d82.98347677304673!3d25.34212108412538!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x398e2dd81c35bde9%3A0x9773c11a75fdfe77!2sKhajuri%20Colony%2C%20Varanasi%2C%20Uttar%20Pradesh!5e0!3m2!1sen!2sin!4v1641985228278!5m2!1sen!2sin" width="100%" height="100%" style="border:0;" allowfullscreen="" loading="lazy"></iframe></div>
+            <div  id="map" class="col-md-6"><iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d14423.482610620262!2d82.98347677304673!3d25.34212108412538!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x398e2dd81c35bde9%3A0x9773c11a75fdfe77!2sKhajuri%20Colony%2C%20Varanasi%2C%20Uttar%20Pradesh!5e0!3m2!1sen!2sin!4v1641985228278!5m2!1sen!2sin" width="100%" height="100%" style="border:0;" allowfullscreen="" loading="lazy"></iframe></div>
         </div>
     </div>
     <div class="row mt-5">
@@ -81,14 +88,5 @@ Contact Us
         <div class="mt-3">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin.</div>
         <div class="mt-3">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin.</div>
     </div>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"
-    integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p"
-    crossorigin="anonymous"></script>
-<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.10.2/dist/umd/popper.min.js"
-    integrity="sha384-7+zCNj/IqJ95wo16oMtfsKbZ9ccEh31eOz1HGyDuCQ6wgnyJNSYdrPa03rtR1zdB"
-    crossorigin="anonymous"></script>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.min.js"
-    integrity="sha384-QJHtvGhmr9XOIpI6YVutG+2QOK9T+ZnN4kzFN1RtK3zEFEIsxhlmWl5/YESvpZ13"
-    crossorigin="anonymous"></script>
 </script>
 {% endblock body %}
