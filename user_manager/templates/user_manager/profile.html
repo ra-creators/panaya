@@ -39,7 +39,7 @@
             <hr>
             <div class="row ">
                 <div class="col-3 text-center"><img class="l_img" src="/assets/img/logout.svg" alt=""></div>
-                <div class="col-9 acc"><a href="{% url 'logout' %}" style='color: #333333;'>LOGOUT</a></div>
+                <div class="col-9 acc"><a data-bs-toggle="modal" data-bs-target="#logoutModal" style='color: #333333;'>LOGOUT</a></div>
             </div>
             <hr>
         </div>
@@ -85,6 +85,7 @@
     crossorigin="anonymous"></script>
 
 <script>
+    var safeEdit = false;
     function saveEventListener(){
         document.getElementById('save-phone').addEventListener('click', function() {
             // Check if input is len 10
@@ -106,19 +107,23 @@
                 }).then(function(data) {
                     console.log(data);
                     alert('Phone number updated successfully');
+                    
                 });    
             } else {
                 alert('Phone number must be 10 digits long');
             }
+            safeEdit = false;
         });
     };
 
     function editPhoneInputCheck(){
-        document.getElementById('edit-phone-input').disabled = false;
-        document.getElementById('edit-phone-wrapper').innerHTML += '<a href="#" class="save" id="save-phone">Save</a>'; 
-        saveEventListener();
+        if (safeEdit === false){
+            safeEdit = true;
+            document.getElementById('edit-phone-input').disabled = false;
+            document.getElementById('edit-phone-wrapper').innerHTML += '<a href="#" class="save" id="save-phone">Save</a>'; 
+            saveEventListener();
+        }
     }
-
 
 </script>
 {% endblock body %}

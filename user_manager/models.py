@@ -1,6 +1,7 @@
 from django.db import models
 from django.utils import timezone
-from django.contrib.auth.models import AbstractBaseUser, BaseUserManager, PermissionsMixin
+from django.contrib.auth.models import (
+    AbstractBaseUser, BaseUserManager, PermissionsMixin)
 
 from datetime import timedelta, datetime
 
@@ -8,7 +9,8 @@ from datetime import timedelta, datetime
 class UserProfileManager(BaseUserManager):
     """Manages the user profiles"""
 
-    def create_user(self, email, fname, lname, dob, phone_number=None, password=None, profile_pic=None):
+    def create_user(self, email, fname, lname, dob,
+                    phone_number=None, password=None, profile_pic=None):
         """Create a new user profile"""
         if not email:
             raise ValueError('User must have an email address')
@@ -16,7 +18,8 @@ class UserProfileManager(BaseUserManager):
         email = self.normalize_email(email)
         if profile_pic:
             user = self.model(email=email, fname=fname, lname=lname,
-                              dob=dob, phone_number=phone_number, profile_pic=profile_pic)
+                              dob=dob, phone_number=phone_number,
+                              profile_pic=profile_pic)
         else:
             user = self.model(email=email, fname=fname, lname=lname,
                               dob=dob, phone_number=phone_number)
@@ -24,7 +27,8 @@ class UserProfileManager(BaseUserManager):
         user.save(using=self._db)
         return user
 
-    def create_superuser(self, email, fname, lname, dob, password, phone_number=None, profile_pic=None):
+    def create_superuser(self, email, fname, lname, dob, password,
+                         phone_number=None, profile_pic=None):
         """Create and save a new superuser with given details"""
         user = self.create_user(email, fname, lname,
                                 dob,  phone_number, password, profile_pic)
@@ -42,7 +46,8 @@ class User(AbstractBaseUser, PermissionsMixin):
     dob = models.DateField()
     phone_number = models.CharField(max_length=10, blank=True, null=True)
     profile_pic = models.ImageField(
-        upload_to='profile_pics/%Y/%m/%d', default='default/images/profile_pic.png')
+        upload_to='profile_pics/%Y/%m/%d',
+        default='default/images/profile_pic.png')
     is_staff = models.BooleanField(default=False)
     objects = UserProfileManager()
 
@@ -59,8 +64,8 @@ class User(AbstractBaseUser, PermissionsMixin):
         return self.dob
 
     def get_profile_pic(self):
-        if profile_pic:
-            return profile_pic
+        if self.profile_pic:
+            return self.profile_pic
         else:
             return 'default/images/profile_pic.png'
 
@@ -70,7 +75,7 @@ class User(AbstractBaseUser, PermissionsMixin):
 
 class OTP(models.Model):
     """
-    Otp model for user. 
+    Otp model for user.
     This model is used to store the otp generated for the user.
     Otp should expire after 15 minutes of generation.
     """
@@ -132,6 +137,8 @@ class UserAddress(models.Model):
     first_name = models.CharField(max_length=200)
     last_name = models.CharField(max_length=200)
     address = models.TextField(max_length=200)
+    line1 = models.TextField(max_length=200, blank=True)
+    line2 = models.TextField(max_length=200, blank=True)
     postal_code = models.CharField(max_length=6)
     city = models.CharField(max_length=200)
     state = models.CharField(max_length=50)

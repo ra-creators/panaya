@@ -1,5 +1,6 @@
 import json
 from django.http.response import HttpResponseBadRequest, HttpResponseNotFound
+from django.http import JsonResponse
 from django.shortcuts import redirect, render
 from django.contrib.auth.decorators import login_required
 from django.views.decorators.csrf import csrf_exempt
@@ -15,6 +16,7 @@ from .models import OTP
 from orders.models import Order
 # helper
 from .helpers import generate_otp
+from orders.helpers import trackOrder
 # mail util
 from util_mail.views import send_otp
 
@@ -286,6 +288,7 @@ def profile_edit_address_success(request):
         lname = request.POST.get('lname')
         address = request.POST.get('address')
         city = request.POST.get('city')
+        state = request.POST.get('state')
         country = request.POST.get('country')
         postal_code = request.POST.get('postalcode')
         if address_id:
@@ -297,6 +300,7 @@ def profile_edit_address_success(request):
                 address_.address = address
                 address_.city = city
                 address_.country = country
+                address_.state = state
                 address_.postal_code = postal_code
                 address_.save()
                 return redirect('address')
@@ -345,3 +349,14 @@ def single_order_detail(request, order_id):
     return render(request, 'user_manager/order_details.html', {
         'order': order
     })
+
+@login_required
+def get_order_tracking(request, order_id):
+    order = Order.objects.get(id=order_id)
+    if request.user != order.user:
+        return HttpResponseBadRequest
+    res = trackOrder(order)
+    if res:
+        return JsonResponse(res, safe=False)
+    else:
+        return JsonResponse({'status_code':404, 'text':"Not Found"})

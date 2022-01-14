@@ -6,7 +6,7 @@ from django.contrib.auth import get_user_model
 
 User = get_user_model()
 
-# Create your models here.
+
 class Order(models.Model):
     user = models.ForeignKey(
         User, related_name='order_details', on_delete=models.CASCADE)
@@ -23,6 +23,8 @@ class Order(models.Model):
     updated = models.DateTimeField(auto_now=True)
     paid = models.BooleanField(default=False)
     razorpay_order_id = models.CharField(
+        default='nil', max_length=30, )
+    razorpay_invoice_id = models.CharField(
         default='nil', max_length=30, )
 
     class Meta:
@@ -41,22 +43,27 @@ class Order(models.Model):
 
     @property
     def total(self):
-        return float(self.get_total_cost())-float(self.discount)
+        return float(self.get_total_cost())-float(self.discount_amount)
+
+    @property
+    def discount_amount(self):
+        discount_amaount = 0
+        if(self.coupon):
+            if(self.coupon.percentage):
+                discount_amaount = (self.get_total_cost() *
+                                    (self.coupon.discount/100))
+            else:
+                discount_amaount = self.coupon.discount
+        if discount_amaount > self.get_total_cost():
+            discount_amaount = self.get_total_cost()
+        return discount_amaount
 
     def save(self, *args, **kwargs):
-        try:
-            if(self.coupon):
-                # print(self.coupon)
-                if(self.coupon.percentage):
-                    self.discount = (self.get_total_cost() *
-                                     (self.coupon.discount/100))
-                else:
-                    self.discount = self.coupon.discount
-            if self.discount > self.get_total_cost():
-                self.discount = self.get_total_cost()
-
-        except Exception as err:
-            raise err
+        for order_item in self.items.all():
+            try:
+                order_item.product.update_stocks(order_item.quantity)
+            except Exception as err:
+                raise err
         super().save(*args, **kwargs)
 
 
@@ -80,21 +87,16 @@ class OrderItem(models.Model):
     def get_cost(self):
         return self.price * self.quantity
 
-    def save(self, *args, **kwargs):
-        try:
-            self.product.update_stocks(self.quantity)
-        except Exception as err:
-            raise err
-        super().save(*args, **kwargs)
 
 class OrderTracking(models.Model):
     """
     Order Tracking Model by storing JSON response
     """
     order = models.OneToOneField(Order,
-                              related_name='order_tracking',
-                              on_delete=models.CASCADE)
+                                 related_name='order_tracking',
+                                 on_delete=models.CASCADE)
     shiprocket_order_id = models.CharField(max_length=20)
+    shiprocket_shipment_id = models.CharField(max_length=20)
     response = models.TextField()
     created = models.DateTimeField(auto_now_add=True)
     updated = models.DateTimeField(auto_now=True)

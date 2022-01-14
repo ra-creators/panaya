@@ -46,15 +46,21 @@ My Order Details
             border: none;
         }
         .feedback_btn{
+                background: #8D0020;
+                color: #F49D37;
+                border: none;
+                border-radius: 10px;
+                max-width: 50%;
+                margin: auto;
+                font-size: 16px;
+        }
+        .feedback_btn_popup{
             background: #8D0020;
             color: #F49D37;
             border: none;
             border-radius: 10px;
-            padding-top: 10px;
-            padding-bottom: 10px;
-            padding-left: 15px;
-            padding-right: 15px;
-            font-size: 20px;
+            margin: 0 20%;
+            font-size: 16px;
         }
         .cross {
             float: right;
@@ -64,6 +70,20 @@ My Order Details
             margin-top: -10%;
             cursor: pointer;
         }
+        .emoji-check{
+            position: absolute;
+            opacity: 0;
+            width: 0;
+        }
+        @media only screen and (max-width: 700px) {
+            .emoji , .share{
+                font-size : 20px;
+            }
+            .satisfied{
+                font-size:18px;
+            }
+        }    
+
     </style>
 {% endblock css %}
 
@@ -76,7 +96,7 @@ My Order Details
     width: 80%;
     text-align: center;
     margin-left: 10%;
-    align-items: center;">
+    align-items: center; top:5%;">
          <div class="container text-center" style="background: #FFEFD1;">
         <div class="cross" onclick="closeFeedback()" style="transform: rotate(45deg); margin-top : 0% !important ; color: #8d0020;">+</div>
         <div class='text-center'>
@@ -85,21 +105,28 @@ My Order Details
             <p style="font-family: 'Corinthia' , cursive; font-size: 1.5rem; color: #ffce76;">The Heritage Collection</p>
         </div>
         <div class="container">
-            <div class="share mt-5">SHARE YOUR FEEDBACK</div>
+            <div class="share mt-3">SHARE YOUR FEEDBACK</div>
             <div class="satisfied mt-3">How Satisfied are you with panaya</div>
-            <div class="mt-5">
-                <button class="emoji">😞</button>
-                <button class="emoji">🙁</button>
-                <button class="emoji">😐</button>
-                <button class="emoji">🙂</button>
-                <button class="emoji">😀</button>
-            </div>
-            <div class="mt-5 mb-5">
-                <input class="feedback_input" type="text" value="write a feedback">
-            </div>
-            <div class="mt-5 pb-5">
-                <button class="feedback_btn">Send Feedback</button>
-            </div>
+            <form action="{% url 'feedback_product' %}" method='post'>
+                <div class="mt-1">
+                    <input type="radio" class="emoji-check" id='1' name="feedback" value="1">
+                    <label  class='emoji' onclick="alert('😞');" for="1">😞</label>
+                    <input type="radio" class="emoji-check" id='2' name="feedback" value="2">
+                    <label class='emoji' onclick="alert('🙁');" for="2">🙁</label>
+                    <input type="radio" class="emoji-check" id='3' name="feedback" value="3">
+                    <label class='emoji' onclick="alert('😐');" for="3">😐</label>
+                    <input type="radio" class="emoji-check" id='4' name="feedback" value="4">
+                    <label class='emoji' onclick="alert('🙂');" for="4">🙂</label>
+                    <input type="radio" class="emoji-check" id='5' name="feedback" value="5">
+                    <label class='emoji' onclick="alert('😀');" for="5">😀</label>
+                </div>
+                <div class="mt-3 mb-3" id='feedback-input'>
+                    <input class="feedback_input" name='text' type="text" id='feedback_text' value="write a feedback">
+                </div>
+                <div class="mt-5 pb-5">
+                    <button id='send-feedback-button' class="feedback_btn_popup" onclick="alert('Thanks for the feedback!');">Send Feedback</button>
+                </div>
+            </form>
         </div>
     </div>
     </div>
@@ -138,6 +165,7 @@ My Order Details
                                 <div class="price">	&#8377; {{ order_item.price }}</div>
                                 {% comment %} <div class='size'>Rate Us</div> {% endcomment %}
                             </div>
+                            <button class="mt-5 feedback_btn" onclick="giveFeedback('{{ order_item.product.id }}', '{{ order.id }}')">Give feedback</button>
                     {% endfor %}
                 </div>
                 <div class="mt-3 policy">
@@ -157,7 +185,7 @@ My Order Details
                 </div>
                 <div>
                     <span class="dot" id='ship-dot'></span>
-                    <div class="tra_box done3" id='ship-line'>
+                    <div class="tra_box" id='ship-line'>
                         <div class="t_name" id='ship-name'>Shipped</div>
                         <div class="t_summary" id='shipped'>
                         </div>
@@ -177,7 +205,7 @@ My Order Details
                         <div class="t_summary" id='delivered'></div>
                     </div>
                 </div>
-                <button class="mt-5 feedback_btn" onclick="giveFeedback()">Give feedback</button>
+                
             </div>
         </div>
     </div>
@@ -216,45 +244,87 @@ My Order Details
 <script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
 <script>
     const feedback = document.getElementById('feedback')
-    function giveFeedback() {
+    function giveFeedback(product_id, order_id) {
         feedback.style.display = 'block';
+        $('#feedback-input').append(`<input type="hidden" id='product_id' name="product_id" value="`+ product_id +`">`);
+        $('#feedback-input').append(`<input type="hidden" id='order_id' name="order_id" value="`+ order_id +`">`);
     }
     function closeFeedback(){
         feedback.style.display = 'none';
     }
-    $(document).ready(function(){
-        var response = JSON.parse(`{{ order.order_tracking.response }}`.replace(/&quot;/g, '"'));
-        // console.log(response);
-        var scans = response.scans;
-        if(scans.length == 0){
-            console.log('No Shipment Found');
-        }
-        else{
-            $('#ship-dot').addClass('done1');
-            $('#ship-line').addClass('done3');
-            $('#ship-name').addClass('done');
-            for (var i = scans.length - 1; i >= 0; i--) {
-                var scan = scans[i];
-                var activity = scan.activity;
-                var date = scan.date;
-                if(activity == "SHIPMENT OUT FOR DELIVERY"){
-                    $('#out-dot').addClass('done1');
-                    $('#out-line').addClass('done3');
-                    $('#out-name').addClass('done');
-                    $('#out-for-delivery').append(date + " - OUT FOR DELIVERY");
-                    break;
+{% comment %} 
+    $('#send-feedback-button').click(function(e){
+        e.preventDefault();
+        feedback = document.querySelector('input[name="feedback"]:checked').value;
+        feedback_text = $('#feedback_text').val();
+        product_id = $('#product_id').val();
+        $.ajax({
+            url: "{% url 'feedback_product' %}",
+            type: "POST",
+            data: {
+                'feedback': feedback,
+                'text': feedback_text,
+                'product_id': product_id
+            },
+            success: function(response) {
+                if (response == 200) {
+                    alert("Thanks for the feedback!");
+                } else {
+                    alert('Error in sending feedback');
                 }
-                var location = scan.location;
-                var html = `<div>${date} - ${activity} AT ${location}</div>`;
-                $('#shipped').append(html);
+            },
+            error: function(response) {
+                alert('Error in sending feedback');
             }
-        }
-        if(response.shipment_status_id === 7){
-            $('#delivery-dot').addClass('done1');
-            $('#delivery-line').addClass('done3');
-            $('#delivery-name').addClass('done');
-            $('#delivered').append(response.current_timestamp + ' - DELIVERED');
-        }
-    })
+        });
+    }) {% endcomment %}
+
+    $(document).ready(function(){
+        $.ajax({
+            url: "{% url 'get_order_tracking' order.id %}",
+            type: "GET",
+            success: function(response) {
+                var res = JSON.parse(response);
+            },
+            error: function(response) {
+                alert("Failed to fetch tracking data.");
+            }
+        }).then(function(response){
+            var res = JSON.parse(response);
+            var scans = res.tracking_data.shipment_track_activities;
+            // console.log(scans);
+            if(scans.length == 0){
+                console.log('No Shipment Found');
+            }
+            else{
+                $('#ship-dot').addClass('done1');
+                $('#ship-line').addClass('done3');
+                $('#ship-name').addClass('done');
+                for (var i = scans.length - 1; i >= -1; i--) {
+                    var scan = scans[i];
+                    var activity = scan.activity;
+                    var date = scan.date;
+                    var status = scan["sr-status"];
+                    if(status === "7"){
+                        $('#delivery-dot').addClass('done1');
+                        $('#delivery-line').addClass('done3');
+                        $('#delivery-name').addClass('done');
+                        $('#delivered').append(date + ' - DELIVERED');
+                        break;
+                    }
+                    if(status === "17"){
+                        $('#out-dot').addClass('done1');
+                        $('#out-line').addClass('done3');
+                        $('#out-name').addClass('done');
+                        $('#out-for-delivery').append(date + " - OUT FOR DELIVERY");
+                    }
+                    var location = scan.location;
+                    var html = `<div>${date} - ${activity} AT ${location}</div>`;
+                    $('#shipped').append(html);
+                }
+            }
+        });
+    });
+
 </script>
 {% endblock body %}

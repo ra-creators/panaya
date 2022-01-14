@@ -83,7 +83,7 @@ button{
     display: flex;
     justify-content: space-between;
 }
-
+/* 
 #buttons a{
     text-decoration: none;
     background: #2F80ED;
@@ -94,7 +94,7 @@ button{
     max-height: 8vh;
     padding-top: 3%;
     margin-top:auto;
-}
+} */
 
 .continue{
     background: #2F80ED;

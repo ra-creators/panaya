@@ -27,6 +27,3 @@ class UserAddressInline(admin.StackedInline):
 @admin.register(User)
 class UserAdmin(admin.ModelAdmin):
     inlines = (UserAddressInline, OrderInline)
-
-
-admin.site.register(OTP)

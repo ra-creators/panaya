@@ -9,6 +9,9 @@ from .models import ShipRocketToken, OrderTracking
 NEW_TOKEN_ENDPOINT = "https://apiv2.shiprocket.in/v1/external/auth/login"
 CREATE_ENDPOINT = "https://apiv2.shiprocket.in/v1/external/orders/create/adhoc"
 
+def getTrackingEndpoint(shipment_id):
+    return f"https://apiv2.shiprocket.in/v1/external/courier/track/shipment/{shipment_id}"
+
 def getNewAuthToken():
     headers = {
         'Content-Type': 'application/json'
@@ -71,7 +74,7 @@ def createNewOrder(order):
         "shipping_email": order.user.email,
         "shipping_phone": order.user.phone_number,
         "payment_method": "Prepaid",
-        "sub_total": 10,
+        "sub_total": order.total(),
         "length": 10,
         "breadth": 10,
         "height": 10,
@@ -94,13 +97,39 @@ def createNewOrder(order):
     except:
         print("Connection Not Made")
         return False
-    print(response.status_code, response.text)
+    # print(response.status_code, response.text)
     if(int(response.status_code) != 200):
         return False
     res = json.loads(response.text)
     # Create a order_tracking response
     tracking = OrderTracking.objects.create(
-        order=order, response=res, shiprocket_order_id=res['order_id']
+        order=order, response=res, shiprocket_order_id=res['order_id'],
+        shiprocket_shipment_id=res['shipment_id'],
     )
     tracking.save()
     return True
+
+def trackOrder(order):
+    checkShipRocketExpiryAuthToken()
+    headers = {
+        'Content-Type': 'application/json',
+        'Authorization': 'Bearer ' + ShipRocketToken.objects.get(id=1).token
+    }
+
+    shipment_id = int(order.order_tracking.shiprocket_shipment_id)
+    endpoint = getTrackingEndpoint(shipment_id)
+
+    # Get the data
+    try:
+        response = requests.get(endpoint, headers=headers, json=json_obj)
+    except:
+        print("Connection Not Made")
+        return None
+    if(int(response.status_code) != 200):
+        return False
+    res = json.loads(response.text)
+    try:
+        order.order_tracking.response = res
+    except:
+        raise Exception('Order Tracking not created. Please contact support.')
+    return res

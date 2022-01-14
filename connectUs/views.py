@@ -11,6 +11,7 @@ from util_mail.views import subscribed
 def contactUsEmailSend(request):
     if request.method == 'POST':
         email = request.POST.get('email')
+        print(email)
         if ConnectEmails.objects.filter(email=email).exists():
             return HttpResponse(400)
         email_ = ConnectEmails.objects.create(email=email)

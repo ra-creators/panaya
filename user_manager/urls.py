@@ -18,4 +18,6 @@ urlpatterns = [
     path('otp_check/', views.OTPCheck.as_view(), name='otp_check'),
     path('password_change/', views.PasswordChangeView.as_view(), name='password_change'),
     path('profile/api/user/<int:user_id>/', views.update_phone, name='update_phone'),
+    path('profile/order/get_order_tracking/<int:order_id>', views.get_order_tracking, name='get_order_tracking'),
+    
 ]

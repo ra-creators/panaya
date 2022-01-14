@@ -5,7 +5,14 @@
 {% block title %}
 Sign in
 {% endblock title %}
-
+{% block css %}
+    <style>
+        #buttons a{
+            text-decoration: none;
+            color: #fff;
+        }
+    </style>
+{% endblock css %}
 
 {% block body %}
     <div class="sign-in-form">
@@ -24,7 +31,7 @@ Sign in
         <input type="email" placeholder="Enter your Email Address" name="email" class='entry' required>
         <input type="password" placeholder="Enter Password" name='password' class='entry' required >
         <div id='buttons'>
-            <a href="{% url 'forgot_password' %}" >Forgot Password?</a>
+            <button type="submit" class="continue"><a href="{% url 'forgot_password' %}">Forgot Password?</a></button>
             <button type="submit" class="continue">Continue</button>
         </div>
         </form>
