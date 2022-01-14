@@ -46,7 +46,7 @@ def rp_callback(request):
         order.paid = True
         order.save()
         try:
-            payment_recieved.send_mail(
+            payment_recieved(
                 request=request, transaction=transaction)
         except Exception as err:
             print(err)
