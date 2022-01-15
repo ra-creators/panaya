@@ -18,14 +18,38 @@
         .call_us{
              margin-right: 2%;   
         }
-            
+        header nav a {
+            padding : 0% !important ; 
+        }
+        header nav div {
+            justify-content: space-around;
+        }    
         @media screen and (min-width: 700px) {
             .call_us{
                 display: none;
             }
         }
-        header nav a {
-            padding : 0% !important ; 
+        
+        @media only screen and (min-width: 700px) and (max-width: 992px) {
+          header nav a {
+            font-size: 15px !important;
+          }
+          header nav div {
+            width: 30% !important;
+          }
+          .mail_input {
+            font-size: 8px;
+          }
+        }
+        
+        @media only screen and (min-width: 576px) and (max-width: 976px) {
+            .email_form{
+              display : grid;
+            }
+            .email_form input {
+                width : 80% ;
+                margin : auto ;
+            }
         }
     </style>
     {% block css %}{% endblock css %}
@@ -214,7 +238,7 @@
                         <h2>Stay In Touch</h2>
                     </div>
                     <p>Hear about our new woven treasures and more...</p>
-                    <form class='align-center form-row'>
+                    <form class='align-center form-row email_form'>
                         <input class='col-7' type="email" placeholder="Enter your E-mail" name='email' id='email'>
                         <input class='btn btn-warning col-3' id='email-send-button' type="submit" value='Send' onclick="sayThanks()">
                     </form>

@@ -1,0 +1,256 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}{{page_heading}}{% endblock title %}
+
+{% block css %}
+<link rel="stylesheet" href="{% static 'products/css/shop.css' %}">
+{% endblock css %}
+
+{% block body %}
+<section id="welcome-carousel">
+    <div class="owl-carousel owl-fw-carousel owl-theme">
+        {% for img in ShopSlider %}
+        <div class="item overlay-container" style="width:auto">
+            <div class="item">
+                <img class="img-fluid" loading="lazy" loading="lazy" src="{{ img.image.url }}" alt="" />
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</section>
+
+<section id="heading" class="section-heading">
+    <img src="{% static 'pages_static/images/section-heading-decor.png' %}" alt="" />
+    <h1>{{page_heading}}</h1>
+    <img class="flip-horizontal" src="{% static 'pages_static/images/section-heading-decor.png' %}" alt="" />
+</section>
+
+{% if page_type == 'single' %}
+<section id="search-filter">
+    <div class="container-lg mt-5">
+        <div class="row">
+            <div>
+                <form action="/shop/search/" method="POST" id="search-form">
+                    {% csrf_token %}
+                    <div class="row justify-content-center">
+                        <div class="col-sm-3 d-flex align-items-center mb-3">
+                            <input size="20" class="form-control" value="{{formdata.name}}" type="text" name="name"
+                                id="name" placeholder="search">
+                        </div>
+                        <div class="col-sm-3 d-flex align-items-center mb-3">
+                            <select name="category" value="{{formdata.category}}" class="form-select"
+                                aria-label="Category select">
+                                <option value="0" {% if '' == formdata.category %}selected="selected" {% endif %}>
+                                    category all</option>
+                                {% for categorie in categories %}
+                                {% if categorie.id|stringformat:"i" == formdata.category %}
+                                <option value="{{categorie.id}}" data-bool="yes" data-cat={{categorie.id}}
+                                    data-form={{formdata.category}} selected="selected">
+                                    {{categorie}}
+                                </option>
+                                {% else %}
+                                <option value="{{categorie.id}}" data-bool="no" data-cat={{categorie.id}}
+                                    data-form={{formdata.category}}>
+                                    {{categorie}}
+                                </option>
+                                {% endif %}
+                                {% endfor %}
+                            </select>
+                        </div>
+                        <div class="col-sm-3 d-flex align-items-center mb-3">
+                            <select name="type" value="{{formdata.type}}" class="form-select"
+                                aria-label="type select">
+                                <option value="0" {% if '' == formdata.type %}selected="selected" {% endif %}>
+                                    type all</option>
+                                {% for type in types %}
+                                {% if type.id|stringformat:"i" == formdata.type %}
+                                <option value="{{type.id}}" data-bool="yes" data-cat={{type.id}}
+                                    data-form={{formdata.type}} selected="selected">
+                                    {{type}}
+                                </option>
+                                {% else %}
+                                <option value="{{type.id}}" data-bool="no" data-cat={{type.id}}
+                                    data-form={{formdata.type}}>
+                                    {{type}}
+                                </option>
+                                {% endif %}
+                                {% endfor %}
+                            </select>
+                        </div>
+                        <div class="col-sm-3 d-flex align-items-center mb-3">
+                            <select name="color" value="{{formdata.color}}" class="form-select"
+                                aria-label="color select">
+                                <option value="0" {% if '' == formdata.color %}selected="selected" {% endif %}>
+                                    color all</option>
+                                {% for color in colors %}
+                                {% if color.id|stringformat:"i" == formdata.color %}
+                                <option value="{{color.id}}" data-bool="yes" data-cat={{color.id}}
+                                    data-form={{formdata.color}} selected="selected">
+                                    {{color}}
+                                </option>
+                                {% else %}
+                                <option value="{{color.id}}" data-bool="no" data-cat={{color.id}}
+                                    data-form={{formdata.color}}>
+                                    {{color}}
+                                </option>
+                                {% endif %}
+                                {% endfor %}
+                            </select>
+                        </div>
+                        <div class="col-sm-3 d-flex align-items-center mb-3">   
+                            <input value="{{formdata.maxPrice}}" placeholder ="Min Price" size="4" type="number" min="1"
+                                class="form-control" name="maxPrice" id="maxPrice">
+                        </div>
+                        <div class="col-sm-3 d-flex align-items-center mb-3">
+                            <input value="{{formdata.minPrice}}" placeholder ="Max Price" size="4" type="number" max=""
+                                class="form-control" name="minPrice" id="minPrice">
+                        </div>
+                    </div>
+                    <div class="text-center">
+                        <button type="submit" style="padding: .375rem .75rem;"
+                            class="btn styled-btn-filled">Search</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+        <div class="col-md"></div>
+        {% comment %} <div class="col-md-auto fs-4">
+            <i class="fa fa-filter cursor-pointer me-2"></i>
+            <i class="fa fa-th cursor-pointer me-2"></i>
+            <i class="fa fa-list cursor-pointer text-muted"></i>
+        </div> {% endcomment %}
+    </div>
+</section>
+{% endif %}
+
+{% if page_type == 'single' %}
+<section id="products">
+    <div class="container-lg mt-2">
+        <div class="row">
+            <div class="col-auto">
+                <h2 class="text-sp-red">{{property.name}}</h2>
+            </div>
+            <div class="col"></div>
+            <div class="col-auto">
+                <a class="text-sp-red" href="{% url single_url property.slug %}">find more</a>
+            </div>
+        </div>
+        <div class="mt-2 row g-2 g-md-5 row-cols-1 row-cols-md-2 row-cols-lg-3">
+            {% for product in products %}
+            <div class="col mt-0">
+                <div class="overlay-container">
+                    <img loading="lazy" class="" style="width: 100%" src="{{product.get_primary_img }}" alt="" />
+                    <div class="overlay-shopnow">
+                        <a href="{{ product.get_absolute_url }}">
+                            <button class="btn overlay-bottom overlay-shopnow-btn">
+                                Shop Now
+                            </button>
+                        </a>
+                    </div>
+                </div>
+                <h2 class="mt-2 fs-5">{{product.name}}</h2>
+                <p class="fs-5 fw-bold">Rs. {{product.price}}</p>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</section>
+{% else %}
+<section id="products">
+    <div class="container-lg mt-2">
+        {% for property in properties %}
+        <div class="row">
+            <div class="col-auto">
+                <h2 class="text-sp-red">{{property.name}}</h2>
+            </div>
+            <div class="col"></div>
+            <div class="col-auto">
+                <a class="text-sp-red" href="{% url single_url property.slug %}">find more</a>
+            </div>
+        </div>
+        <div class="mt-2 row g-2 g-md-5 row-cols-1 row-cols-md-2 row-cols-lg-3">
+            {% for product in property.products.all|slice:":6" %}
+            <div class="col mt-0">
+                <div class="overlay-container">
+                    <img loading="lazy" class="" style="width: 100%" src="{{product.get_primary_img }}" alt="" />
+                    <div class="overlay-shopnow">
+                        <a href="{{ product.get_absolute_url }}">
+                            <button class="btn overlay-bottom overlay-shopnow-btn">
+                                Shop Now
+                            </button>
+                        </a>
+                    </div>
+                </div>
+                <h2 class="mt-2 fs-5">{{product.name}}</h2>
+                <p class="fs-5 fw-bold">Rs. {{product.price}}</p>
+            </div>
+            {% endfor %}
+
+        </div>
+        {% endfor %}
+    </div>
+</section>
+{% endif %}
+
+{% if page_type == 'single' %}
+<nav aria-label="Page navigation">
+    <ul class="pagination">
+        {% for _ in ''|center:number_pages %}
+            {% if current_page_number == forloop.counter %}
+            <li class="page-item">
+                <a class="page-link active" href="{% url single_url property.slug forloop.counter %}">{{forloop.counter}}</a>
+            </li>
+            {% else %}
+            <li class="page-item">
+                <a class="page-link" href="{% url single_url property.slug forloop.counter %}">{{forloop.counter}}</a>
+            </li>
+            {% endif %}
+        {% endfor %}
+        {% comment %} <li class="page-item"><a class="page-link" href="#">3</a></li> {% endcomment %}
+    </ul>
+</nav>
+{% endif %}
+
+
+{% endblock body %}
+
+{% block js %}
+<!-- owl carousel -->
+<script
+  src="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/owl.carousel.min.js"
+  integrity="sha512-bPs7Ae6pVvhOSiIcyUClR7/q2OAsRiovw4vAkX+zJbw3ShAeeqezq50RIIcIURq7Oa20rW2n2q+fyXBNcU9lrw=="
+  crossorigin="anonymous"
+  referrerpolicy="no-referrer"
+></script>
+<link
+rel="stylesheet"
+  href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.carousel.min.css"
+  integrity="sha512-tS3S5qG0BlhnQROyJXvNjeEM4UpMXHrQfTGmbQ1gKmelCxlSEBUaxhRBj/EFTzpbP4RVSrpEikbmdJobCvhE3g=="
+  crossorigin="anonymous"
+  referrerpolicy="no-referrer"
+/><link
+rel="stylesheet"
+href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.theme.default.min.css"
+integrity="sha512-sMXtMNL1zRzolHYKEujM2AqCLUR9F2C4/05cdbxjjLSRvMQIciEPCQZo++nk7go3BtSuK9kfa/s+a4f4i5pLkw=="
+crossorigin="anonymous"
+  referrerpolicy="no-referrer"
+/>
+<script>
+    $(".owl-fw-carousel").owlCarousel({
+        loop: true,
+        margin: 10,
+        autoplay: true,
+        nav: true,
+        items:  1,
+    });
+
+    let pagination = (e) => {
+        e.preventDefault();
+        let pageN = e.target.dataset.href;
+        let searchForm = document.getElementById('search-form');
+        searchForm.action = '/shop/search/' + pageN + '/';
+        // console.log(searchForm)
+        searchForm.submit()
+    }
+</script>
+{% endblock js %}

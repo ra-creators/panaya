@@ -200,56 +200,99 @@ def product_list(request, page=1):
                   )
 
 
-def categories(request, category_slug=None):
+def categories(request, category_slug=None, page=1):
+    context = {}
     category = None
     categories = Category.objects.all()
     products = Product.objects.filter(available=True)
+    context['page_heading'] = 'Categories'
+    context['page_type'] = 'list'
+    context['single_url'] = 'product_list_by_category'
     # print(category_slug)
     if category_slug:
         category = get_object_or_404(Category, slug=category_slug)
+        context['page_heading'] = ('Categories | '+category.name)
+        context['page_type'] = 'single'
         categories = [category]
         products = products.filter(category=category)
+        pages = Paginator(products, 24)
+        context['current_page_number'] = page
+        products = pages.page(page)
+        context['number_pages'] = pages.num_pages
+    context.update({
+        'property': category,
+        'properties': categories,
+        'products': products,
+        'ShopSlider': ShopSlider.objects.all()[:5],
+    })
     return render(request,
-                  'product/categories.html',
-                  {
-                      'category': category,
-                      'categories': categories,
-                      'products': products
-                  })
+                  'product/properties.html',
+                  context=context
+                  )
 
 
-def collections(request, collection_slug=None):
+def collections(request, collection_slug=None, page=1):
+    context = {}
     collection = None
     collections = Collection.objects.all()
     products = Product.objects.filter(available=True)
-    print(collection_slug)
+    context['page_heading'] = 'Collections'
+    context['page_type'] = 'list'
+    context['single_url'] = 'product_list_by_collection'
+    # print(collection_slug)
     if collection_slug:
         collection = get_object_or_404(Collection, slug=collection_slug)
         collections = [collection]
+        context['page_heading'] = ('Collections | '+collection.name)
+        context['page_type'] = 'single'
         products = products.filter(collection=collection)
+        pages = Paginator(products, 24)
+        context['current_page_number'] = page
+        products = pages.page(page)
+        context['number_pages'] = pages.num_pages
+    context.update({
+        'property': collection,
+        'properties': collections,
+        'products': products,
+        'ShopSlider': ShopSlider.objects.all()[:5],
+    })
     return render(request,
-                  'product/collections.html',
-                  {
-                      'collections': collections,
-                      'products': products
-                  })
+                  'product/properties.html',
+                  context=context
+                  )
 
 
-def types(request, type_slug=None):
+def types(request, type_slug=None, page=1):
+    context = {}
     type = None
     types = Type.objects.all()
     products = Product.objects.filter(available=True)
-    print(type_slug)
+    context['page_heading'] = 'Types'
+    context['page_type'] = 'list'
+    context['single_url'] = 'product_list_by_type'
+    # print(type_slug)
     if type_slug:
         type = get_object_or_404(Type, slug=type_slug)
         types = [type]
+        context['page_heading'] = ('Types | '+type.name)
+        context['page_type'] = 'single'
         products = products.filter(type=type)
+        pages = Paginator(products, 24)
+        context['current_page_number'] = page
+        products = pages.page(page)
+        # print(products)
+        context['number_pages'] = pages.num_pages
+    # print(products)
+    context.update({
+        'property': type,
+        'properties': types,
+        'products': products,
+        'ShopSlider': ShopSlider.objects.all()[:5],
+    })
     return render(request,
-                  'product/types.html',
-                  {
-                      'types': types,
-                      'products': products
-                  })
+                  'product/properties.html',
+                  context=context
+                  )
 
 
 def product_detail(request, id, slug=None):
@@ -264,6 +307,13 @@ def product_detail(request, id, slug=None):
                                     available=True)
     cart_product_form = CartAddProductForm()
     related = product.realted()
+    lst = []
+    # Check if related product is available or not
+    for i in related:
+        if i.available:
+            lst.append(i)
+    related = set(lst)
+
     faqs = product.faqs
     # print(related)
     return render(request,
@@ -370,7 +420,8 @@ def product_search(request, page=1):
 
 
 def cart(request):
-    del request.session['rd_to']
+    if request.session.get('rd_to'):
+        del request.session['rd_to']
     # print(request.session.get('rd_to'))
     return render(request, 'product/cart.html')
 
