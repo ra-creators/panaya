@@ -55,20 +55,6 @@
 <section id="blogs" class="my-5">
     <div class="container-lg">
         <div class="row g-2 row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-4 justify-content-center">
-            {% comment %} <div class="col">
-                <div class="card mx-auto" style="max-width: 20rem;">
-                    <img src="{%static 'pages_static/images/index/Rectangle 79.png' %}" class="card-img-top"
-                        alt="..." />
-                    <div class="card-body">
-                        <h5 class="card-title">Singhanias - Celebrity Blog</h5>
-                        <p>August 20, 2021</p>
-                        <p class="card-text">
-                            Sailesh Singhanias is an iconic part of the tinsel world as
-                            celebrities breathe style in every l...Continue Reading
-                        </p>
-                    </div>
-                </div>
-            </div> {% endcomment %}
             {% for blog in blogs %}
             <div class="col">
                 <div class="card mx-auto" style="max-width: 20rem;">
@@ -84,10 +70,9 @@
                             <p> <i class="far fa-eye"></i> {{blog.views}}</p>
                         </div>
                         <div class="card-text" style="max-height:20rem; overflow:hidden">
-                            {{blog.content|truncatewords:40|safe}}
+                            {{blog.content|striptags|truncatewords:40|safe}}
                         </div>
                         <a href="{% url 'blog' blog.id %}">... Continue Reading</a>
-
                     </div>
                 </div>
             </div>
