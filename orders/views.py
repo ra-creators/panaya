@@ -55,8 +55,11 @@ def verify_order(request, product_id=None):
 def buy_now(request, product_id):
     context = {}
     quantity = 1
+    if request.session.get('rd_to'):
+        del request.session['rd_to']
     request.session['rd_to'] = 'buy_now'
     request.session['product_id'] = product_id
+    # print(request.session['rd_to'])
     if(request.method == 'POST' and 'quantity' in request.POST):
         quantity = int(request.POST['quantity'])
 
@@ -134,12 +137,12 @@ def create_invoice(order):
 @login_required
 def create_order(request):
     if request.method == 'GET':
-         # request.session['rd_to'] = 'create_order'
         return verify_order(request)
+
     cart = Cart(request)
     addr_id = ""
     context = {}
-
+    
     if request.method != 'POST':
         return HttpResponse("no allowed")
     # quick fix for address redirect issue
@@ -182,13 +185,6 @@ def create_order(request):
     # print('pre razorcall', order.coupon, order.discount, order.total)
     # order.save()
 
-    # try:
-    #     order_tracking = createNewOrder(order)
-    #     if not order_tracking:
-    #         raise Exception('Order is not created')
-    # except Exception as e:
-    #     print(e)
-
     try:
         order_data = {}
         # print('razorcall', order.coupon, order.discount, order.total)
@@ -220,6 +216,7 @@ def create_order(request):
         print("email error", err)
     
     order.save()
+    
     try:
         order_tracking = createNewOrder(order)
         print("ORDER TRACKING: ", order_tracking)
@@ -227,7 +224,6 @@ def create_order(request):
             raise Exception('Order is not created')
     except Exception as e:
         print(e)
-
     
     return JsonResponse(context)
 

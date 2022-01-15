@@ -5,6 +5,16 @@
 
 {% block css %}
 <link rel="stylesheet" href="{% static 'blogs/blogs.css' %}">
+<style>
+    .row{
+        width:100%;
+    }
+    @media only screen and (max-width: 700px){
+        .m_blog_img{
+            margin-top: -5rem !important;
+        }
+    }
+</style>
 {% endblock css %}
 
 {% block body %}
@@ -39,7 +49,7 @@
 </section>
 
 <section id="tag-line" class="container-lg mt-5">
-    <h1 class="text-center">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Felis lacus tellus in mi in.</h1>
+    <h1 class="text-center">The simplest Indian outfits never go out of style. They're elegant, classy, and make an Indian girl look more glam than any western dress.</h1>
 </section>
 
 <section id="blogs" class="my-5">

@@ -74,7 +74,7 @@ def createNewOrder(order):
         "shipping_email": order.user.email,
         "shipping_phone": order.user.phone_number,
         "payment_method": "Prepaid",
-        "sub_total": order.total(),
+        "sub_total": order.total,
         "length": 10,
         "breadth": 10,
         "height": 10,
@@ -91,13 +91,13 @@ def createNewOrder(order):
             "sku": str(item.product.id)
         })
     json_obj['order_items'] = order_items
-
+    # print(json_obj)
     try:
         response = requests.post(CREATE_ENDPOINT, headers=headers, json=json_obj)
     except:
         print("Connection Not Made")
         return False
-    # print(response.status_code, response.text)
+    print(response.status_code, response.text)
     if(int(response.status_code) != 200):
         return False
     res = json.loads(response.text)
@@ -130,6 +130,8 @@ def trackOrder(order):
     res = json.loads(response.text)
     try:
         order.order_tracking.response = res
+        if res['tracking_data']['shipment_status'] == 7:
+            order.order_tracking.delivered = True
     except:
         raise Exception('Order Tracking not created. Please contact support.')
     return res

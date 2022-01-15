@@ -100,53 +100,38 @@ Order Details
 </div>
 
 {% if order.paid %}
-<div class="container mt-5 mb-5">
-    <div class="main">Order Tracking</div>
-        <div>
-            <span class="dot done1"></span>
-            <div class="tra_box done3">
-                <div class="t_name done">Ordered</div>
-                <div class="t_summary">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Neque ultrices a,
-                    sed mauris duis vel tortor. Sit viverra porttitor lorem fermentum dui. Leo ultrices ullamcorper
-                    amet sit sodales. Pharetra vel mollis diam feugiat egestas scelerisque. At nisl est ornare non
-                    sit.
-                </div>
-            </div>
+<div class="container col-sm-6">
+    <div class="text-center d_name mt-1 mb-2">Order Tracking</div>
+    <div>
+        <span class="dot done1"></span>
+        <div class="tra_box done3">
+            <div class="t_name done">Ordered</div>
+            <div class="t_summary">{{ order.created }}</div>
         </div>
-        <div>
-            <span class="dot done1"></span>
-            <div class="tra_box done3">
-                <div class="t_name done">Shipped</div>
-                <div class="t_summary">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Neque ultrices a,
-                    sed mauris duis vel tortor. Sit viverra porttitor lorem fermentum dui. Leo ultrices ullamcorper
-                    amet sit sodales. Pharetra vel mollis diam feugiat egestas scelerisque. At nisl est ornare non
-                    sit.
-                </div>
-            </div>
-        </div>
-        <div>
-            <span class="dot done1"></span>
-            <div class="tra_box done3">
-                <div class="t_name done">Out for Delivery</div>
-                <div class="t_summary">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Neque ultrices a,
-                    sed mauris duis vel tortor. Sit viverra porttitor lorem fermentum dui. Leo ultrices ullamcorper
-                    amet sit sodales. Pharetra vel mollis diam feugiat egestas scelerisque. At nisl est ornare non
-                    sit.
-                </div>
-            </div>
-        </div>
-        <div>
-            <span class="dot"></span>
-            <div class="tra_box">
-                <div class="t_name">Delivered</div>
-                <div class="t_summary">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Neque ultrices a,
-                    sed mauris duis vel tortor. Sit viverra porttitor lorem fermentum dui. Leo ultrices ullamcorper
-                    amet sit sodales. Pharetra vel mollis diam feugiat egestas scelerisque. At nisl est ornare non
-                    sit.
-                </div>
+    </div>
+    <div>
+        <span class="dot" id='ship-dot'></span>
+        <div class="tra_box" id='ship-line'>
+            <div class="t_name" id='ship-name'>Shipped</div>
+            <div class="t_summary" id='shipped'>
             </div>
         </div>
     </div>
+    <div>
+        <span class="dot" id='out-dot'></span>
+        <div class="tra_box" id='out-line'>
+            <div class="t_name" id='out-name'>Out for Delivery</div>
+            <div class="t_summary" id="out-for-delivery"></div>
+        </div>
+    </div>
+    <div>
+        <span class="dot" id='delivery-dot'></span>
+        <div class="tra_box" id='delivery-line'>
+            <div class="t_name" id='delivery-name'>Delivered</div>
+            <div class="t_summary" id='delivered'></div>
+        </div>
+    </div>
+    
 </div>
 {% endif %}
 

@@ -1,6 +1,6 @@
 {% extends 'base_user.html' %}
 {% load static %}
-
+{% load socialaccount %}
 
 {% block title %}
 Sign-up
@@ -58,12 +58,20 @@ Sign-up
         </div>
         <button type="submit" class="continue">Continue</button>
         <hr>
-        <p class="or"> or </p>
-        <button type="button" id="signup-google" class="signup-google" ><i class="fab fa-google"></i>
-             Continue with Google</button>
-        <button type="button" id="signup-facebook" class="signup-facebook"><i class="fab fa-facebook-f"></i> Continue with Facebook</button>
-        <button type="button" id="signup-apple" class="signup-apple"> <i class="fab fa-apple"></i> Continue with Apple</button>
-
     </form>
+        <p class="or"> or </p>
+        <form action="{% provider_login_url 'google' %}" method='post'>
+            {% csrf_token %}
+            <button type="submit" id="signup-google" class="signup-google" ><i class="fab fa-google"></i>
+                Continue with Google</button>
+        </form>
+        <form action="{% provider_login_url 'facebook' method='oauth2' %}" method='post'>
+            {% csrf_token %}
+            <button type="submit" id="signup-facebook" class="signup-facebook"><i class="fab fa-facebook-f"></i> 
+                Continue with Facebook</button>
+        </form>
+        {% comment %} <button type="button" id="signup-apple" class="signup-apple"> <i class="fab fa-apple"></i> Continue with Apple</button> {% endcomment %}
+
+    
 </div>
 {% endblock body %}

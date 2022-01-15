@@ -1,4 +1,6 @@
 from django.contrib import admin, messages
+from django.db import models
+from django.forms import CheckboxSelectMultiple
 from django.shortcuts import render, redirect
 from django.template.defaultfilters import slugify
 from .models import (Category, Product, Tag, ProductImage, Review, FAQ,
@@ -50,6 +52,10 @@ class ProductAdmin(admin.ModelAdmin):
     list_editable = ['price', 'available']
     prepopulated_fields = {'slug': ('name',)}
     inlines = [ProductImageInline, ReviewInLine, FaqInLine]
+
+    formfield_overrides = {
+        models.ManyToManyField: {'widget': CheckboxSelectMultiple},
+    }
 
     def bulk_import(self, request, queryset=None):
         # print('hei')

@@ -28,12 +28,15 @@
           transform-style: preserve-3d;
 }
 
-.flip-card:hover .flip-card-inner {
-  -webkit-transform: rotateY(180deg);
-          transform: rotateY(180deg);
+@media (min-width: 992px) {
+  .flip-card:hover .flip-card-inner {
+    -webkit-transform: rotateY(180deg);
+            transform: rotateY(180deg);
+  }
 }
 
-.flip-card .flip-card-front, .flip-card .flip-card-back {
+.flip-card .flip-card-front,
+.flip-card .flip-card-back {
   -webkit-backface-visibility: hidden;
   /* Safari */
   backface-visibility: hidden;
@@ -242,6 +245,7 @@ header #nav {
 header nav a {
   text-decoration: none;
   color: #ffe65c;
+  padding: 0 9%;
   margin-bottom: 1%;
   margin-top: 7%;
 }
@@ -252,7 +256,6 @@ header nav div {
   display: -ms-flexbox;
   display: flex;
   margin: 0 10px;
-  justify-content: space-around;
 }
 
 /* Footer */
@@ -341,11 +344,13 @@ footer a:hover {
 
 #explore-banaras {
   background-image: url("/static/pages_static/images/index/explore-banaras-bg.png");
+  background-repeat: no-repeat;
+  background-size: cover;
 }
 
 #heirlooms {
   width: 100vw;
-  background-image: url("/static/pages_static/images/index/heirloom-bg1.jpg");
+  background-image: url("/static/pages_static/images/index/heirloom-bg.png");
   background-repeat: no-repeat;
   background-size: cover;
   background-position: 0%;
@@ -491,7 +496,7 @@ footer a:hover {
   border-radius: 50%;
   width: 150px;
   height: 150px;
-  background: linear-gradient(318.05deg, #DA8741 9.88%, #A83279 51.33%, #7723BE 82.94%);
+  background: linear-gradient(318.05deg, #da8741 9.88%, #a83279 51.33%, #7723be 82.94%);
 }
 
 .story_div {
@@ -505,11 +510,17 @@ footer a:hover {
   margin: auto;
 }
 
-.hover_part1, .hover_part2, .hover_part3, .hover_part4 {
+.hover_part1,
+.hover_part2,
+.hover_part3,
+.hover_part4 {
   display: none;
 }
 
-.hov1:hover + .hover_part1, .hov2:hover + .hover_part2, .hov3:hover + .hover_part3, .hov4:hover + .hover_part4 {
+.hov1:hover + .hover_part1,
+.hov2:hover + .hover_part2,
+.hov3:hover + .hover_part3,
+.hov4:hover + .hover_part4 {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -536,9 +547,6 @@ a.nav-item {
 .thanks_img {
   padding: 5%;
 }
-a{
-   text-decoration: none;
-}
 @media only screen and (max-width: 700px) {
   header {
     background: none;
@@ -560,7 +568,7 @@ a{
   }
   .panaya_d {
     font-family: "Corinthia", cursive;
-    font-size: 1.0rem;
+    font-size: 1rem;
     color: #ffce76;
   }
   header nav div {
@@ -587,7 +595,7 @@ a{
     width: auto;
   }
   .logos {
-    width: 50%;
+    width: 30%;
   }
   .p_cont {
     width: 90%;
@@ -623,35 +631,17 @@ a{
   .thanks_text {
     font-size: 15px !important;
   }
-  .say_thank{
-      top: 25%;
-      height : 50%;
-  }
-  .thanks_img{
-      height: 30vh;
-  }
-  #say_thank{
-      top: 30% !important;
-      width: 90% !important;
-      margin-left:5% !important;
-  }
 }
 
 @media only screen and (min-width: 700px) and (max-width: 900px) {
-  .mail_input {
-    font-size: 8px;
-  }
-  .pro_cart{
-      margin-bottom: 10% !important;
-  }
-}
-
-@media only screen and (min-width: 700px) and (max-width: 992px) {
-    header nav div {
-    width: 30%;
-  }
   header nav a {
     font-size: 15px !important;
+  }
+  header nav div {
+    width: 30%;
+  }
+  .mail_input {
+    font-size: 8px;
   }
 }
 /*# sourceMappingURL=styles.css.map */

@@ -97,6 +97,7 @@ class OrderTracking(models.Model):
                                  on_delete=models.CASCADE)
     shiprocket_order_id = models.CharField(max_length=20)
     shiprocket_shipment_id = models.CharField(max_length=20)
+    delivered = models.BooleanField(default=False)
     response = models.TextField()
     created = models.DateTimeField(auto_now_add=True)
     updated = models.DateTimeField(auto_now=True)

@@ -95,9 +95,9 @@ class Cart {
         <div class="col-4"><img class="img-fluid" src=${item.img}></img></div>
         <div class="col-auto align-self-center text-white">
           <p class="cross"> <i onClick="removeFromCart(${item.id})" class="fas fa-times-circle"></i></p>
-          <h3>${item.name}</h3>
-          <h4>Price-${item.price}</h4>
-          <h4>Qty-${item.quantity}</h4>
+          <h4>${item.name}</h4>
+          <h5>Price-${item.price}</h5>
+          <h5>Qty-${item.quantity}</h5>
         </div>
         </div>
         `;

@@ -29,6 +29,11 @@ body {
   margin: auto;
 }
 
+.img-fluid {
+  width: 100%;
+  height: auto;
+}
+
 .order-confirmation {
   max-width: 650px;
   margin: 20px auto 0 auto;
@@ -118,7 +123,7 @@ a {
 }
 
 .thank-you-text a {
-  color: #8D0020;
+  color: #8d0020;
 }
 
 .track-your-order {

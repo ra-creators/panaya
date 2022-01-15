@@ -1,4 +1,4 @@
-*{
+* {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
@@ -24,8 +24,12 @@ body {
   }
 }
 
-.order-confirmation {
+.img-fluid {
+  width: 100%;
+  height: auto;
+}
 
+.order-confirmation {
   max-width: 650px;
   margin: 20px auto 0 auto;
   padding: 1rem;
@@ -57,7 +61,7 @@ body {
   width: 100%;
   display: flex;
   align-items: center;
-  img{
+  img {
     width: 2rem;
     height: auto;
     margin: auto;
@@ -98,13 +102,13 @@ body {
   font-weight: 600;
   text-align: left;
 }
-a{
+a {
   text-decoration: none;
 }
-.thank-you-text a{
-    color: #8D0020;
+.thank-you-text a {
+  color: #8d0020;
 }
-.track-your-order{
+.track-your-order {
   margin-bottom: 50px;
   margin-left: auto;
   margin-right: auto;
@@ -116,16 +120,16 @@ a{
   border-radius: 20px;
 }
 
-.footer{
-    width: 100%;
-    display: flex;
-    flex-flow: row wrap;
-    /* margin-bottom: 200px; */
-    position: relative;
+.footer {
+  width: 100%;
+  display: flex;
+  flex-flow: row wrap;
+  /* margin-bottom: 200px; */
+  position: relative;
   .links {
     display: flex;
     margin: auto;
-    a{
+    a {
       margin: 10px 10px 10px 10px;
       color: #8d0020;
       // width: 90%;
@@ -136,18 +140,18 @@ a{
     }
   }
 }
-.footer-subscribe{
+.footer-subscribe {
   height: 200px;
 }
-.subscribe{
-  img{  
+.subscribe {
+  img {
     // background-color: #ffce76;
   }
 }
 /* .logo.subscribe{ */
-  /* position: absolute; */
-  /* bottom: 20px; */
-  /* left: 40px; */
+/* position: absolute; */
+/* bottom: 20px; */
+/* left: 40px; */
 /* } */
 //  @media screen and (min-width:500px){
 //     .order-confirmation {
@@ -192,5 +196,5 @@ a{
 //     }
 // }
 // @media screen and (min-width:1200px){
-    
-// } 
+
+// }

@@ -15,6 +15,7 @@ window.addEventListener("DOMContentLoaded", (event) => {
   selectImg = document.getElementById("select-img-container");
   targetElement = document.getElementById("active-product-img");
   selectImg.style.height = targetElement.offsetHeight + "px";
+  let width = window.innerWidth > 0 ? window.innerWidth : screen.width;
   targetElement.addEventListener("load", () => {
     // console.log(targetElement.offsetHeight);
     selectImg.style.height = targetElement.offsetHeight + "px";
@@ -22,7 +23,6 @@ window.addEventListener("DOMContentLoaded", (event) => {
       selectImg.style.height = "20vh";
     }
   });
-  let width = window.innerWidth > 0 ? window.innerWidth : screen.width;
   if (width <= 576) {
     selectImg.style.height = "20vh";
   }
@@ -43,6 +43,6 @@ function changeTab(event) {
   }
   let target = event.target;
   let tabName = event.target.dataset.target;
-  document.getElementById(tabName).style.display = "flex";
+  document.getElementById(tabName).style.display = "block";
   target.classList.add("active");
 }

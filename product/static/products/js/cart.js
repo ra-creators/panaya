@@ -181,6 +181,7 @@ class Cart {
       // this.removeFromDom(item.id);
       this.addToDom(item);
     }
+    this.save();
   }
   udpateItem(item) {
     fetch(this.addCartUrl, {
@@ -213,6 +214,7 @@ class Cart {
       // this.removeFromDom(item.id);
       this.updateDom(item);
     }
+    this.save();
   }
   removeItem(id) {
     fetch(this.removeCartUrl, {
@@ -241,6 +243,7 @@ class Cart {
 
     delete this.items[id];
     this.removeFromDom(id);
+    this.save();
   }
   get total() {
     let total = 0;

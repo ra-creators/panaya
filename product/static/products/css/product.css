@@ -54,7 +54,7 @@ a {
 
 #pop .cross {
   position: absolute;
-  right: 0;
+  right: 0rem;
   color: rgba(244, 157, 55, 0.97);
   background-color: transparent;
   font-size: 3vw;

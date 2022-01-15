@@ -146,7 +146,7 @@ class OTPCheck(View):
             otp_ = OTP.objects.get(email=email)
             # print(otp_.verify(otp))
             otp_res = otp_.verify(otp)
-            print(otp_res)
+            # print(otp_res)
             if otp_res['status']:
                 request.session['password_change'] = True
                 return redirect('password_change')
@@ -231,20 +231,14 @@ class ProfileAddAddress(LoginRequiredMixin, View):
             #     del request.session['product_id']
             #     return redirect('buy_now', product_id)
             redirect_to = request.session.get('rd_to')
-            print(redirect_to)
+            # print(redirect_to)
             if redirect_to == 'address':
-                try:
-                    del request.session['rd_to']
-                except:
-                    pass
+                del request.session['rd_to']
                 return redirect('address')
             elif redirect_to == 'buy_now':
                 product_id = request.session.get('product_id')
-                try:
-                    del request.session['rd_to']
-                    del request.session['product_id']
-                except:
-                    pass
+                del request.session['rd_to']
+                del request.session['product_id']
                 return redirect('buy_now', product_id)
             return redirect('create_order')
         else:
@@ -282,7 +276,7 @@ def profile_edit_address(request):
 @login_required
 def profile_edit_address_success(request):
     if request.method == 'POST':
-        print("hello")
+        # print("hello")
         address_id = request.POST.get('id')
         fname = request.POST.get('fname')
         lname = request.POST.get('lname')
@@ -292,7 +286,7 @@ def profile_edit_address_success(request):
         country = request.POST.get('country')
         postal_code = request.POST.get('postalcode')
         if address_id:
-            print("hi")
+            # print("hi")
             address_ = request.user.addresses.get(id=address_id)
             if address_:
                 address_.first_name = fname
@@ -321,11 +315,13 @@ def profile(request):
 
 @login_required
 def profile_address(request):
-    for k, v in request.session.items():
-        print(k, v)
-    # del request.session['rd_to']
-    print(request.session.get('rd_to'))
+    # for k, v in request.session.items():
+    #     print(k, v)
+    if request.session.get('rd_to'):
+        del request.session['rd_to']
+    # print(request.session.get('rd_to'))
     request.session['rd_to'] = 'address'
+    # print(request.session.get('rd_to'))
     return render(request, 'user_manager/profile_address.html')
 
 

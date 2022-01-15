@@ -13,6 +13,7 @@ from cart.cart import Cart
 def coupon_apply(request):
     now = timezone.now()
     code = request.POST.get('code')
+    # print(code)
     if code:
         try:
             coupon = Coupon.objects.get(code__iexact=code,
@@ -23,13 +24,14 @@ def coupon_apply(request):
             cart = Cart(request)
             
             # check if after discount total is above threshold
-            if cart.get_total_price - cart.check_discount(coupon) < 1:
+            check_dis = cart.check_discount(coupon)
+            if cart.get_total_price() - check_dis < 1:
                 request.session['coupon_id'] = None
                 return HttpResponse(404)
 
             dic = {
                 'status': 'success',
-                'discount': coupon.discount,
+                'discount': int(coupon.discount),
                 'total': str(cart.get_total_price_after_discount())
             }            
             return JsonResponse(json.dumps(dic), safe=False)

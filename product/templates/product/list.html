@@ -91,7 +91,7 @@ Products
     <div class="container-lg mt-5">
         <div class="row">
             <div>
-                <form action="/shop/search" method="POST" id="search-form">
+                <form action="/shop/search/" method="POST" id="search-form">
                     {% csrf_token %}
                     <div class="row justify-content-center">
                         <div class="col-sm-3 d-flex align-items-center mb-3">
@@ -299,7 +299,7 @@ crossorigin="anonymous"
         e.preventDefault();
         let pageN = e.target.dataset.href;
         let searchForm = document.getElementById('search-form');
-        searchForm.action = '/shop/search/' + pageN
+        searchForm.action = '/shop/search/' + pageN + '/';
         // console.log(searchForm)
         searchForm.submit()
     }

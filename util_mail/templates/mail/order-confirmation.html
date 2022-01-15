@@ -22,7 +22,7 @@
 </div>
 {% for item in order.items.all %}
 <div class="ordered-item">
-    <img src="{{item.product.get_primary_img}}" alt="">
+    <img class="img-fluid" src="{{item.product.get_primary_img}}" alt="">
     <div class="item-detail">
         <h4>{{item.product.name}}</h4>
         <p>Qty-{{item.quantity}}</p>
