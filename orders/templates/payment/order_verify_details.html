@@ -93,7 +93,9 @@ Payment Gateway
         {% for item in cart %}
         <div class="row text-start mt-2 item" data-id={{item.product.id}} data-quantity={{item.quantity}} style="border-bottom: 1px solid">
             <div class="col-sm-4 pb-2">
-                <img src="{{item.product.images.all.0}}" class="img-fluid" alt="">
+                <a href="{{item.product.get_absolute_url}}">
+                    <img src="{{item.product.images.all.0}}" class="img-fluid" alt="">
+                </a>
             </div>
             <div class="col-sm-4">
                 <div class="ans">

@@ -142,7 +142,7 @@ def create_order(request):
     cart = Cart(request)
     addr_id = ""
     context = {}
-    
+
     if request.method != 'POST':
         return HttpResponse("no allowed")
     # quick fix for address redirect issue
@@ -177,8 +177,7 @@ def create_order(request):
                 price=Product.objects.get(id=item['id']).price,
                 quantity=item['quantity'])
     except Exception as e:
-        # print(e)
-        # order.delete()
+        print(e)
         return undo_create_order(order, 400, 'malformed data', str(e))
     # print(order)
 
@@ -214,9 +213,11 @@ def create_order(request):
         order_confirmation(request, order)
     except Exception as err:
         print("email error", err)
-    
-    order.save()
-    
+    try:
+        order.save()
+    except Exception as e:
+        return undo_create_order(order, 400, 'malformed data', str(e))
+
     try:
         order_tracking = createNewOrder(order)
         print("ORDER TRACKING: ", order_tracking)
@@ -224,7 +225,7 @@ def create_order(request):
             raise Exception('Order is not created')
     except Exception as e:
         print(e)
-    
+
     return JsonResponse(context)
 
     # return render(request,

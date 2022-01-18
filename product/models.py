@@ -41,9 +41,9 @@ class Category(models.Model):
     @property
     def get_thumbnail(self):
         if self.thumbnail:
-            return ("https://static.panaya.in/media/" + str(self.thumbnail))
+            return self.thumbnail.url
         else:
-            return "https://static.panaya.in/media/defaults/noimg.png"
+            return "/media/defaults/noimg.png"
 
     def get_absolute_url(self):
         return reverse('product_list_by_category',
@@ -70,9 +70,9 @@ class Collection(models.Model):
     @property
     def get_thumbnail(self):
         if self.thumbnail:
-            return ("https://static.panaya.in/media/" + str(self.thumbnail))
+            return self.thumbnail.url
         else:
-            return "https://static.panaya.in/media/defaults/noimg.png"
+            return "/media/defaults/noimg.png"
 
     def get_absolute_url(self):
         return reverse('product_list_by_collection',
@@ -99,9 +99,9 @@ class Type(models.Model):
     @property
     def get_thumbnail(self):
         if self.thumbnail:
-            return ("https://static.panaya.in/media/" + str(self.thumbnail))
+            return self.thumbnail.url
         else:
-            return "https://static.panaya.in/media/defaults/noimg.png"
+            return "/media/defaults/noimg.png"
 
     def get_absolute_url(self):
         return reverse('product_list_by_type',
@@ -164,7 +164,7 @@ class Product(models.Model):
     def get_primary_img(self):
         if self.images.all():
             return self.images.all()[0]
-        return "https://static.panaya.in/media/defaults/noimg.png"
+        return "/media/defaults/noimg.png"
 
     def update_rating(self, new_rating):
         self.avg_rating = ((self.avg_rating*self.no_rating) +
@@ -175,14 +175,14 @@ class Product(models.Model):
     def update_stocks(self, quantity):
         quantity = int(quantity)
         if self.stocks < quantity:
-            raise ValueError("quantity more than stocks")
+            raise Exception("quantity more than stocks")
 
         self.stocks = self.stocks-quantity
         if(self.stocks == 0):
             self.available = False
         self.save()
 
-    def realted(self, num_items=3):
+    def realted(self, num_items=6):
         if not self.tags.exists():
             return []
         related_all = []
@@ -193,7 +193,7 @@ class Product(models.Model):
             if related.id == self.id:
                 related_all.remove(related)
                 break
-        return related_all
+        return list(related_all)[:num_items]
 
 
 class ProductImage(models.Model):

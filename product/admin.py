@@ -1,3 +1,4 @@
+from statistics import mode
 from django.contrib import admin, messages
 from django.db import models
 from django.forms import CheckboxSelectMultiple
@@ -11,22 +12,30 @@ import csv
 # Register your models here.
 
 
+class ProductInline(admin.StackedInline):
+    model = Product
+    extra = 0
+
+
 @admin.register(Category)
 class CategoryAdmin(admin.ModelAdmin):
     list_display = ['name', 'slug']
     prepopulated_fields = {'slug': ('name',)}
+    # inlines = [ProductInline]
 
 
 @admin.register(Collection)
 class CollectionAdmin(admin.ModelAdmin):
     list_display = ['name', 'slug']
     prepopulated_fields = {'slug': ('name',)}
+    inlines = [ProductInline]
 
 
 @admin.register(Type)
 class TypeAdmin(admin.ModelAdmin):
     list_display = ['name', 'slug']
     prepopulated_fields = {'slug': ('name',)}
+    inlines = [ProductInline]
 
 
 class ProductImageInline(admin.StackedInline):
@@ -179,4 +188,6 @@ class ReviewAdmin(admin.ModelAdmin):
     # list_filter = ['product', 'created']
 
 
-admin.site.register(Color, admin.ModelAdmin)
+@admin.register(Color)
+class ColorAdmin(admin.ModelAdmin):
+    pass

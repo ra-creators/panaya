@@ -65,7 +65,9 @@ class Cart {
           <div class="col-6">
             <div class="row mt-3 desc_box">
               <div class="col-sm-4">
+              <a href="/shop/id/${item.id}">
                   <img class="img-fluid" src="${item.img}" alt="product">
+              </a>
               </div>
               <div class="col-sm-8 align-self-center">
                 <div class="name">${item.name}</div>

@@ -58,7 +58,9 @@ Order Details
         {% for item in order.items.all %}
         <div class="row text-start mt-2" style="border-bottom: 1px solid">
             <div class="col-sm-4 col-md-6 pb-2">
-                <img src="{{item.product.get_primary_img}}" class="img-fluid" alt="">
+                <a href="{{item.product.get_absolute_url}}">
+                    <img src="{{item.product.get_primary_img}}" class="img-fluid" alt="">
+                </a>
             </div>
             <div class="col-sm-auto ">
                 <div class="">

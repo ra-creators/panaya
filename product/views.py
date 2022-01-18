@@ -86,7 +86,7 @@ class product(View):
         context = {}
         context['formdata'] = {}
         context['number_pages'] = 1
-        searched_products = Product.objects
+        searched_products = Product.objects.filter(available=True)
         if request.method == 'POST':
             # print(request.POST)
             post_data = request.POST
@@ -330,7 +330,7 @@ def product_search(request, page=1):
     context = {}
     context['formdata'] = {}
     context['number_pages'] = 1
-    searched_products = Product.objects
+    searched_products = Product.objects.filter(available=True)
     if request.method == 'POST':
         # print(request.POST)
         post_data = request.POST
@@ -411,7 +411,7 @@ def product_search(request, page=1):
     context['number_pages'] = pages.num_pages
     # context['current_page'] = pages.page(page)
     context['current_page_number'] = (page)
-    context['products'] = pages.page(1)
+    context['products'] = pages.page(page)
     context['categories'] = Category.objects.all()
     context['types'] = Type.objects.all()
     context['colors'] = Color.objects.all()

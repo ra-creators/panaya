@@ -204,15 +204,22 @@ Products
             {% for product in products %}
             <div class="col mt-0">
                 <div class="overlay-container">
+                    {% if product.stocks == 0 %}
+                    <div class="corner-ribbon top-right sticky yellow-on-red">
+                        SOLD OUT
+                    </div> 
+                    {% endif %}
                     <img loading="lazy" class="shopNowImg" style="width: 100%" src="{{product.get_primary_img }}" alt="" />
+                    {% if product.stocks != 0 %}
                     <div class="overlay-shopnow">
                         <a href="{{ product.get_absolute_url }}">
-                        {% comment %} <a href="{% url 'product_detail' product.id %}"> {% endcomment %}                            
+                        {% comment %} <a href="{% url 'product_detail' product.id %}"> {% endcomment %}   
                             <button class="btn overlay-bottom overlay-shopnow-btn">
                                 Shop Now
                             </button>
                         </a>
                     </div>
+                    {% endif %}
                 </div>
                 <h2 class="mt-2 fs-5">{{product.name}}</h2>
                 <p class="fs-5 fw-bold">Rs. {{product.price}}</p>
@@ -230,11 +237,11 @@ Products
                     {% for _ in ''|center:number_pages %}
                     {% if current_page_number == forloop.counter %}
                     <li class="page-item">
-                        <a class="page-link active" href={{forloop.counter}}>{{forloop.counter}}</a>
+                        <a class="page-link active" href={% url 'product_list' forloop.counter %}>{{forloop.counter}}</a>
                     </li>
                     {% else %}
                     <li class="page-item">
-                        <a class="page-link" href={{forloop.counter}}>{{forloop.counter}}</a>
+                        <a class="page-link" href={% url 'product_list' forloop.counter %}>{{forloop.counter}}</a>
                     </li>
                     {% endif %}
                     {% endfor %}

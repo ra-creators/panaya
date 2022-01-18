@@ -1,6 +1,31 @@
 {% extends 'base.html' %} {% load static %} {% block title %} {{ product.name }}
 {% endblock title %} {% block css %}
 <link rel="stylesheet" href="{% static 'products/css/product.css' %}" />
+<style>
+  .outof-stock{
+  }
+  .outof-stock>h3{
+    z-index: 0;
+    position: absolute;
+    right: 0;
+    width: fit-content;
+    transform: rotateZ(45deg);
+    background-color: #8d0020;
+    color: rgba(255, 206, 118, 0.86);
+  }
+  .main_product_img {
+  position: relative;
+  overflow: hidden;
+  cursor: zoom-in;
+}
+.img_producto {
+  position: absolute;
+  width:100%;
+  top: 0;
+  left: 0;
+  transition: transform 0.5s ease-out;
+}
+</style>
 {% endblock css %}
 {% block body %}
 
@@ -10,26 +35,30 @@
   <img class="flip-horizontal" src="{% static 'pages_static/images/section-heading-decor.png' %}" alt="" />
 </section>
 
+
 <section id="product" class="container-lg mt-5">
+  <div class="outof-stock">
+    <h3 class="p-1">OUT OF STOCK</h3>
+  </div>
   <div class="row">
     <div class="col-md-7">
       <div class="container-fluid m-1">
         <div class="row">
-          <div class="col-12 col-sm-4 d-sm-block d-flex order-1 order-sm-0" style="overflow-y: auto" id="select-img-container">
+            <div class="col-12 col-sm-4 d-sm-block d-flex order-1 order-sm-0" style="overflow-y: auto" id="select-img-container">
             {% for img in product.images.all %}
             <img src="{{img}}" style="cursor: pointer" class="img-fluid m-1" alt=""
               onclick="setActiveProductImg(event)" />
             {% endfor %}
           </div>
-          <div class="col-12 col-sm-7 offset-sm-1 order-0 order-sm-1 main_product_img">
-            <img style="cursor: pointer" src="{{product.images.all.0}}" alt="product"
-              class="img-fluid" id="active-product-img" />
+          <div class="col-12 col-sm-7 offset-sm-1 order-0 order-sm-1 main_product_img " data-scale="1.6">
+            <img src="{{product.images.all.0}}" alt="product"
+              class="dslc-lightbox-image img_producto" id="active-product-img" />
           </div>
         </div>
       </div>
     </div>
     <div class="col-md-5 text-center">
-      <h1 class="text-sp-red">{{ product.name }}</h1>
+      <h2 class="text-sp-red">{{ product.name }}</h2>
       <h3 class="text-secondary">Rs. {{product.price}}</h3>
       <div class="d-flex justify-content-center">
           <div class="number-input ">
@@ -59,7 +88,6 @@
     </div>
   </div>
 </section>
-
 <section id="info" class="container-lg mt-5">
   <ul class="nav">
     <li class="nav-item">
@@ -152,7 +180,9 @@
   <div class="row g-2 g-md-5 row-cols-1 row-cols-md-3">
     {% for product in related %}
     <div class="col">
-      <img class="img-fluid" src="{{product.images.all.0}}" alt="" />
+      <a href="{% url 'product_detail' product.id %}">
+        <img class="img-fluid" src="{{product.images.all.0}}" alt="" />
+      </a>
       <a href="{% url 'product_detail' product.id %}">
         <h2 class="mt-2 text-sp-red">{{product}}</h2>
       </a>
@@ -207,6 +237,7 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/owl.carousel.min.js"
   integrity="sha512-bPs7Ae6pVvhOSiIcyUClR7/q2OAsRiovw4vAkX+zJbw3ShAeeqezq50RIIcIURq7Oa20rW2n2q+fyXBNcU9lrw=="
   crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.carousel.min.css"
   integrity="sha512-tS3S5qG0BlhnQROyJXvNjeEM4UpMXHrQfTGmbQ1gKmelCxlSEBUaxhRBj/EFTzpbP4RVSrpEikbmdJobCvhE3g=="
   crossorigin="anonymous" referrerpolicy="no-referrer" />
@@ -244,9 +275,28 @@
 <script src="{% static 'products/js/product.js' %} "></script>
 <script src="{% static 'products/js/cart_popup.js' %} "></script>
 <script>
-  window.addEventListener("DOMContentLoaded", (event) => {
-    cart = new Cart();
-  });
+    $(".main_product_img ")
+    // tile mouse actions
+
+    .on("mouseover", function () {
+    $(this)
+        .children(".img_producto")
+        .css({ transform: "scale(" + $(this).attr("data-scale") + ")" });
+    })
+    .on("mouseout", function () {
+    $(this).children(".img_producto").css({ transform: "scale(1)" });
+    })
+    .on("mousemove", function (e) {
+    $(this)
+        .children(".img_producto")
+        .css({
+        "transform-origin":
+            ((e.pageX - $(this).offset().left) / $(this).width()) * 100 +
+            "% " +
+            ((e.pageY - $(this).offset().top) / $(this).height()) * 100 +
+            "%"
+        });
+    });
 </script>
 {% endblock js %}
 

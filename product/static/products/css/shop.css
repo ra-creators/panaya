@@ -13,3 +13,30 @@ body {
   background-size: contain;
 }
 /*# sourceMappingURL=shop.css.map */
+.corner-ribbon {
+  width: 100px;
+  position: absolute;
+  top: 25px;
+  left: -50px;
+  text-align: center;
+  line-height: 30px;
+  letter-spacing: 1px;
+  transform: rotate(-45deg);
+  -webkit-transform: rotate(-45deg);
+  overflow: hidden;
+}
+/* Different positions */
+
+.corner-ribbon.top-right {
+  /* top: 18px; */
+  right: -4px;
+  left: auto;
+  transform: rotate(45deg);
+  -webkit-transform: rotate(46deg);
+  overflow: hidden;
+}
+
+.yellow-on-red {
+  background-color: #8d0020;
+  color: rgba(255, 206, 118, 0.86);
+}

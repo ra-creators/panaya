@@ -26,7 +26,14 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SECRET_KEY = 'ro0jv0uf-^wymeildct2q0=!(er1u77xer(ar!@vgde+8!r=b8'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = os.environ['DEBUG'] if 'DEBUG' in os.environ else True
+################
+# Change 'DEBUG' ENVIRONMENT VARIABLE in cpanel under appliaction mangaer
+# https://cpanel.panaya.in/cpsess3501900335/frontend/paper_lantern/passenger/index.html#/details/panaya#top
+
+if 'DEBUG' in os.environ:
+    DEBUG = True if os.environ['DEBUG'] == '1' else False
+else:
+    DEBUG = True
 
 ALLOWED_HOSTS = ['184.168.125.149', 'panaya.in',
                  'www.panaya.in', 'dev.panaya.in']
@@ -160,12 +167,13 @@ LOGOUT_URL = 'logout'
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/3.0/howto/static-files/
 
-# STATIC_URL = '/static/'
-STATIC_URL = 'https://static.panaya.in/static/'
+STATIC_URL = '/static/'
+# STATIC_URL = 'https://static.panaya.in/static/'
 STATIC_ROOT = 'staticfiles'
 
 # media
-MEDIA_URL = 'https://static.panaya.in/media/'
+MEDIA_URL = '/media/'
+# MEDIA_URL = 'https://static.panaya.in/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
 # ckeditor
@@ -205,7 +213,7 @@ SOCIALACCOUNT_PROVIDERS = {
 }
 
 # django_on_heroku.settings(locals())
-TIME_ZONE =  'Asia/Calcutta'
+TIME_ZONE = 'Asia/Calcutta'
 
 USE_I18N = True
 

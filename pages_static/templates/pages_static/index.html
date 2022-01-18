@@ -30,8 +30,7 @@
         />
         <h1>Welcome to Panaya</h1>
         <p>
-          An immersion into the finest artisanal handwoven luxury from
-          Banaras.Slow luxury.
+          A slow, luxurious immersion into the finest  handwoven heritage heirloom from Banaras.
         </p>
         <img loading="lazy"
           class="flip-horizontal img-fluid"
@@ -99,7 +98,7 @@
         </div>
         <div class="container-lg">
           <h1 style="color: rgba(141, 0, 32, 1)" class="text-center mt-3 mb-5">
-            Shop the exclusive new collection for festive and bridal looks and get upto 20% off
+            Shop the exclusive new collection for festive and bridal looks and get flat 20% off by using code Fest%20
           </h1>
           <div class="row g-2 g-md-5 row-cols-1 row-cols-md-3 w-100">
             <div class="owl-carousel owl-item owl-theme">
@@ -151,10 +150,7 @@
       <div class="container-md">
           <h1 class="text-center mb-5 text-sp-red">WOVEN HEIRLOOMS</h1>
           <p class="mb-5">
-            Panaya GOLD is a luxury handmade textile brand, started in 2015.
-            Since its inception, it has been committed to preserving and
-            innovating with the highest levels of artistry and hand
-            craftsmanship in Banaras. Its single edition sarees are
+            More than a 100 year old luxury handmade textile brand, Panaya GOLD ever since it's inception has been committed to preserving and innovating with the highest levels of artistry and handcraftmanship in Banaras. Its single edition sarees are
             contemporary heirlooms for today’s connoisseurs. Each
             One-of-a-kind saree is handwoven over several months,
             benchmarking excellence in quality of materials and design which
@@ -219,7 +215,7 @@
           class="p-5 text-center"
         >
           <h1>Our Banaras Store</h1>
-          <h3>Book a Video Appoinment</h3>
+          <h3>Book a Video Appointment</h3>
           <p>We are available for online video appointments.</p>
           <button class="btn btn-light" onclick="OpenPopUp()">Book Now</button>
         </div>
@@ -285,7 +281,7 @@
             <div class="item">
               <div class="card">
                 <img loading="lazy"
-                src="https://static.panaya.in/media/{{blog.image}}"
+                src="/media/{{blog.image}}"
                 class="card-img-top"
                 alt=""
                 />
@@ -293,7 +289,7 @@
                   <h5 class="card-title">{{blog.title}}</h5>
                   <p class="mb-0">{{blog.author | upper}} . {{blog.date | timesince}}</p>
                   <div class="card-text">
-                    {{blog.content|truncatewords:40|safe}}
+                    {{blog.content|striptags|truncatewords:40|safe}}
                   </div>
                   <p>.... <a href="{% url 'blog' blog.id %}">read more</a> </p>
                 </div>
