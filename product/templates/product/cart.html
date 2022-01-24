@@ -73,10 +73,19 @@ Cart
 
 {% block js %}
 <script src="{% static 'products/js/cart.js' %} "></script>
+<script src="https://code.jquery.com/jquery-3.6.0.js" integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk=" crossorigin="anonymous"></script>
 <script>
     window.addEventListener("DOMContentLoaded", (event) => {
         cart = new Cart(true);
     });
+
+    $.ajax({
+        url: "{% url 'increase_cart_count' %}",
+        type: "GET",
+        success: function(response) {
+            // console.log(response);
+        }
+    });   
 
     // write a ajax
     $('#promo-apply-button').click(function (e) {

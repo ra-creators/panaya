@@ -7,7 +7,7 @@ class Blog(models.Model):
     title = models.CharField(max_length=100, default="Title")
     author = models.CharField(max_length=100, default="admin")
     date = models.DateField(auto_created=True)
-    image = models.FileField(upload_to="blogs/", max_length=100)
+    image = models.ImageField(upload_to="blogs/", max_length=100)
     content = RichTextField()
     likes = models.IntegerField(default=0)
     views = models.IntegerField(default=0)

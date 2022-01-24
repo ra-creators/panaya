@@ -72,7 +72,7 @@ class Cart {
               <div class="col-sm-8 align-self-center">
                 <div class="name">${item.name}</div>
                 <div class="price">Price ₹ ${item.price}</div>
-                <div>Size - 2 L</div>
+                <div>Free Size</div>
               </div>
             </div>
           </div>
@@ -125,7 +125,7 @@ class Cart {
           <div class="col-sm-8 align-self-center">
             <div class="name">${item.name}</div>
             <div class="price">Price ₹ ${item.price}</div>
-            <div>Size - 2 L</div>
+            <div>Free Size</div>
           </div>
         </div>
       </div>

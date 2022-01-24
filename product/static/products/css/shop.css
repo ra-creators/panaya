@@ -22,7 +22,7 @@ body {
   line-height: 30px;
   letter-spacing: 1px;
   transform: rotate(-45deg);
-  -webkit-transform: rotate(-45deg);
+  -webkit-transform: rotate(-50deg);
   overflow: hidden;
 }
 /* Different positions */
@@ -32,11 +32,34 @@ body {
   right: -4px;
   left: auto;
   transform: rotate(45deg);
-  -webkit-transform: rotate(46deg);
+  -webkit-transform: rotate(50deg);
   overflow: hidden;
 }
 
 .yellow-on-red {
   background-color: #8d0020;
   color: rgba(255, 206, 118, 0.86);
+}
+
+.row{
+  width : 100%;
+}
+@media only screen and (min-width: 992px) {
+  .overlay-shopnow {
+      display: none;
+  }
+  .overlay-container:hover > .overlay-shopnow{
+      display : block;
+  }
+}
+/* Chrome, Safari, Edge, Opera */
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+/* Firefox */
+input[type=number] {
+  -moz-appearance: textfield;
 }

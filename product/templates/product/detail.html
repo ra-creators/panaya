@@ -13,17 +13,27 @@
     background-color: #8d0020;
     color: rgba(255, 206, 118, 0.86);
   }
+  
+
+@media only screen and (min-width: 567px){
   .main_product_img {
-  position: relative;
-  overflow: hidden;
-  cursor: zoom-in;
+      position: relative;
+      overflow: hidden;
+      cursor: zoom-in;
+   }
+    .img_producto {
+      position: absolute;
+      width:100%;
+      top: 0;
+      left: 0;
+      transition: transform 0.5s ease-out;
+    }
 }
-.img_producto {
-  position: absolute;
-  width:100%;
-  top: 0;
-  left: 0;
-  transition: transform 0.5s ease-out;
+@media only screen and (max-width: 567px){
+    .img_producto{
+        width: 100% ;
+        transform: none !important;
+    }
 }
 </style>
 {% endblock css %}
@@ -37,9 +47,6 @@
 
 
 <section id="product" class="container-lg mt-5">
-  <div class="outof-stock">
-    <h3 class="p-1">OUT OF STOCK</h3>
-  </div>
   <div class="row">
     <div class="col-md-7">
       <div class="container-fluid m-1">
@@ -244,7 +251,7 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.theme.default.min.css"
   integrity="sha512-sMXtMNL1zRzolHYKEujM2AqCLUR9F2C4/05cdbxjjLSRvMQIciEPCQZo++nk7go3BtSuK9kfa/s+a4f4i5pLkw=="
   crossorigin="anonymous" referrerpolicy="no-referrer" />
-<script>
+{% comment %} <script>
   $(".owl-fw-carousel").owlCarousel({
     loop: true,
     margin: 10,
@@ -271,7 +278,7 @@
       },
     },
   });
-</script>
+</script> {% endcomment %}
 <script src="{% static 'products/js/product.js' %} "></script>
 <script src="{% static 'products/js/cart_popup.js' %} "></script>
 <script>
@@ -281,7 +288,7 @@
     .on("mouseover", function () {
     $(this)
         .children(".img_producto")
-        .css({ transform: "scale(" + $(this).attr("data-scale") + ")" });
+        .css({ transform: "scale(4)" });
     })
     .on("mouseout", function () {
     $(this).children(".img_producto").css({ transform: "scale(1)" });

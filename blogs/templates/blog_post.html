@@ -23,7 +23,7 @@
         <h1 class='col-12 align-center1'>{{blog.title}}</h1>
         <h5 class='col-12 text-muted align-center1'>{{blog.author|upper}} . {{blog.date|timesince}} ago</h5>
         <div class='row text-center'>
-            <img src="/media/{{blog.image}}" alt="blog thumbnail">
+            <img src="{{blog.image.url}}" alt="blog thumbnail">
         </div>
         <div class='text col-12' id='blog-text'>
             {{blog.content|safe}}
@@ -31,9 +31,10 @@
         <div class="col-12">
             <div id='blog-like-comment-post'>
                 <div id='blog-like-comment'>
-                    <!-- Like icon -->
+                    <!-- Like icon --> 
                     <a blogid="{{blog.id}}" class="col-auto disabled me-2" href="{% url 'blog_like' blog.id %}"><i
                             class="fs-3 far fa-thumbs-up" aria-hidden="true"></i></a>
+                    <h4 style='margin-right: 10px;'>{{ blog.likes }}</h4>
 
                     {% comment %} <!-- Comment icon -->
                     <div id="comment-button" style="cursor:pointer">
@@ -57,7 +58,7 @@
 
 <!-- Comments section -->
 <section class="container mt-5">
-    <div class="row d-flex justify-content-center">
+    <div class="row d-flex" style="margin:0 5%;">
         <div class="col-md-8">
 
             <div class="headings d-flex justify-content-between align-items-center mb-3">
@@ -99,6 +100,7 @@
 
 {% comment %} other blogs {% endcomment %}
 <section id="blogs" class="my-5">
+    <h2 class="text-center mt-3 mb-3">Blogs You May Also Like </h2>
     <div class="container-lg">
         <div class="row g-2 row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-4 justify-content-center">
             {% comment %} <div class="col">
@@ -119,6 +121,11 @@
             <div class="col">
                 <div class="card mx-auto" style="max-width: 20rem;">
                     <div class="card-body">
+                        <img
+                            src="{{blog.image.url}}"
+                            class="card-img-top"
+                            alt=""
+                        />
                         <h5 class="card-title">{{blog.title}}</h5>
                         <div class="text-muted d-flex justify-content-between">
                             <p class="text-muted">{{blog.date | timesince}} ago</p>

@@ -198,7 +198,7 @@ class Cart {
     return total;
   }
 }
-let cart;
+let cart = new Cart();
 
 let addToCart = (e) => {
   //   console.log(e.target.dataset);

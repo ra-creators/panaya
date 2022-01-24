@@ -13,9 +13,9 @@ def index_view(request):
     categories = Category.objects.all()
     collection = Collection.objects.all()
 
-    new_products = Product.objects.order_by('-id')[:10]
+    new_products = Product.objects.filter(available=True).order_by('-id')[:10]
+    # print(new_products)
     new_products = reversed(new_products)
-
     slider_images = IndexSlider.objects.all()[:5]
     # print(slider_images)
     context = {

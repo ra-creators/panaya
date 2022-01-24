@@ -50,7 +50,7 @@
           />
         </div>
         <div class="container" style="text-align: -webkit-center;" class="explore-banaras">
-          <div class="row row-cols-1 row-cols-sm-1 row-cols-md-2 row-cols-lg-3 row-cols-xl-4">
+          <div class="row row-cols-1 row-cols-sm-1 row-cols-md-2 row-cols-lg-3 row-cols-xl-4" style="display: flex; justify-content: center; align-items: center;">
             {% for category in categories %}
             <div class="col mt-5 text-center d-flex justify-content-center">
               <div class="flip-card">
@@ -97,9 +97,9 @@
           />
         </div>
         <div class="container-lg">
-          <h1 style="color: rgba(141, 0, 32, 1)" class="text-center mt-3 mb-5">
+          <h3 style="color: rgba(141, 0, 32, 1); font-weight: 400 !important;" class="text-center mt-3 mb-5">
             Shop the exclusive new collection for festive and bridal looks and get flat 20% off by using code Fest%20
-          </h1>
+          </h3>
           <div class="row g-2 g-md-5 row-cols-1 row-cols-md-3 w-100">
             <div class="owl-carousel owl-item owl-theme">
             {% for product in new_products %}
@@ -110,8 +110,10 @@
                   src="{{product.get_primary_img}}"
                   alt=""
                 />
-                <h2 class="mt-5 text-sp-red">{{product.name}}</h2>
-                <a class="btn styled-btn-filled" href="{% url 'product_detail' product.id %}">Shop Now</a>
+                <div>
+                    <p style="height:50px;" class="mt-5 text-sp-red">{{product.name}}</p>
+                    <a class="btn styled-btn-filled" href="{% url 'product_detail' product.id %}">Shop Now</a>
+                </div>
               </div>
             </div>
             {% endfor %}
@@ -141,7 +143,7 @@
               />
             </a>
             <a href="{% url 'product_list_by_type' type.slug %}">
-              <h2 class="mt-5 text-sp-red">{{type.name}}</h2>
+              <h2 style="font-weight:400 !important;" class="mt-5 text-sp-red">{{type.name}}</h2>
             </a>
           </div>
           {% endfor %}
@@ -247,7 +249,7 @@
                 <label class="form-label" for="mobile">Mobile No.</label>
               </div>
               <div class="col">
-                <input type="number" name="phone" pattern="[1-9]{1}[0-9]{9}" class="form-control" id='contact-phone'>
+                <input type="text" name="phone" pattern="[1-9]{1}[0-9]{9}" class="form-control" id='contact-phone' maxlength="10">
               </div>
             </div>
             <div class="row mt-5">
@@ -281,7 +283,7 @@
             <div class="item">
               <div class="card">
                 <img loading="lazy"
-                src="/media/{{blog.image}}"
+                src="{{blog.image.url}}"
                 class="card-img-top"
                 alt=""
                 />
@@ -368,8 +370,17 @@ crossorigin="anonymous"
     autoplay: true,
     nav: true,
     items:  1,
+    autoplayTimeout: 6000,
   });
-  
+
+  $.ajax({
+    url: "{% url 'increase_home_count' %}",
+    type: "GET",
+    success: function(response) {
+        // console.log(response);
+    }
+  });
+
   $('#contact-send-button').click(function(e) {
     e.preventDefault();
     $.ajax({
@@ -382,7 +393,7 @@ crossorigin="anonymous"
             "name": $('#contact-name').val(),
         },
         success: function(response) {
-            console.log(response);
+            // console.log(response);
             if (response == 200) {
                 alert("Contact Information Sent!");
             } else {
@@ -390,11 +401,13 @@ crossorigin="anonymous"
             }
         },
         error: function(response) {
-            console.log(response);
+            // console.log(response);
             alert("Error");
         }
     });
   });
+
+  
 </script>
 <script>
   {% if messages %}

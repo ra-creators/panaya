@@ -37,6 +37,7 @@ urlpatterns = [
 
     # search
     path('search/', views.product_search, name='product_search'),
+#     path('search/#search-filter', views.product_search, name='product_search'),
     path('search/<int:page>/', views.product_search, name='product_search'),
 
     # single product

@@ -73,6 +73,7 @@ INSTALLED_APPS = [
     'coupons',
     'connectUs',
     'util_mail',
+    'user_visits',
 ]
 
 AUTHENTICATION_BACKENDS = [
@@ -167,13 +168,17 @@ LOGOUT_URL = 'logout'
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/3.0/howto/static-files/
 
-STATIC_URL = '/static/'
-# STATIC_URL = 'https://static.panaya.in/static/'
+if DEBUG:
+    STATIC_URL = '/static/'
+else:
+    STATIC_URL = 'https://static.panaya.in/static/'
 STATIC_ROOT = 'staticfiles'
 
 # media
-MEDIA_URL = '/media/'
-# MEDIA_URL = 'https://static.panaya.in/media/'
+if DEBUG:
+    MEDIA_URL = '/media/'
+else:
+    MEDIA_URL = 'https://static.panaya.in/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
 # ckeditor
